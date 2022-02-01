@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -40,6 +42,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Preview(showSystemUi = true)
 @Composable
 internal fun ProfileScreen() {
@@ -54,51 +57,66 @@ internal fun ProfileScreen() {
                     )
                 }
             )
-        },
-        content = {
-            LazyColumn(
-                contentPadding = PaddingValues(16.dp),
-                content = {
-                    item {
-                        Column {
-                            Row(Modifier.height(IntrinsicSize.Min)) {
-                                Image(
-                                    modifier = Modifier
-                                        .size(size = 80.dp)
-                                        .clip(shape = CircleShape),
-                                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                                    contentDescription = null,
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                FollowMeter(
-                                    modifier = Modifier.weight(1f),
-                                    count = "520",
-                                    label = "Posts"
-                                )
-                                FollowMeter(
-                                    modifier = Modifier.weight(1f),
-                                    count = "16.2M",
-                                    label = "Followers"
-                                )
-                                FollowMeter(
-                                    modifier = Modifier.weight(1f),
-                                    count = "1",
-                                    label = "Following"
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = "Prachan Ghale",
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Black
+        }
+    ) {
+        LazyColumn(
+            content = {
+                item {
+                    Column(modifier = Modifier.padding(16.dp)) {
+                        Row(Modifier.height(IntrinsicSize.Min)) {
+                            Image(
+                                modifier = Modifier
+                                    .size(size = 80.dp)
+                                    .clip(shape = CircleShape),
+                                painter = painterResource(id = R.drawable.ic_launcher_background),
+                                contentDescription = null,
                             )
-                            Text(text = "Programmer", fontSize = 14.sp)
+                            Spacer(modifier = Modifier.width(8.dp))
+                            FollowMeter(
+                                modifier = Modifier.weight(1f),
+                                count = "520",
+                                label = "Posts"
+                            )
+                            FollowMeter(
+                                modifier = Modifier.weight(1f),
+                                count = "16.2M",
+                                label = "Followers"
+                            )
+                            FollowMeter(
+                                modifier = Modifier.weight(1f),
+                                count = "1",
+                                label = "Following"
+                            )
                         }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = "Prachan Ghale",
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Black
+                        )
+                        Text(text = "Programmer", fontSize = 14.sp)
+                        Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
-            )
-        }
-    )
+
+                stickyHeader {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(70.dp)
+                            .background(Color.Gray)
+                    ) {
+
+                    }
+                }
+                items((1..25).toList()) {
+                    ListItem {
+                        Text(text = "Test Title $it")
+                    }
+                }
+            }
+        )
+    }
 }
 
 @Composable
