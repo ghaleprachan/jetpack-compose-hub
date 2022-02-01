@@ -1,0 +1,34 @@
+ext {
+    versions = [
+            compose_version = '1.2.0-alpha01',
+            compose_navigation = '2.5.0-alpha01',
+            kotlin_version = '1.6.0'
+    ]
+
+    materialDesign = [
+            "material3": "androidx.compose.material3:material3:1.0.0-alpha04",
+            "material" : "androidx.compose.material:material:$compose_version"
+    ]
+
+    compose = [
+            "androidx.compose.ui:ui:$compose_version",
+            "androidx.compose.ui:ui-tooling-preview:$compose_version",
+            "androidx.navigation:navigation-compose:$compose_navigation",
+            "androidx.activity:activity-compose:1.4.0"
+    ]
+
+    testing = [
+            'junit:junit:4.13.2',
+            'androidx.test.ext:junit:1.1.3',
+            'androidx.test.espresso:espresso-core:3.4.0',
+            "androidx.compose.ui:ui-test-junit4:$compose_version",
+            "androidx.compose.ui:ui-tooling:$compose_version",
+            "androidx.compose.ui:ui-test-manifest:$compose_version"
+    ]
+    lottieAnimation = "com.airbnb.android:lottie-compose:4.2.2"
+}
+
+// Common For All
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01'
+}
