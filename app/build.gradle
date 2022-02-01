@@ -47,10 +47,9 @@ android {
 }
 
 dependencies {
-    // implementation project(":android-common")
-    compose dependencies
-    /*implementation(compose)
+    implementation project(":android-common")
+    implementation(compose)
     implementation(materialDesign.material)
     implementation(testing)
-    implementation(lottieAnimation)*/
+    implementation(lottieAnimation)
 }
