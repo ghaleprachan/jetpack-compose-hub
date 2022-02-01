@@ -2,7 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-apply from: "$rootDir/dipendencies.gradle"
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdk 31
@@ -48,8 +48,8 @@ android {
 
 dependencies {
     implementation project(":android-common")
+
     implementation(compose)
-    implementation(materialDesign.material)
     implementation(testing)
     implementation(lottieAnimation)
 }

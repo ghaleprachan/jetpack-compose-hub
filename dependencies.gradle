@@ -18,7 +18,24 @@ ext {
             materialDesign.material
     ]
 
-    /*compose = { dependencyHandler ->
+    testing = [
+            "junit:junit:4.13.2",
+            "androidx.test.ext:junit:1.1.3",
+            "androidx.test.espresso:espresso-core:3.4.0",
+            "androidx.compose.ui:ui-test-junit4:$compose_version",
+            "androidx.compose.ui:ui-tooling:$compose_version",
+            "androidx.compose.ui:ui-test-manifest:$compose_version"
+    ]
+
+    lottieAnimation = "com.airbnb.android:lottie-compose:4.2.2"
+}
+
+dependencies {
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+}
+
+/*compose = { dependencyHandler ->
         delegate = dependencyHandler
         implementation "androidx.compose.ui:ui:$compose_version"
         implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
@@ -28,20 +45,3 @@ ext {
         implementation "junit:junit:4.0.2"
     }
     To call this do: compose dependencies*/
-
-    testing = [
-            "junit:junit:4.13.2",
-            "androidx.test.ext:junit:1.1.3",
-            "androidx.test.espresso:espresso-core:3.4.0",
-            "androidx.compose.ui:ui-test-junit4:$compose_version",
-            "androidx.compose.ui:ui-tooling:$compose_version",
-            "androidx.compose.ui:ui-test-manifest:$compose_version"
-    ]
-    lottieAnimation = "com.airbnb.android:lottie-compose:4.2.2"
-}
-
-// Common For All
-dependencies {
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-}

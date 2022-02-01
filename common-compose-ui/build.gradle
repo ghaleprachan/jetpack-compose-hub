@@ -2,7 +2,7 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
-apply from: "$rootDir/dipendencies.gradle"
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdk 31
@@ -37,8 +37,6 @@ android {
 }
 
 dependencies {
-    /*implementation compose.composeui
-    implementation compose.composematerial
-    implementation compose.composeactivity
-    implementation compose.composetooling*/
+    implementation(compose)
+    implementation(materialDesign.material3)
 }
