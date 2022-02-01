@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 rootProject.name = "Compose Hub"
 include ':app'
 include ':android-common'
+include ':common-compose-ui'
+include ':theme'
+include ':dummy-data'
