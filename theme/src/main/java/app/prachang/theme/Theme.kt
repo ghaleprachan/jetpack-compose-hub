@@ -1,4 +1,4 @@
-package app.prachang.composehub.ui.theme
+package app.prachang.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

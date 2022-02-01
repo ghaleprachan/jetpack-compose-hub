@@ -1,4 +1,4 @@
-package app.prachang.composehub.ui.theme
+package app.prachang.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

@@ -1,6 +1,6 @@
 ext {
     versions = [
-            compose_version = '1.2.0-alpha01',
+            compose_version = '1.2.0-alpha02',
             compose_navigation = '2.5.0-alpha01',
             kotlin_version = '1.6.0'
     ]

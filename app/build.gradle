@@ -47,6 +47,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":theme"))
     implementation project(":android-common")
 
     implementation(compose)

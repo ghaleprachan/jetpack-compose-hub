@@ -1,4 +1,4 @@
-package app.prachang.composehub.ui.theme
+package app.prachang.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
