@@ -52,7 +52,8 @@ dependencies {
     implementation(project(":android-common"))
     implementation(project(":dummy-data"))
 
-    implementation(compose)
-    implementation(testing)
-    implementation(lottieAnimation)
+    implementation compose
+    implementation coil
+    implementation lottieAnimation
+    implementation testing
 }
