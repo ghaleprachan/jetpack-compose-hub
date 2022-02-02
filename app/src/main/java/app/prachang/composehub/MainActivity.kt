@@ -1,18 +1,19 @@
 package app.prachang.composehub
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,9 +58,19 @@ private fun ProfileScreenPreview() {
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 internal fun ProfileScreen() {
+    val elevation = remember {
+        mutableStateOf(0.dp)
+    }
+    val scrollState = rememberLazyListState()
+    if (scrollState.firstVisibleItemScrollOffset > 0) {
+        elevation.value = 8.dp
+    } else {
+        elevation.value = 0.dp
+    }
     Scaffold(
         topBar = {
             TopAppBar(
+                elevation = elevation.value,
                 title = {
                     Text(
                         text = profileData.username,
@@ -71,6 +82,7 @@ internal fun ProfileScreen() {
         }
     ) {
         LazyColumn(
+            state = scrollState,
             content = {
                 item {
                     Column(modifier = Modifier.padding(16.dp)) {
@@ -85,27 +97,27 @@ internal fun ProfileScreen() {
                             Spacer(modifier = Modifier.width(8.dp))
                             FollowMeter(
                                 modifier = Modifier.weight(1f),
-                                count = "520",
+                                count = profileData.totalPosts,
                                 label = "Posts"
                             )
                             FollowMeter(
                                 modifier = Modifier.weight(1f),
-                                count = "16.2M",
+                                count = profileData.followerCount,
                                 label = "Followers"
                             )
                             FollowMeter(
                                 modifier = Modifier.weight(1f),
-                                count = "1",
+                                count = profileData.followingCount,
                                 label = "Following"
                             )
                         }
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Prachan Ghale",
+                            text = profileData.name,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Black
                         )
-                        Text(text = "Programmer", fontSize = 14.sp)
+                        Text(text = "Athlete", fontSize = 14.sp)
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
@@ -146,7 +158,6 @@ internal fun ProfileScreen() {
             }
         )
     }
-    // val painter = rememberImagePainter("")
 }
 
 @Composable

@@ -5,11 +5,12 @@ import java.util.*
 
 val profileData = Profile(
     userId = UUID.randomUUID().toString(),
-    name = "Prachan Ghale",
-    username = "g_prachan",
+    name = "Cristiano Ronaldo",
+    username = "cristiano",
     image = image1,
-    followerCount = 233,
-    followingCount = 325,
+    totalPosts = "3,239",
+    followerCount = "398M",
+    followingCount = "498",
     description = null,
     link = null
 )
