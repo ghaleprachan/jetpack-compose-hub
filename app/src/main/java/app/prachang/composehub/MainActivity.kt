@@ -13,12 +13,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -42,8 +45,15 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Preview(showSystemUi = true)
+@Composable
+private fun ProfileScreenPreview() {
+    ComposeHubTheme {
+        ProfileScreen()
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 internal fun ProfileScreen() {
     Scaffold(
@@ -53,7 +63,7 @@ internal fun ProfileScreen() {
                     Text(
                         text = profileData.username,
                         fontSize = 24.sp,
-                        fontWeight = FontWeight.ExtraBold
+                        fontWeight = FontWeight.ExtraBold,
                     )
                 }
             )

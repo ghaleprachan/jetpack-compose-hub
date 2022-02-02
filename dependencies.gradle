@@ -2,7 +2,8 @@ ext {
     versions = [
             compose_version = '1.2.0-alpha02',
             compose_navigation = '2.5.0-alpha01',
-            kotlin_version = '1.6.0'
+            kotlin_version = '1.6.0',
+            accompaniest = '0.24.1-alpha',
     ]
 
     materialDesign = [
@@ -15,7 +16,8 @@ ext {
             "androidx.compose.ui:ui-tooling-preview:$compose_version",
             "androidx.navigation:navigation-compose:$compose_navigation",
             "androidx.activity:activity-compose:1.4.0",
-            materialDesign.material
+            materialDesign.material,
+            "com.google.accompanist:accompanist-systemuicontroller:$accompaniest",
     ]
 
     testing = [
