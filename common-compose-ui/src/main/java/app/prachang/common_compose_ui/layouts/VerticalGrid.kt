@@ -6,6 +6,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 
+@Preview(showSystemUi = true)
+@Composable
+private fun VerticalGridSample() {
+    VerticalGrid(columns = 3) {
+        (1..8).forEach {
+            Text(text = "Item ${it + 1}")
+        }
+    }
+}
 
 @Composable
 internal fun VerticalGrid(
