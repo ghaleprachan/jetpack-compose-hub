@@ -1,5 +1,8 @@
 package app.prachang.common_compose_ui.layouts
 
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +17,18 @@ private fun VerticalGridSample() {
             Text(text = "Item ${it + 1}")
         }
     }
+}
+
+@Preview(showSystemUi = true)
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TestOne() {
+    LazyVerticalGrid(
+        cells = GridCells.Fixed(2),
+        content = {
+
+        }
+    )
 }
 
 @Composable
