@@ -18,7 +18,6 @@ private fun VerticalGridSample() {
         }
     }
 }
-// Do research and change it later TODO
 @Preview(showSystemUi = true)
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -30,7 +29,7 @@ fun TestOne() {
         }
     )
 }
-
+// Do research and change it later TODO
 @Composable
 internal fun VerticalGrid(
     modifier: Modifier = Modifier,
