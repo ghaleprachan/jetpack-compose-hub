@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":theme"))
     implementation(project(":android-common"))
     implementation(project(":dummy-data"))
+    implementation(project(":common-compose-ui"))
 
     implementation compose
     implementation coil

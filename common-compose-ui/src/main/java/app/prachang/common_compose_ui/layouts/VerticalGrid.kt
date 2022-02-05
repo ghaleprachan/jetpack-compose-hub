@@ -18,17 +18,7 @@ private fun VerticalGridSample() {
         }
     }
 }
-@Preview(showSystemUi = true)
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun TestOne() {
-    LazyVerticalGrid(
-        cells = GridCells.Fixed(2),
-        content = {
 
-        }
-    )
-}
 // Do research and change it later TODO
 @Composable
 internal fun VerticalGrid(
