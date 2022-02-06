@@ -28,15 +28,18 @@ fun TestOne() {
 @Preview(showSystemUi = true)
 @Composable
 fun TestUI() {
-    Layout(content = {
-        Text(
-            modifier = Modifier
-                .fillMaxWidth(),
-            text = "Prachan",
-        )
-    }, measurePolicy = { s, e ->
-        layout(2, 3) {
+    Layout(
+        content = {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = "Prachan",
+            )
+        },
+        measurePolicy = { s, e ->
+            layout(200, 100) {
 
-        }
-    })
+            }
+        },
+    )
 }
