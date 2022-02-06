@@ -1,5 +1,6 @@
 package app.prachang.common_compose_ui.layouts
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
@@ -41,7 +42,7 @@ fun VerticalGrid(
             val columnY = Array(columns) { 0 }
             placeables.forEachIndexed { index, placeable ->
                 val column = index % columns
-//                if(columnY[columnY.lastIndex] - columnY[columnY.lastIndex-1])
+
                 placeable.placeRelative(
                     x = column * itemWidth,
                     y = columnY[column]
