@@ -1,27 +1,14 @@
 package app.prachang.common_compose_ui.layouts
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.tooling.preview.Preview
 
-@Preview(showSystemUi = true)
+/**
+ * A simple grid which lays elements out vertically in evenly sized [columns].
+ */
 @Composable
-private fun VerticalGridSample() {
-    VerticalGrid(columns = 3) {
-        (1..8).forEach {
-            Text(text = "Item ${it + 1}")
-        }
-    }
-}
-
-// Do research and change it later TODO
-@Composable
-internal fun VerticalGrid(
+fun VerticalGrid(
     modifier: Modifier = Modifier,
     columns: Int = 2,
     content: @Composable () -> Unit
@@ -54,7 +41,7 @@ internal fun VerticalGrid(
             val columnY = Array(columns) { 0 }
             placeables.forEachIndexed { index, placeable ->
                 val column = index % columns
-                placeable.place(
+                placeable.placeRelative(
                     x = column * itemWidth,
                     y = columnY[column]
                 )

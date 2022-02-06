@@ -41,7 +41,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    TestUI()
+                    TestUI {
+                        Text("MyBasicColumn")
+                        Text("places items")
+                        Text("vertically.")
+                        Text("We've done it by hand!")
+                    }
                 }
             }
         }
