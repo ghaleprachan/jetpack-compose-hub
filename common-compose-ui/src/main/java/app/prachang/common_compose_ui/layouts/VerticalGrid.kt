@@ -1,9 +1,31 @@
 package app.prachang.common_compose_ui.layouts
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Placeable
+
+private val placeables = Array<Placeable?>(size = 3) { null }
+
+@Composable
+fun Grid(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Layout(
+        modifier = modifier,
+        content = { content() },
+        measurePolicy = { measurables, constraints ->
+
+            measurables.mapIndexed { index, measurable ->
+                placeables[index] = measurable.measure(constraints)
+            }
+            layout(constraints.maxWidth, constraints.maxHeight) {
+
+            }
+        }
+    )
+}
 
 /**
  * A simple grid which lays elements out vertically in evenly sized [columns].
