@@ -93,22 +93,9 @@ fun VerticalGrid(
     modifier: Modifier = Modifier,
     columns: Int = 2,
     content: @Composable () -> Unit,
-    images: List<String>
 ) {
     Layout(
-        content = /*content*/{
-            images.forEach {
-                val painter = rememberImagePainter(data = it)
-                Image(
-                    painter = painter,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .aspectRatio(1f)
-                        .background(Color.Red),
-                    contentScale = ContentScale.Crop
-                )
-            }
-        },
+        content = content,
         modifier = modifier
     ) { measurables, constraints ->
         val itemWidth = constraints.maxWidth / columns

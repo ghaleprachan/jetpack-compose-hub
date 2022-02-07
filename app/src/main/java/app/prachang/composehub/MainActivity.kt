@@ -156,14 +156,11 @@ internal fun ProfileScreen() {
                 }
                 val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
                 val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
-                val images: MutableList<String> = mutableListOf()
 
                 itemsIndexed(myPosts) { index, post ->
-                    images.addUnique(post.postImage[0])
                     VerticalGrid(
                         columns = Colums.THREE,
                         content = {},
-                        images = images
                     )
                     val column = index % Colums.THREE
                     val padding = if (column != 2) firstPadding else lastPadding
