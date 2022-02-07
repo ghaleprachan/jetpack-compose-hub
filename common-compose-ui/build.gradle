@@ -39,5 +39,6 @@ android {
 dependencies {
     implementation(compose)
     implementation(materialDesign.material3)
+    implementation coil
     implementation testing
 }

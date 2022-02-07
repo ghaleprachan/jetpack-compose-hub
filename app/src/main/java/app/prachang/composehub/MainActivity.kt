@@ -158,25 +158,22 @@ internal fun ProfileScreen() {
                 itemsIndexed(myPosts) { index, post ->
                     Grid(
                         // columns = Colums.THREE
-                    ) {
-                        // myPosts.forEachIndexed { index, post ->
-                        val column = index % Colums.THREE
-                        val padding = if (column != 2) firstPadding else lastPadding
-                        val painter = rememberImagePainter(data = post.postImage[0])
+                        image = post.postImage[0]
+                    )
+                    val column = index % Colums.THREE
+                    val padding = if (column != 2) firstPadding else lastPadding
+                    /*
+                    val painter = rememberImagePainter(data = post.postImage[0])
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .aspectRatio(1f)
+                            // .padding(paddingValues = padding)
+                            .background(Color.Red),
+                        contentScale = ContentScale.Crop
+                    )*/
 
-                        // Box {
-                        Image(
-                            painter = painter,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .aspectRatio(1f)
-                                // .padding(paddingValues = padding)
-                                .background(Color.Red),
-                            contentScale = ContentScale.Crop
-                        )
-                        // }
-                        //}
-                    }
                 }
                 /*items(myPosts.windowed(3, 3, true)) { subList ->
                     Row {

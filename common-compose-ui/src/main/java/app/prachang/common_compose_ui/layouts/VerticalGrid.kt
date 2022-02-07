@@ -1,16 +1,25 @@
 package app.prachang.common_compose_ui.layouts
 
 import android.util.Log
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 
 var recentX = 0
 var recentY = 0
 var rowCount = 0
+val uni: () -> Unit = {}
+private lateinit var composable: @Composable () -> Unit
+private val images: MutableList<String> = mutableListOf()
 
 /**
  * 1. val configuration = LocalConfiguration.current
@@ -20,11 +29,26 @@ var rowCount = 0
 @Composable
 fun Grid(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    // content: @Composable () -> Unit
+    image: String
 ) {
     Layout(
         modifier = modifier,
-        content = { content() },
+        content = {
+            images.add(image)
+            images.forEach {
+                val painter = rememberImagePainter(data = it)
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        // .padding(paddingValues = padding)
+                        .background(Color.Red),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        },
         measurePolicy = { measurables, constraints ->
             val width = constraints.maxWidth / 3
 
