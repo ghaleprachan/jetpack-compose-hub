@@ -1,13 +1,14 @@
 package app.prachang.composehub
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
@@ -18,19 +19,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.prachang.common_compose_ui.layouts.Grid
+import app.prachang.common_compose_ui.layouts.VerticalGrid
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
-import app.prachang.common_compose_ui.layouts.VerticalGrid as VerticalGrid1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,6 +41,21 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
+                    /* Grid {
+                         Text(text = "One", modifier = Modifier.background(Color.Red))
+                         Text(text = "Two", modifier = Modifier.background(Color.Green))
+                         Text(text = "Three", modifier = Modifier.background(Color.Red))
+                         Text(text = "Four", modifier = Modifier.background(Color.Green))
+                         Text(text = "Five", modifier = Modifier.background(Color.Red))
+                         Text(text = "Six", modifier = Modifier.background(Color.Green))
+                         Text(text = "One", modifier = Modifier.background(Color.Red))
+                         Text(text = "Two", modifier = Modifier.background(Color.Green))
+                         Text(text = "Three", modifier = Modifier.background(Color.Red))
+                         Text(text = "Four", modifier = Modifier.background(Color.Green))
+                         Text(text = "Five", modifier = Modifier.background(Color.Red))
+                         Text(text = "Six", modifier = Modifier.background(Color.Green))
+                         Text(text = "Six", modifier = Modifier.background(Color.Green))
+                     }*/
                     ProfileScreen()
                 }
             }
@@ -141,21 +156,25 @@ internal fun ProfileScreen() {
                 val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
                 val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
                 itemsIndexed(myPosts) { index, post ->
-                    VerticalGrid1(
-                        columns = Colums.THREE
+                    Grid(
+                        // columns = Colums.THREE
                     ) {
                         // myPosts.forEachIndexed { index, post ->
                         val column = index % Colums.THREE
                         val padding = if (column != 2) firstPadding else lastPadding
                         val painter = rememberImagePainter(data = post.postImage[0])
+
+                        // Box {
                         Image(
                             painter = painter,
                             contentDescription = null,
                             modifier = Modifier
                                 .aspectRatio(1f)
-                                .padding(paddingValues = padding),
+                                // .padding(paddingValues = padding)
+                                .background(Color.Red),
                             contentScale = ContentScale.Crop
                         )
+                        // }
                         //}
                     }
                 }

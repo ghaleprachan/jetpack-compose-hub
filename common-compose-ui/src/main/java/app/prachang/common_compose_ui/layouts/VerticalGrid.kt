@@ -1,12 +1,22 @@
 package app.prachang.common_compose_ui.layouts
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.Placeable
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
 
-private val placeables = Array<Placeable?>(size = 3) { null }
+var recentX = 0
+var recentY = 0
+var rowCount = 0
 
+/**
+val configuration = LocalConfiguration.current
+val screenHeight = configuration.screenHeightDp.dp
+val screenWidth = configuration.screenWidthDp.dp / 3
+ * */
 @Composable
 fun Grid(
     modifier: Modifier = Modifier,
@@ -16,12 +26,31 @@ fun Grid(
         modifier = modifier,
         content = { content() },
         measurePolicy = { measurables, constraints ->
+            val width = constraints.maxWidth / 3
 
-            measurables.mapIndexed { index, measurable ->
-                placeables[index] = measurable.measure(constraints)
+            val placeables = measurables.map { measurable ->
+                // Measure each children
+                measurable.measure(constraints)
             }
-            layout(constraints.maxWidth, constraints.maxHeight) {
+            /*val columnHeights = Array(3) { 0 }
+            placeables.forEachIndexed { index, placeable ->
+                val column = index % 3
+                columnHeights[column] += placeable.height
+            }
 
+            val height = (columnHeights.maxOrNull() ?: constraints.minHeight)
+                .coerceAtMost(constraints.maxHeight)*/
+            layout(constraints.maxWidth, 3000) {
+                placeables.forEach { placeable ->
+                    val x = rowCount % 3
+                    val y = (rowCount / 3.0).toInt()
+                    rowCount += 1
+                    Log.e(
+                        "PrachanGhale",
+                        "$rowCount x = $x Place= ${x * width} ${y * width}"
+                    )
+                    placeable.placeRelative(x = x * (width), y = y * width)
+                }
             }
         }
     )
@@ -64,7 +93,7 @@ fun VerticalGrid(
             val columnY = Array(columns) { 0 }
             placeables.forEachIndexed { index, placeable ->
                 val column = index % columns
-
+                Log.e("PrachanGhale ", "x = ${column * itemWidth} y = ${columnY[column]}")
                 placeable.placeRelative(
                     x = column * itemWidth,
                     y = columnY[column]
