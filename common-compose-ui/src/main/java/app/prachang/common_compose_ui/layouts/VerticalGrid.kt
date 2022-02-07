@@ -13,10 +13,10 @@ var recentY = 0
 var rowCount = 0
 
 /**
-1. val configuration = LocalConfiguration.current
-2. val screenHeight = configuration.screenHeightDp.dp
-3. val screenWidth = configuration.screenWidthDp.dp
- * */
+ * 1. val configuration = LocalConfiguration.current
+ * 2. val screenHeight = configuration.screenHeightDp.dp
+ * 3. val screenWidth = configuration.screenWidthDp.dp
+ */
 @Composable
 fun Grid(
     modifier: Modifier = Modifier,
