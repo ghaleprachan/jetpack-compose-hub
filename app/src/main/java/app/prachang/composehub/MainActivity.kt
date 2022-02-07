@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.layouts.Grid
 import app.prachang.common_compose_ui.layouts.VerticalGrid
+import app.prachang.common_compose_ui.layouts.addUnique
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
@@ -155,10 +156,14 @@ internal fun ProfileScreen() {
                 }
                 val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
                 val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
+                val images: MutableList<String> = mutableListOf()
+
                 itemsIndexed(myPosts) { index, post ->
-                    Grid(
-                        // columns = Colums.THREE
-                        image = post.postImage[0]
+                    images.addUnique(post.postImage[0])
+                    VerticalGrid(
+                        columns = Colums.THREE,
+                        content = {},
+                        images = images
                     )
                     val column = index % Colums.THREE
                     val padding = if (column != 2) firstPadding else lastPadding

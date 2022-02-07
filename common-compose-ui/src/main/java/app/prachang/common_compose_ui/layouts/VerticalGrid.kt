@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +20,6 @@ var recentY = 0
 var rowCount = 0
 val uni: () -> Unit = {}
 private lateinit var composable: @Composable () -> Unit
-private val images: MutableList<String> = mutableListOf()
 
 /**
  * 1. val configuration = LocalConfiguration.current
@@ -29,25 +29,23 @@ private val images: MutableList<String> = mutableListOf()
 @Composable
 fun Grid(
     modifier: Modifier = Modifier,
-    // content: @Composable () -> Unit
     image: String
 ) {
     Layout(
         modifier = modifier,
         content = {
-            images.add(image)
+            /*images.add(image)
             images.forEach {
                 val painter = rememberImagePainter(data = it)
                 Image(
                     painter = painter,
                     contentDescription = null,
                     modifier = Modifier
-                        .aspectRatio(1f)
-                        // .padding(paddingValues = padding)
+                        .height(200.dp)
                         .background(Color.Red),
                     contentScale = ContentScale.Crop
                 )
-            }
+            }*/
         },
         measurePolicy = { measurables, constraints ->
             val width = constraints.maxWidth / 3
@@ -61,10 +59,12 @@ fun Grid(
                 val column = index % 3
                 columnHeights[column] += placeable.height
             }
-
             val height = (columnHeights.maxOrNull() ?: constraints.minHeight)
                 .coerceAtMost(constraints.maxHeight)*/
-            layout(constraints.maxWidth, 3000) {
+            layout(
+                constraints.maxWidth,
+                constraints.minHeight.coerceAtMost(constraints.maxHeight)
+            ) {
                 placeables.forEach { placeable ->
                     val x = rowCount % 3
                     val y = (rowCount / 3.0).toInt()
@@ -79,6 +79,11 @@ fun Grid(
         }
     )
 }
+fun <T> MutableList<T>.addUnique(value: T) {
+    if (!this.contains(value)) {
+        this.add(value)
+    }
+}
 
 /**
  * A simple grid which lays elements out vertically in evenly sized [columns].
@@ -87,10 +92,23 @@ fun Grid(
 fun VerticalGrid(
     modifier: Modifier = Modifier,
     columns: Int = 2,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    images: List<String>
 ) {
     Layout(
-        content = content,
+        content = /*content*/{
+            images.forEach {
+                val painter = rememberImagePainter(data = it)
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .background(Color.Red),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        },
         modifier = modifier
     ) { measurables, constraints ->
         val itemWidth = constraints.maxWidth / columns
