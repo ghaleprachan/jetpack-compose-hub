@@ -8,6 +8,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -22,7 +23,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prachang.common_compose_ui.layouts.VerticalGrid
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
@@ -30,6 +30,7 @@ import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import app.prachang.common_compose_ui.layouts.VerticalGrid as VerticalGrid1
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,42 +41,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val context = LocalContext.current
-                    Column(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState())
-                            .background(Color.Red)
-                    ) {
-                        VerticalGrid(
-                            columns = Colums.THREE
-                        ) {
-                            val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
-                            val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
-
-                            myPosts.forEachIndexed { index, post ->
-                                val column = index % Colums.THREE
-                                val padding = if (column != 2) firstPadding else lastPadding
-                                val painter = rememberImagePainter(data = post.postImage[0])
-                                Image(
-                                    painter = painter,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .aspectRatio(1f)
-                                        .padding(paddingValues = padding)
-                                        .clickable {
-                                            Toast
-                                                .makeText(
-                                                    context,
-                                                    "${post.postImage}",
-                                                    Toast.LENGTH_SHORT
-                                                )
-                                                .show()
-                                        },
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        }
-                    }
+                    ProfileScreen()
                 }
             }
         }
@@ -172,9 +138,28 @@ internal fun ProfileScreen() {
 
                     }
                 }
-                val paddingValues = PaddingValues(top = 2.dp, start = 2.dp)
-                val endPaddingValues = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
-                items(myPosts.windowed(3, 3, true)) { subList ->
+                val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
+                val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
+                itemsIndexed(myPosts) { index, post ->
+                    VerticalGrid1(
+                        columns = Colums.THREE
+                    ) {
+                        // myPosts.forEachIndexed { index, post ->
+                        val column = index % Colums.THREE
+                        val padding = if (column != 2) firstPadding else lastPadding
+                        val painter = rememberImagePainter(data = post.postImage[0])
+                        Image(
+                            painter = painter,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .aspectRatio(1f)
+                                .padding(paddingValues = padding),
+                            contentScale = ContentScale.Crop
+                        )
+                        //}
+                    }
+                }
+                /*items(myPosts.windowed(3, 3, true)) { subList ->
                     Row {
                         subList.forEachIndexed { index, post ->
                             val painter = rememberImagePainter(
@@ -194,7 +179,7 @@ internal fun ProfileScreen() {
                             )
                         }
                     }
-                }
+                }*/
             }
         )
     }
