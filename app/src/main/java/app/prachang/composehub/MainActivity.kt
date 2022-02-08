@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
@@ -32,6 +33,7 @@ import app.prachang.dummy_data.instagram.profileData
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
+import coil.transform.RoundedCornersTransformation
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -157,27 +159,7 @@ internal fun ProfileScreen() {
                 val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
                 val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
 
-                itemsIndexed(myPosts) { index, post ->
-                    VerticalGrid(
-                        columns = Colums.THREE,
-                        content = {},
-                    )
-                    val column = index % Colums.THREE
-                    val padding = if (column != 2) firstPadding else lastPadding
-                    /*
-                    val painter = rememberImagePainter(data = post.postImage[0])
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .aspectRatio(1f)
-                            // .padding(paddingValues = padding)
-                            .background(Color.Red),
-                        contentScale = ContentScale.Crop
-                    )*/
-
-                }
-                /*items(myPosts.windowed(3, 3, true)) { subList ->
+                items(myPosts.windowed(3, 3, true)) { subList ->
                     Row {
                         subList.forEachIndexed { index, post ->
                             val painter = rememberImagePainter(
@@ -190,14 +172,14 @@ internal fun ProfileScreen() {
                                 painter = painter,
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .padding(if (subList.lastIndex == index) endPaddingValues else paddingValues)
+                                    .padding(if (subList.lastIndex == index) lastPadding else firstPadding)
                                     .weight(1f)
                                     .aspectRatio(1f),
                                 contentScale = ContentScale.Crop
                             )
                         }
                     }
-                }*/
+                }
             }
         )
     }
