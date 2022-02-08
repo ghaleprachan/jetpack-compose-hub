@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":android-common"))
     implementation(project(":dummy-data"))
     implementation(project(":common-compose-ui"))
+    implementation(project(":instagram-clone"))
 
     implementation compose
     implementation coil
