@@ -32,6 +32,7 @@ android {
 
 dependencies {
     implementation(project(":common-compose-ui"))
+    implementation(project(":theme"))
     implementation(compose)
     implementation(materialDesign.material3)
     implementation coil
