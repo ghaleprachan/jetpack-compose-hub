@@ -36,13 +36,13 @@ import coil.transform.RoundedCornersTransformation
 @Composable
 private fun ProfileScreenPreview() {
     ComposeHubTheme {
-        ProfileScreen()
+        InstaProfileScreen()
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
-internal fun ProfileScreen() {
+fun InstaProfileScreen() {
     val elevation = remember {
         mutableStateOf(0.dp)
     }
