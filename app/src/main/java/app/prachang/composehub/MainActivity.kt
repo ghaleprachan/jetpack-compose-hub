@@ -44,21 +44,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    /* Grid {
-                         Text(text = "One", modifier = Modifier.background(Color.Red))
-                         Text(text = "Two", modifier = Modifier.background(Color.Green))
-                         Text(text = "Three", modifier = Modifier.background(Color.Red))
-                         Text(text = "Four", modifier = Modifier.background(Color.Green))
-                         Text(text = "Five", modifier = Modifier.background(Color.Red))
-                         Text(text = "Six", modifier = Modifier.background(Color.Green))
-                         Text(text = "One", modifier = Modifier.background(Color.Red))
-                         Text(text = "Two", modifier = Modifier.background(Color.Green))
-                         Text(text = "Three", modifier = Modifier.background(Color.Red))
-                         Text(text = "Four", modifier = Modifier.background(Color.Green))
-                         Text(text = "Five", modifier = Modifier.background(Color.Red))
-                         Text(text = "Six", modifier = Modifier.background(Color.Green))
-                         Text(text = "Six", modifier = Modifier.background(Color.Green))
-                     }*/
                     ProfileScreen()
                 }
             }
