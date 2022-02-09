@@ -2,7 +2,9 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
+
 apply from: "$rootDir/dependencies.gradle"
+
 android {
     namespace 'app.prachang.instagram_clone'
     compileSdk 31
@@ -27,6 +29,12 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.2.0-alpha02"
     }
 }
 
