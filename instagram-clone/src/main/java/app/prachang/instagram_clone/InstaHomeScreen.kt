@@ -1,6 +1,9 @@
 package app.prachang.instagram_clone
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.*
@@ -17,10 +20,11 @@ private fun InstaHomeScreenPreview() {
     InstaHomeScreen()
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun InstaHomeScreen() {
     var elevation by remember {
-        mutableStateOf(8.dp)
+        mutableStateOf(0.dp)
     }
 
     val scrollState = rememberLazyListState()
@@ -50,8 +54,27 @@ fun InstaHomeScreen() {
         LazyColumn(
             state = scrollState,
             content = {
-
+                item {
+                    StoryContent()
+                }
+                items((1..100).toList()) {
+                    ListItem {
+                        Text(text = "Title $it")
+                    }
+                }
             }
         )
     }
+}
+
+@Composable
+fun StoryContent() {
+    LazyRow(
+        contentPadding = PaddingValues(16.dp),
+        content = {
+            items((1..20).toList()) {
+                Text(text = "Story $it")
+            }
+        }
+    )
 }
