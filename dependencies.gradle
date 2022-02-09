@@ -16,6 +16,7 @@ ext {
             "androidx.compose.ui:ui-tooling-preview:$compose_version",
             "androidx.navigation:navigation-compose:$compose_navigation",
             "androidx.activity:activity-compose:1.4.0",
+            "androidx.compose.material:material-icons-extended:$compose_version",
             materialDesign.material,
     ]
 
