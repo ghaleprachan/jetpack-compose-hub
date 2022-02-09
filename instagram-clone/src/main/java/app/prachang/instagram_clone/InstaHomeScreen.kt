@@ -72,8 +72,11 @@ fun StoryContent() {
     LazyRow(
         contentPadding = PaddingValues(16.dp),
         content = {
+            item {
+                Text(text = "My Story  ")
+            }
             items((1..20).toList()) {
-                Text(text = "Story $it")
+                Text(text = "Story $it   ")
             }
         }
     )
