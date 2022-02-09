@@ -30,6 +30,7 @@ import app.prachang.common_compose_ui.layouts.addUnique
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
+import app.prachang.instagram_clone.InstaHomeScreen
 import app.prachang.instagram_clone.InstaProfileScreen
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    InstaProfileScreen()
+                    InstaHomeScreen()
                 }
             }
         }
