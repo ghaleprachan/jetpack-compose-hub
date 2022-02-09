@@ -47,10 +47,10 @@ fun InstaProfileScreen() {
         mutableStateOf(0.dp)
     }
     val scrollState = rememberLazyListState()
-    if (scrollState.firstVisibleItemScrollOffset > 0) {
-        elevation.value = 8.dp
+    elevation.value = if (scrollState.firstVisibleItemScrollOffset > 0) {
+        8.dp
     } else {
-        elevation.value = 0.dp
+        0.dp
     }
     Scaffold(
         topBar = {
