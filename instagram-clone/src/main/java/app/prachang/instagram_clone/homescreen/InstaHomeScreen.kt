@@ -59,7 +59,7 @@ fun InstaHomeScreen() {
                 item {
                     StoryContent()
                 }
-                items(myPosts) {
+                items(myPosts.take(10)) {
                     PostItem(post = it)
                 }
             }
