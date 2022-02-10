@@ -93,7 +93,7 @@ fun PostItem(post: Post) {
                 Icon(Icons.Outlined.Share, contentDescription = null)
             }
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = {  },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.End)
