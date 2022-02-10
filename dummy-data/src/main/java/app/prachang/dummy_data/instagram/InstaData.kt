@@ -19,7 +19,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image1,
         date = "2 days",
         postImage = listOf(image1, image2),
         likes = 12,
@@ -30,7 +30,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image2,
         date = "7 days",
         postImage = listOf(image2, image3, image4, image5),
         likes = 12,
@@ -41,7 +41,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image3,
         date = "7 hour",
         postImage = listOf(image3),
         likes = 12,
@@ -52,7 +52,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image4,
         date = "1 hour",
         postImage = listOf(image4),
         likes = 12,
@@ -63,7 +63,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image5,
         date = "1 Feb",
         postImage = listOf(image5),
         likes = 12,
@@ -74,7 +74,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image6,
         date = "1 day",
         postImage = listOf(image6),
         likes = 12,
@@ -85,7 +85,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image7,
         date = "1 mins ago",
         postImage = listOf(image7),
         likes = 12,
@@ -96,7 +96,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image8,
         date = "1 day",
         postImage = listOf(image8),
         likes = 12,
@@ -107,7 +107,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image9,
         date = "1 mins ago",
         postImage = listOf(image9),
         likes = 12,
@@ -118,7 +118,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image10,
         date = "2 days",
         postImage = listOf(image10, image2),
         likes = 12,
@@ -129,7 +129,7 @@ val myPosts = listOf(
     Post(
         postId = UUID.randomUUID().toString(),
         username = "gprachan",
-        userImage = "",
+        userImage = image11,
         date = "7 days",
         postImage = listOf(image11, image3, image4, image5),
         likes = 12,
