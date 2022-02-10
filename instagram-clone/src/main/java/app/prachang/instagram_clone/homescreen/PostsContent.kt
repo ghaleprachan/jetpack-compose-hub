@@ -83,17 +83,17 @@ fun PostItem(post: Post) {
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { }) {
                 Icon(Icons.Outlined.FavoriteBorder, contentDescription = null)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { }) {
                 Icon(Icons.Outlined.Comment, contentDescription = null)
             }
-            IconButton(onClick = {  }) {
+            IconButton(onClick = { }) {
                 Icon(Icons.Outlined.Share, contentDescription = null)
             }
             IconButton(
-                onClick = {  },
+                onClick = { },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(align = Alignment.End)
