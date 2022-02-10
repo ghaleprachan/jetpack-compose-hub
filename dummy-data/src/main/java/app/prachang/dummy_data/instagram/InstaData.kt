@@ -3,6 +3,7 @@ package app.prachang.dummy_data.instagram
 import app.prachang.dummy_data.*
 import java.util.*
 
+val kotlinIcon = "https://cdn.iconscout.com/icon/free/png-256/kotlin-2752140-2284957.png"
 val profileData = Profile(
     userId = UUID.randomUUID().toString(),
     name = "Cristiano Ronaldo",
