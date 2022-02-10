@@ -89,7 +89,7 @@ fun PostItem(post: Post) {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(Icons.Outlined.Comment, contentDescription = null)
             }
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = {  }) {
                 Icon(Icons.Outlined.Share, contentDescription = null)
             }
             IconButton(
