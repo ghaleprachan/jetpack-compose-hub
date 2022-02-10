@@ -15,12 +15,18 @@ import androidx.compose.material.icons.outlined.Message
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import app.prachang.common_compose_ui.extensions.Height
+import app.prachang.dummy_data.instagram.Post
 import app.prachang.dummy_data.instagram.myPosts
 import coil.compose.rememberImagePainter
 
@@ -85,27 +91,47 @@ fun StoryContent() {
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         content = {
             item {
-                Text(text = "My Story  ")
+
             }
-            items(myPosts.take(10)) {
-                val painter = rememberImagePainter(data = it.userImage)
-                Column {
-                    Image(
-                        painter = painter,
-                        modifier = Modifier
-                            .size(70.dp)
-                            .border(
-                                width = 1.dp,
-                                brush = gradient,
-                                shape = CircleShape
-                            )
-                            .padding(5.dp)
-                            .clip(shape = CircleShape),
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
-                }
+            items(myPosts.take(10)) { post ->
+                StoryItem(post, gradient)
             }
         }
     )
+}
+
+@Composable
+private fun StoryItem(
+    post: Post,
+    gradient: Brush
+) {
+    val painter = rememberImagePainter(data = post.userImage)
+    Column {
+        Image(
+            painter = painter,
+            modifier = Modifier
+                .size(70.dp)
+                .border(
+                    width = 1.5.dp,
+                    brush = gradient,
+                    shape = CircleShape
+                )
+                .padding(5.dp)
+                .clip(shape = CircleShape),
+            contentScale = ContentScale.Crop,
+            contentDescription = null
+        )
+        Height(4)
+        Text(
+            modifier = Modifier.width(70.dp),
+            text = post.username,
+            style = TextStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium
+            ),
+            textAlign = TextAlign.Center,
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
+        )
+    }
 }
