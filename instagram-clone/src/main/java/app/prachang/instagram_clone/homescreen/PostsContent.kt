@@ -31,6 +31,7 @@ import coil.compose.rememberImagePainter
 @Composable
 fun PostItem(post: Post) {
     val profilePainter = rememberImagePainter(data = post.userImage)
+    val postImage = rememberImagePainter(data = post.postImage[0])
     Column {
         Row(
             modifier = Modifier
@@ -66,5 +67,14 @@ fun PostItem(post: Post) {
                 )
             }
         }
+        Height(height = 6)
+        Image(
+            painter = postImage,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp),
+            contentScale = ContentScale.Crop
+        )
     }
 }

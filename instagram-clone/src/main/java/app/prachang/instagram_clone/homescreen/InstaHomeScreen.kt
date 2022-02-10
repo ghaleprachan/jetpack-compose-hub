@@ -1,5 +1,6 @@
 package app.prachang.instagram_clone
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -53,6 +54,7 @@ fun InstaHomeScreen() {
     ) {
         LazyColumn(
             state = scrollState,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             content = {
                 item {
                     StoryContent()
