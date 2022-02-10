@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -76,5 +77,29 @@ fun PostItem(post: Post) {
                 .height(280.dp),
             contentScale = ContentScale.Crop
         )
+        Height(height = 6)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.FavoriteBorder, contentDescription = null)
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.Comment, contentDescription = null)
+            }
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(Icons.Outlined.Share, contentDescription = null)
+            }
+            IconButton(
+                onClick = { /*TODO*/ },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(align = Alignment.End)
+            ) {
+                Icon(Icons.Outlined.BookmarkBorder, contentDescription = null)
+            }
+        }
     }
 }
