@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.instagram_clone.homescreen.PostItem
 import app.prachang.instagram_clone.homescreen.StoryContent
+import kotlinx.coroutines.launch
 
 @Preview(showSystemUi = true)
 @Composable
@@ -29,11 +30,13 @@ fun InstaHomeScreen() {
     }
 
     val scrollState = rememberLazyListState()
+
     elevation = if (scrollState.firstVisibleItemScrollOffset > 0) {
         8.dp
     } else {
         0.dp
     }
+
     Scaffold(
         topBar = {
             TopAppBar(
