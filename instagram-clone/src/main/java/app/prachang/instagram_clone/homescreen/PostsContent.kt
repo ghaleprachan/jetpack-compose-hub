@@ -29,9 +29,9 @@ import coil.compose.rememberImagePainter
 /**
  *  Here update post image using pager and other UI improvements
  *
- *  Also add previews
- *  todo*/
-@Composable
+ *  Also add previews todo
+ *  */
+
 fun PostItem(post: Post) {
     val profilePainter = rememberImagePainter(data = post.userImage)
     val postImage = rememberImagePainter(data = post.postImage[0])

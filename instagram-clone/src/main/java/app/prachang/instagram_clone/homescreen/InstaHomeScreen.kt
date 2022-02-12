@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone
+package app.prachang.instagram_clone.homescreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,9 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import app.prachang.dummy_data.instagram.myPosts
-import app.prachang.instagram_clone.homescreen.PostItem
-import app.prachang.instagram_clone.homescreen.StoryContent
-import kotlinx.coroutines.launch
 
 @Preview(showSystemUi = true)
 @Composable
