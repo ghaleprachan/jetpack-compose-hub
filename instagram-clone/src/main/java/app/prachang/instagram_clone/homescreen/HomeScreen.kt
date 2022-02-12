@@ -15,13 +15,13 @@ import app.prachang.dummy_data.instagram.myPosts
 
 @Preview(showSystemUi = true)
 @Composable
-private fun InstaHomeScreenPreview() {
-    InstaHomeScreen()
+private fun HomeScreenPreview() {
+    HomeScreen()
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun InstaHomeScreen() {
+fun HomeScreen() {
     var elevation by remember {
         mutableStateOf(0.dp)
     }
