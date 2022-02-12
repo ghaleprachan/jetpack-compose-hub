@@ -23,7 +23,9 @@ ext {
     accompaniest = [
             "ui_controller"  : "com.google.accompanist:accompanist-systemuicontroller:$accompaniest_version",
             "pager"          : "com.google.accompanist:accompanist-pager:$accompaniest_version",
-            "pager_indicator": "com.google.accompanist:accompanist-pager-indicators:$accompaniest_version"
+            "pager_indicator": "com.google.accompanist:accompanist-pager-indicators:$accompaniest_version",
+            "flow_layout"    : "com.google.accompanist:accompanist-flowlayout:$accompaniest_version",
+            "swipe_refresh"  : "com.google.accompanist:accompanist-swiperefresh:$accompaniest_version"
     ]
 
     testing = [
