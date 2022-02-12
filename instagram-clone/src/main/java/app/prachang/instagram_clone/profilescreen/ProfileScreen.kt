@@ -1,35 +1,29 @@
-package app.prachang.instagram_clone
+package app.prachang.instagram_clone.profilescreen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.dummy_data.image2
-import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
-import coil.transform.RoundedCornersTransformation
 
 
 @Preview(showSystemUi = true)
@@ -40,6 +34,7 @@ private fun ProfileScreenPreview() {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen() {
@@ -47,6 +42,7 @@ fun ProfileScreen() {
         mutableStateOf(0.dp)
     }
     val scrollState = rememberLazyListState()
+
     elevation.value = if (scrollState.firstVisibleItemScrollOffset > 0) {
         8.dp
     } else {
@@ -122,7 +118,32 @@ fun ProfileScreen() {
 
                     }
                 }
-                val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
+
+
+                /*item {
+                        Column(modifier = Modifier.height(500.dp)) {
+                            LazyVerticalGrid(cells = GridCells.Fixed(3), content = {
+                                items(myPosts) { post ->
+                                    val painter = rememberImagePainter(
+                                        data = post.postImage[0],
+                                        builder = {
+                                            transformations(RoundedCornersTransformation())
+                                        }
+                                    )
+                                    Image(
+                                        painter = painter,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .aspectRatio(1f),
+                                        contentScale = ContentScale.Crop
+                                    )
+                                }
+                            })
+                        }
+                    }*/
+
+                /*val firstPadding = PaddingValues(top = 2.dp, start = 2.dp)
                 val lastPadding = PaddingValues(start = 2.dp, end = 2.dp, top = 2.dp)
 
                 items(myPosts.windowed(3, 3, true)) { subList ->
@@ -145,7 +166,7 @@ fun ProfileScreen() {
                             )
                         }
                     }
-                }
+                }*/
             }
         )
     }
