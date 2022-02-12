@@ -31,7 +31,7 @@ import coil.compose.rememberImagePainter
  *
  *  Also add previews todo
  *  */
-
+@Composable
 fun PostItem(post: Post) {
     val profilePainter = rememberImagePainter(data = post.userImage)
     val postImage = rememberImagePainter(data = post.postImage[0])
