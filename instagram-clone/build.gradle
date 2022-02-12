@@ -43,7 +43,7 @@ dependencies {
     implementation(project(":theme"))
     implementation(project(":dummy-data"))
     implementation compose
-    // implementation accompaniest
+    implementation accompaniest.flow_layout
     implementation materialDesign.material3
     implementation coil
     implementation testing
