@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.extensions.Height
+import app.prachang.common_compose_ui.modifiers.diagonalGradientBorder
 import app.prachang.dummy_data.instagram.Post
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.dummy_data.instagram.myPosts
@@ -33,6 +34,7 @@ import coil.compose.rememberImagePainter
 
 @Composable
 fun StoryContent() {
+
     val gradient = Brush.sweepGradient(listOf(Color.Red, Color.Magenta))
     LazyRow(
         contentPadding = PaddingValues(16.dp),
@@ -100,10 +102,15 @@ fun StoryItem(
             painter = painter,
             modifier = Modifier
                 .size(70.dp)
-                .border(
-                    width = 1.5.dp,
-                    brush = gradient,
-                    shape = CircleShape
+                .diagonalGradientBorder(
+                    borderSize = 1.5.dp,
+                    colors = listOf(
+                        Color(0xFFd71069),
+                        Color(0xFFe25d6a),
+                        Color(0xFFe9ad55),
+                    ),
+                    shape = CircleShape,
+                    isFromRight = true
                 )
                 .padding(5.dp)
                 .clip(shape = CircleShape),

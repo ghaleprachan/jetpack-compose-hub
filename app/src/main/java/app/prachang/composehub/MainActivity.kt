@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.ui.Modifier
+import app.prachang.instagram_clone.homescreen.HomeScreen
 import app.prachang.instagram_clone.profilescreen.ProfileScreen
 import app.prachang.theme.ComposeHubTheme
 
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ProfileScreen()
+                    HomeScreen()
                 }
             }
         }
