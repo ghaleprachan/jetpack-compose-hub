@@ -10,6 +10,7 @@ import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +26,10 @@ import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
+import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.theme.Typography
 import coil.compose.rememberImagePainter
+import coil.size.OriginalSize
 
 /**
  *  Here update post image using pager and other UI improvements
@@ -36,7 +39,9 @@ import coil.compose.rememberImagePainter
 @Composable
 fun PostItem(post: Post) {
     val profilePainter = rememberImagePainter(data = post.userImage)
-    val postImage = rememberImagePainter(data = post.postImage[0])
+    val postImage = rememberImagePainter(data = post.postImage[0], builder = {
+        size(OriginalSize)
+    })
     Column {
         Row(
             modifier = Modifier
@@ -79,7 +84,6 @@ fun PostItem(post: Post) {
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(280.dp)
                 .background(Color.Gray),
             contentScale = ContentScale.Crop
         )
@@ -124,6 +128,47 @@ fun PostItem(post: Post) {
             maxLines = 3,
             modifier = Modifier.padding(
                 horizontal = 12.dp
+            )
+        )
+        Height(height = 8)
+        Text(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            text = "View all ${post.commentCount} comments",
+            style = TextStyle(
+                color = Color.Gray,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold
+            )
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            val myProfilePainter = rememberImagePainter(data = kotlinIcon)
+            Image(
+                painter = myProfilePainter,
+                contentDescription = null,
+                modifier = Modifier
+                    .size(30.dp)
+                    .clip(shape = CircleShape)
+            )
+            Text(
+                text = "Write your comment...",
+                style = TextStyle(
+                    fontSize = 13.sp,
+                    color = Color.Gray,
+                    fontWeight = FontWeight.SemiBold
+                )
+            )
+        }
+        Text(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            text = post.date,
+            style = TextStyle(
+                fontSize = 12.sp,
+                color = Color.Gray,
             )
         )
     }

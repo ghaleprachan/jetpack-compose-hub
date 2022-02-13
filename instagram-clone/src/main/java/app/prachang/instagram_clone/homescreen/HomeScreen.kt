@@ -51,6 +51,7 @@ fun HomeScreen() {
             content = {
                 item {
                     StoryContent()
+                    Divider()
                 }
                 items(myPosts) {
                     PostItem(post = it)
