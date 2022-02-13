@@ -52,7 +52,7 @@ fun HomeScreen() {
                 item {
                     StoryContent()
                 }
-                items(myPosts.take(10)) {
+                items(myPosts) {
                     PostItem(post = it)
                 }
             }
