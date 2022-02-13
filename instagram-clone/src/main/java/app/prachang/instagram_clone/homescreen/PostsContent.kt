@@ -6,18 +6,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.outlined.*
+import androidx.compose.material.icons.outlined.BookmarkBorder
+import androidx.compose.material.icons.outlined.Comment
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,9 +28,9 @@ import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
 import app.prachang.dummy_data.instagram.kotlinIcon
-import app.prachang.theme.Typography
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
+import app.prachang.instagram_clone.R
 
 /**
  *  Here update post image using pager and other UI improvements
@@ -92,13 +93,25 @@ fun PostItem(post: Post) {
             modifier = Modifier.fillMaxWidth()
         ) {
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.FavoriteBorder, contentDescription = null)
+                Icon(
+                    Icons.Outlined.FavoriteBorder,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Comment, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_outlined_comment),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Share, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_chat),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
             IconButton(
                 onClick = { },
