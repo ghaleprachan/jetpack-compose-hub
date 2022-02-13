@@ -34,7 +34,6 @@ import coil.compose.rememberImagePainter
 
 @Composable
 fun StoryContent() {
-
     val gradient = Brush.sweepGradient(listOf(Color.Red, Color.Magenta))
     LazyRow(
         contentPadding = PaddingValues(16.dp),
