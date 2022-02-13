@@ -19,11 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
+import app.prachang.theme.Typography
 import coil.compose.rememberImagePainter
 
 /**
@@ -83,9 +85,7 @@ fun PostItem(post: Post) {
         )
         Height(height = 6)
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 8.dp)
+            modifier = Modifier.fillMaxWidth()
         ) {
             IconButton(onClick = { }) {
                 Icon(Icons.Outlined.FavoriteBorder, contentDescription = null)
@@ -105,5 +105,26 @@ fun PostItem(post: Post) {
                 Icon(Icons.Outlined.BookmarkBorder, contentDescription = null)
             }
         }
+        Text(
+            text = "${post.likes} likes",
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight.ExtraBold,
+            ),
+            modifier = Modifier.padding(start = 12.dp)
+        )
+        Height(height = 6)
+        Text(
+            text = "Unless you've made a change to your Instagram bio, it will appear in Instagram's default font, Neue Helvetica. This font is used for the majority of text within the app, such as captions and comments",
+            style = TextStyle(
+                color = Color.DarkGray,
+                fontSize = 14.sp
+            ),
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 3,
+            modifier = Modifier.padding(
+                horizontal = 12.dp
+            )
+        )
     }
 }
