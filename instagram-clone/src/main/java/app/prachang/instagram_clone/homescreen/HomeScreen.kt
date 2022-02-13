@@ -2,6 +2,7 @@ package app.prachang.instagram_clone.homescreen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -73,10 +74,18 @@ fun TopBar(elevation: Dp) {
         },
         actions = {
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.FavoriteBorder, contentDescription = null)
+                Icon(
+                    Icons.Outlined.FavoriteBorder,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
             IconButton(onClick = { }) {
-                Icon(Icons.Outlined.Message, contentDescription = null)
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_chat),
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp)
+                )
             }
         }
     )
