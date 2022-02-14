@@ -28,21 +28,12 @@ private fun HomeScreenPreview() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeScreen() {
-    var elevation by remember {
-        mutableStateOf(0.dp)
-    }
-
     val scrollState = rememberLazyListState()
-
-    /*elevation = if (scrollState.firstVisibleItemScrollOffset > 0) {
-        8.dp
-    } else {
-        0.dp
-    }*/
+    val showElevation = scrollState.firstVisibleItemScrollOffset > 0
 
     Scaffold(
         topBar = {
-            TopBar(elevation = elevation)
+            TopBar(elevation = if (showElevation) 6.dp else 0.dp)
         }
     ) {
         LazyColumn(
