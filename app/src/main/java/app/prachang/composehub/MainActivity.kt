@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // HomeScreen()
                     Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        ExpandableText(text = "Hello World! ".repeat(300))
+                        ExpandableText(text = "Hello World! ".repeat(20))
                     }
                 }
             }
