@@ -10,13 +10,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
+data class AnimateIconProp(
+    val icon: ImageVector,
+    val color: Color,
+)
+
 private const val springRatio = Spring.DampingRatioHighBouncy
 
 @Composable
 fun AnimateIcon(
     modifier: Modifier = Modifier,
-    icon: ImageVector,
-    tint: Color = Color.Black,
+    prop: AnimateIconProp,
     onClick: () -> Unit = {}
 ) {
     var transitionState by remember {
@@ -40,22 +44,23 @@ fun AnimateIcon(
         label = ""
     ) { state ->
         when (state) {
-            AnimationState.Idle -> 24.dp
-            AnimationState.Start -> 12.dp
-            AnimationState.End -> 24.dp
+            AnimationState.Idle -> 26.dp
+            AnimationState.Start -> 16.dp
+            AnimationState.End -> 26.dp
         }
     }
     IconButton(
+        modifier = modifier,
         onClick = {
             onClick()
             transitionState = MutableTransitionState(AnimationState.Start)
         }
     ) {
         Icon(
-            icon,
+            prop.icon,
             contentDescription = null,
-            modifier = modifier.size(size = size),
-            tint = tint
+            modifier = Modifier.size(size = size),
+            tint = prop.color
         )
     }
 }

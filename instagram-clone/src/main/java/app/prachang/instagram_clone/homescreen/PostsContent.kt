@@ -5,8 +5,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Bookmark
 import androidx.compose.material.icons.outlined.BookmarkBorder
 import androidx.compose.material.icons.outlined.Comment
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -18,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -26,6 +29,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.animations.AnimateIcon
+import app.prachang.common_compose_ui.animations.AnimateIconProp
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
@@ -87,7 +91,8 @@ fun PostItem(post: Post) {
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Gray),
+                .defaultMinSize(minHeight = 200.dp)
+                .background(Color.LightGray),
             contentScale = ContentScale.Crop
         )
         Height(height = 6)
@@ -97,22 +102,24 @@ fun PostItem(post: Post) {
             var isLiked by remember {
                 mutableStateOf(false)
             }
-            val icon = if (isLiked) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder
-            val color = if (isLiked) Color.Red else Color.Black
+            val iconProp = if (isLiked) {
+                AnimateIconProp(
+                    icon = Icons.Filled.Favorite,
+                    color = Color.Red
+                )
+            } else {
+                AnimateIconProp(
+                    icon = Icons.Outlined.FavoriteBorder,
+                    color = Color.Black.copy(alpha = 0.8f)
+                )
+            }
             AnimateIcon(
-                icon = icon,
-                tint = color,
+                prop = iconProp,
                 onClick = {
                     isLiked = !isLiked
                 }
             )
-            /*IconButton(onClick = { }) {
-                Icon(
-                    Icons.Outlined.FavoriteBorder,
-                    contentDescription = null,
-                    modifier = Modifier.size(28.dp)
-                )
-            }*/
+
             IconButton(onClick = { }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_outlined_comment),
@@ -127,14 +134,30 @@ fun PostItem(post: Post) {
                     modifier = Modifier.size(24.dp)
                 )
             }
-            IconButton(
-                onClick = { },
+
+            var isSaved by remember {
+                mutableStateOf(false)
+            }
+            val savedIconProp = if (isSaved) {
+                AnimateIconProp(
+                    icon = Icons.Filled.Bookmark,
+                    color = Color.Black
+                )
+            } else {
+                AnimateIconProp(
+                    icon = Icons.Outlined.BookmarkBorder,
+                    color = Color.Black.copy(alpha = 0.8f)
+                )
+            }
+            AnimateIcon(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.End)
-            ) {
-                Icon(Icons.Outlined.BookmarkBorder, contentDescription = null)
-            }
+                    .wrapContentWidth(align = Alignment.End),
+                prop = savedIconProp,
+                onClick = {
+                    isSaved = !isSaved
+                }
+            )
         }
         Text(
             text = "${post.likes} likes",
