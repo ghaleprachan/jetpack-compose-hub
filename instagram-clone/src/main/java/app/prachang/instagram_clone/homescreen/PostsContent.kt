@@ -96,7 +96,7 @@ fun PostItem(post: Post) {
                 Icon(
                     Icons.Outlined.FavoriteBorder,
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(28.dp)
                 )
             }
             IconButton(onClick = { }) {
