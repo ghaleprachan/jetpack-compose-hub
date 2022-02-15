@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.layouts.items
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
@@ -38,33 +39,34 @@ private fun ProfileScreenPreview() {
     }
 }
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun ProfileScreen() {
-    val elevation = remember {
-        mutableStateOf(0.dp)
-    }
     val scrollState = rememberLazyListState()
-
-    elevation.value = if (scrollState.firstVisibleItemScrollOffset > 0) {
-        8.dp
-    } else {
-        0.dp
+    val showElevation by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemScrollOffset > 0
+        }
     }
-    Scaffold(topBar = {
-        TopAppBar(elevation = elevation.value, title = {
-            Text(
-                text = profileData.username,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.ExtraBold,
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                elevation = if (showElevation) 6.dp else 0.dp,
+                title = {
+                    Text(
+                        text = profileData.username,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.ExtraBold,
+                    )
+                },
             )
-        })
-    }) {
+        },
+    ) {
         LazyColumn(state = scrollState, content = {
             item {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Row(Modifier.height(IntrinsicSize.Min)) {
+                    Row(modifier = Modifier.height(IntrinsicSize.Min)) {
                         val painter = rememberImagePainter(data = image2, builder = {
                             transformations(CircleCropTransformation())
                         })
@@ -90,12 +92,14 @@ fun ProfileScreen() {
                             label = "Following"
                         )
                     }
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Height(height = 8.dp)
                     Text(
-                        text = profileData.name, fontSize = 16.sp, fontWeight = FontWeight.Black
+                        text = profileData.name,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Black
                     )
                     Text(text = "Athlete", fontSize = 14.sp)
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Height(height = 8.dp)
                 }
             }
 
@@ -103,7 +107,7 @@ fun ProfileScreen() {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(70.dp)
+                        .height(65.dp)
                         .background(Color.Gray)
                 ) {
 
