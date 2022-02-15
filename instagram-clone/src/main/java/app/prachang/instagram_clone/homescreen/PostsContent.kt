@@ -24,6 +24,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.prachang.android_common.extensions.likeConversion
 import app.prachang.common_compose_ui.animations.AnimateIcon
 import app.prachang.common_compose_ui.animations.AnimateIconProp
 import app.prachang.common_compose_ui.animations.ExpandableText
@@ -147,8 +148,17 @@ fun PostItem(post: Post) {
                     isSaved = !isSaved
                 })
         }
+        var likes by remember {
+            mutableStateOf("")
+        }
+        LaunchedEffect(
+            key1 = "",
+            block = {
+                likes = "${(16..6000000).random().likeConversion()} likes"
+            }
+        )
         Text(
-            text = "${post.likes} likes",
+            text = likes,
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -172,9 +182,7 @@ fun PostItem(post: Post) {
             modifier = Modifier.padding(horizontal = 12.dp),
             text = "View all ${post.commentCount} comments",
             style = TextStyle(
-                color = Color.Gray,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
+                color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.SemiBold
             )
         )
         Row(
