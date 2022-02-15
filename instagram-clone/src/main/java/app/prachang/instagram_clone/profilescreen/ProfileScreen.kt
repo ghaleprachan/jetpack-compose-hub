@@ -20,7 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prachang.common_compose_ui.layouts.itemsInGrid
+import app.prachang.common_compose_ui.layouts.items
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
@@ -110,7 +110,7 @@ fun ProfileScreen() {
                 }
             }
 
-            itemsInGrid(
+            items(
                 items = myPosts,
                 columns = 3,
                 horizontalItemPadding = 2.dp,
