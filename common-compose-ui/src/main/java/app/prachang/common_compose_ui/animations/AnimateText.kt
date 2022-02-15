@@ -1,7 +1,9 @@
 package app.prachang.common_compose_ui.animations
 
 import androidx.compose.animation.*
+import androidx.compose.animation.core.animateIntAsState
 import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material.LocalTextStyle
@@ -55,15 +57,16 @@ fun ExpandableText(
                     MutableInteractionSource()
                 },
                 indication = null,
-                enabled = (textLayoutState?.lineCount ?: 0) >= 3
-            ) {
-                isExpanded = !isExpanded
-            },
+                enabled = (textLayoutState?.lineCount ?: 0) >= 3,
+                onClick = {
+                    isExpanded = !isExpanded
+                },
+            ),
             text = text,
             maxLines = if (target) Int.MAX_VALUE else minimumMaxLines,
             overflow = TextOverflow.Ellipsis,
             onTextLayout = { textLayoutState = it },
-            style = textStyle
+            style = textStyle,
         )
     }
 }

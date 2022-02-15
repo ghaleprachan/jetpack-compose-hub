@@ -1,7 +1,10 @@
 package app.prachang.instagram_clone.homescreen
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -18,7 +21,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.animations.AnimateIcon
 import app.prachang.common_compose_ui.animations.AnimateIconProp
 import app.prachang.common_compose_ui.animations.ExpandableText
+import app.prachang.common_compose_ui.context
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
@@ -43,10 +50,14 @@ import coil.size.OriginalSize
  *  */
 @Composable
 fun PostItem(post: Post) {
+    val context = LocalContext.current
     val profilePainter = rememberImagePainter(data = post.userImage)
-    val postImage = rememberImagePainter(data = post.postImage[0], builder = {
-        size(OriginalSize)
-    })
+    val postImage = rememberImagePainter(
+        data = post.postImage[0],
+        builder = {
+            size(OriginalSize)
+        },
+    )
     Column {
         // Post Content With UserProfile, Username and More-Option Icon
         // Have to add more option action todo(ghaleprachan)
@@ -55,6 +66,15 @@ fun PostItem(post: Post) {
         )
         Height(height = 6.dp)
 
+        var isLiked by remember {
+            mutableStateOf(false)
+        }
+
+        val props = if (isLiked) {
+            Pair(Icons.Filled.Favorite, Color.Red)
+        } else {
+            Pair(Icons.Outlined.FavoriteBorder, Color.Black.copy(alpha = 0.8f))
+        }
         // PostImage
         Image(
             painter = postImage,
@@ -62,14 +82,27 @@ fun PostItem(post: Post) {
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 200.dp)
-                .background(Color.LightGray),
+                .background(Color.LightGray)
+                .pointerInput(Unit) {
+                    detectTapGestures(onDoubleTap = {
+                        isLiked = !isLiked
+                    })
+                },
             contentScale = ContentScale.Crop
         )
-        Height(height = 6)
+
+
+        Height(height = 6.dp)
 
         // Post Like, Share, Comment, Saved and Post Description Section
         // Have to change like process here todo(ghaleprachan)
-        PostLikeContent(post = post)
+        PostLikeContent(
+            post = post,
+            props = props,
+            onLike = {
+                isLiked = !isLiked
+            },
+        )
         Height(height = 8.dp)
 
         // Post Comment count and add new comment section
@@ -114,24 +147,17 @@ private fun PostCommentContent(post: Post) {
 }
 
 @Composable
-private fun PostLikeContent(post: Post) {
+private fun PostLikeContent(
+    post: Post,
+    props: Pair<ImageVector, Color>,
+    onLike: () -> Unit = {},
+) {
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
-        var isLiked by remember {
-            mutableStateOf(false)
-        }
-
-        val props = if (isLiked) {
-            Pair(Icons.Filled.Favorite, Color.Red)
-        } else {
-            Pair(Icons.Outlined.FavoriteBorder, Color.Black.copy(alpha = 0.8f))
-        }
         AnimateIcon(
             prop = props,
-            onClick = {
-                isLiked = !isLiked
-            },
+            onClick = onLike,
         )
 
         IconButton(onClick = { }) {
