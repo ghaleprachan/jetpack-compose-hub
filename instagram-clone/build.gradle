@@ -40,10 +40,12 @@ android {
 
 dependencies {
     implementation(project(":common-compose-ui"))
+    implementation(project(":android-common"))
     implementation(project(":theme"))
     implementation(project(":dummy-data"))
     implementation compose
     implementation accompaniest.flow_layout
+
     implementation materialDesign.material3
     implementation coil
     implementation testing
