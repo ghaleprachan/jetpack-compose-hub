@@ -65,8 +65,12 @@ fun ProfileScreen() {
     ) {
         LazyColumn(state = scrollState, content = {
             item {
-                Column(modifier = Modifier.padding(16.dp)) {
-                    Row(modifier = Modifier.height(IntrinsicSize.Min)) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.height(IntrinsicSize.Min)
+                    ) {
                         val painter = rememberImagePainter(data = image2, builder = {
                             transformations(CircleCropTransformation())
                         })
@@ -121,9 +125,12 @@ fun ProfileScreen() {
                 verticalItemPadding = 2.dp,
                 contentPadding = PaddingValues(2.dp)
             ) { post ->
-                val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
-                    transformations(RoundedCornersTransformation())
-                })
+                val painter = rememberImagePainter(
+                    data = post?.postImage?.get(0),
+                    builder = {
+                        transformations(RoundedCornersTransformation())
+                    }
+                )
                 Image(
                     painter = painter,
                     contentDescription = null,
