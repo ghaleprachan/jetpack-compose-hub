@@ -24,7 +24,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prachang.android_common.extensions.likeConversion
 import app.prachang.common_compose_ui.animations.AnimateIcon
 import app.prachang.common_compose_ui.animations.AnimateIconProp
 import app.prachang.common_compose_ui.animations.ExpandableText
@@ -33,9 +32,9 @@ import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.instagram_clone.R
+import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
-import kotlinx.coroutines.launch
 
 /**
  *  Here update post image using pager and other UI improvements
@@ -49,41 +48,15 @@ fun PostItem(post: Post) {
         size(OriginalSize)
     })
     Column {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Image(
-                painter = profilePainter,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(shape = CircleShape)
-                    .background(Color.Gray),
-                contentScale = ContentScale.Crop
-            )
-            Width(width = 14)
-            Text(
-                text = post.username,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                ),
-            )
-            IconButton(
-                onClick = { },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.End)
-            ) {
-                Icon(
-                    Icons.Default.MoreVert, contentDescription = null
-                )
-            }
-        }
+        // Post Content With UserProfile, Username and More-Option Icon
+        // Have to add more option action todo(ghaleprachan)
+        PostTopContent(
+            profilePainter = profilePainter,
+            post = post
+        )
         Height(height = 6)
+
+        // PostImage
         Image(
             painter = postImage,
             contentDescription = null,
@@ -94,113 +67,171 @@ fun PostItem(post: Post) {
             contentScale = ContentScale.Crop
         )
         Height(height = 6)
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            var isLiked by remember {
-                mutableStateOf(false)
-            }
-            val iconProp = if (isLiked) {
-                AnimateIconProp(
-                    icon = Icons.Filled.Favorite, color = Color.Red
-                )
-            } else {
-                AnimateIconProp(
-                    icon = Icons.Outlined.FavoriteBorder, color = Color.Black.copy(alpha = 0.8f)
-                )
-            }
-            AnimateIcon(
-                prop = iconProp,
-                onClick = {
-                    isLiked = !isLiked
-                }
+
+        // Post Like, Share, Comment, Saved and Post Description Section
+        // Have to change like process here todo(ghaleprachan)
+        PostLikeContent(post = post)
+        Height(height = 8)
+
+        // Post Comment count and add new comment section
+        PostCommentContent(post = post)
+    }
+}
+
+@Composable
+private fun PostCommentContent(post: Post) {
+    Text(
+        modifier = Modifier.padding(horizontal = 12.dp),
+        text = "View all ${post.commentCount} comments",
+        style = TextStyle(
+            color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.SemiBold
+        )
+    )
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        val myProfilePainter = rememberImagePainter(data = kotlinIcon)
+        Image(
+            painter = myProfilePainter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(30.dp)
+                .clip(shape = CircleShape)
+        )
+        Text(
+            text = "Write your comment...", style = TextStyle(
+                fontSize = 13.sp, color = Color.Gray, fontWeight = FontWeight.SemiBold
             )
+        )
+    }
+    Text(
+        modifier = Modifier.padding(horizontal = 12.dp), text = post.date, style = TextStyle(
+            fontSize = 12.sp,
+            color = Color.Gray,
+        )
+    )
+}
 
-            IconButton(onClick = { }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_outlined_comment),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
+@Composable
+private fun PostLikeContent(post: Post) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        var isLiked by remember {
+            mutableStateOf(false)
+        }
+        val iconProp = if (isLiked) {
+            AnimateIconProp(
+                icon = Icons.Filled.Favorite, color = Color.Red
+            )
+        } else {
+            AnimateIconProp(
+                icon = Icons.Outlined.FavoriteBorder, color = Color.Black.copy(alpha = 0.8f)
+            )
+        }
+        AnimateIcon(
+            prop = iconProp,
+            onClick = {
+                isLiked = !isLiked
             }
-            IconButton(onClick = { }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_chat),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
+        )
 
-            var isSaved by remember {
-                mutableStateOf(false)
-            }
-            val savedIconProp = if (isSaved) {
-                AnimateIconProp(
-                    icon = Icons.Filled.Bookmark, color = Color.Black
-                )
-            } else {
-                AnimateIconProp(
-                    icon = Icons.Outlined.BookmarkBorder, color = Color.Black.copy(alpha = 0.8f)
-                )
-            }
-            AnimateIcon(modifier = Modifier
+        IconButton(onClick = { }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_outlined_comment),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+        IconButton(onClick = { }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_chat),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+
+        var isSaved by remember {
+            mutableStateOf(false)
+        }
+        val savedIconProp = if (isSaved) {
+            AnimateIconProp(
+                icon = Icons.Filled.Bookmark, color = Color.Black
+            )
+        } else {
+            AnimateIconProp(
+                icon = Icons.Outlined.BookmarkBorder, color = Color.Black.copy(alpha = 0.8f)
+            )
+        }
+        AnimateIcon(
+            modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(align = Alignment.End),
-                prop = savedIconProp,
-                onClick = {
-                    isSaved = !isSaved
-                })
-        }
+            prop = savedIconProp,
+            onClick = {
+                isSaved = !isSaved
+            }
+        )
+    }
+    Text(
+        text = post.getLikes(),
+        style = TextStyle(
+            fontSize = 14.sp,
+            fontWeight = FontWeight.ExtraBold,
+        ),
+        modifier = Modifier.padding(start = 12.dp)
+    )
+    Height(height = 6)
+    ExpandableText(
+        modifier = Modifier.padding(horizontal = 12.dp),
+        text = post.description.orEmpty(),
+        minimumMaxLines = 3,
+        textStyle = TextStyle(
+            color = Color.DarkGray,
+            fontSize = 14.sp,
+        )
+    )
+}
+
+@Composable
+private fun PostTopContent(
+    profilePainter: ImagePainter,
+    post: Post
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = profilePainter,
+            contentDescription = null,
+            modifier = Modifier
+                .size(40.dp)
+                .clip(shape = CircleShape)
+                .background(Color.Gray),
+            contentScale = ContentScale.Crop
+        )
+        Width(width = 14)
         Text(
-            text = post.getLikes(),
+            text = post.username,
             style = TextStyle(
                 fontSize = 14.sp,
-                fontWeight = FontWeight.ExtraBold,
+                fontWeight = FontWeight.SemiBold,
             ),
-            modifier = Modifier.padding(start = 12.dp)
         )
-        Height(height = 6)
-        ExpandableText(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            text = post.description.orEmpty(),
-            minimumMaxLines = 3,
-            textStyle = TextStyle(
-                color = Color.DarkGray,
-                fontSize = 14.sp,
-            )
-        )
-        Height(height = 8)
-        Text(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            text = "View all ${post.commentCount} comments",
-            style = TextStyle(
-                color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.SemiBold
-            )
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        IconButton(
+            onClick = { },
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(align = Alignment.End)
         ) {
-            val myProfilePainter = rememberImagePainter(data = kotlinIcon)
-            Image(
-                painter = myProfilePainter,
-                contentDescription = null,
-                modifier = Modifier
-                    .size(30.dp)
-                    .clip(shape = CircleShape)
-            )
-            Text(
-                text = "Write your comment...", style = TextStyle(
-                    fontSize = 13.sp, color = Color.Gray, fontWeight = FontWeight.SemiBold
-                )
+            Icon(
+                Icons.Default.MoreVert, contentDescription = null
             )
         }
-        Text(
-            modifier = Modifier.padding(horizontal = 12.dp), text = post.date, style = TextStyle(
-                fontSize = 12.sp,
-                color = Color.Gray,
-            )
-        )
     }
 }
