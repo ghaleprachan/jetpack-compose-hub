@@ -35,7 +35,7 @@ import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.instagram_clone.R
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
-import kotlin.math.abs
+import kotlinx.coroutines.launch
 
 /**
  *  Here update post image using pager and other UI improvements
@@ -109,9 +109,12 @@ fun PostItem(post: Post) {
                     icon = Icons.Outlined.FavoriteBorder, color = Color.Black.copy(alpha = 0.8f)
                 )
             }
-            AnimateIcon(prop = iconProp, onClick = {
-                isLiked = !isLiked
-            })
+            AnimateIcon(
+                prop = iconProp,
+                onClick = {
+                    isLiked = !isLiked
+                }
+            )
 
             IconButton(onClick = { }) {
                 Icon(
@@ -148,17 +151,8 @@ fun PostItem(post: Post) {
                     isSaved = !isSaved
                 })
         }
-        var likes by remember {
-            mutableStateOf("")
-        }
-        LaunchedEffect(
-            key1 = "",
-            block = {
-                likes = "${(16..6000000).random().likeConversion()} likes"
-            }
-        )
         Text(
-            text = likes,
+            text = post.getLikes(),
             style = TextStyle(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -168,9 +162,7 @@ fun PostItem(post: Post) {
         Height(height = 6)
         ExpandableText(
             modifier = Modifier.padding(horizontal = 12.dp),
-            text = "Unless you've made a change to your Instagram bio, it will appear in Instagram's default font, Neue Helvetica. ".repeat(
-                (1..6).random()
-            ),
+            text = post.description.orEmpty(),
             minimumMaxLines = 3,
             textStyle = TextStyle(
                 color = Color.DarkGray,

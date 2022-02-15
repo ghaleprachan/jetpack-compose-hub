@@ -1,5 +1,7 @@
 package app.prachang.dummy_data.instagram
 
+import app.prachang.android_common.extensions.likeConversion
+
 data class Profile(
     val userId: String,
     val name: String,
@@ -31,7 +33,9 @@ data class Post(
     val lastLikeBy: List<String> = emptyList(),
     val description: String? = null,
     val commentCount: Int? = 0,
-)
+) {
+    fun getLikes() = "${likes.likeConversion()} likes"
+}
 
 data class PostComment(
     val commentId: String,

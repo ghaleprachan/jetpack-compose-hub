@@ -27,4 +27,8 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    dependencies {
+        implementation(project(":android-common"))
+    }
 }
