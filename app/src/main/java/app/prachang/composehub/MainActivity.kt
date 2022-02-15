@@ -19,11 +19,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeHubTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    // HomeScreen()
-                    ProfileScreen()
+                    HomeScreen()
+                    // ProfileScreen()
                 }
             }
         }

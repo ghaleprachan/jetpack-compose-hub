@@ -51,8 +51,7 @@ fun PostItem(post: Post) {
         // Post Content With UserProfile, Username and More-Option Icon
         // Have to add more option action todo(ghaleprachan)
         PostTopContent(
-            profilePainter = profilePainter,
-            post = post
+            profilePainter = profilePainter, post = post
         )
         Height(height = 6.dp)
 
@@ -71,7 +70,7 @@ fun PostItem(post: Post) {
         // Post Like, Share, Comment, Saved and Post Description Section
         // Have to change like process here todo(ghaleprachan)
         PostLikeContent(post = post)
-        Height(height = 8)
+        Height(height = 8.dp)
 
         // Post Comment count and add new comment section
         PostCommentContent(post = post)
@@ -122,20 +121,17 @@ private fun PostLikeContent(post: Post) {
         var isLiked by remember {
             mutableStateOf(false)
         }
-        val iconProp = if (isLiked) {
-            AnimateIconProp(
-                icon = Icons.Filled.Favorite, color = Color.Red
-            )
+
+        val props = if (isLiked) {
+            Pair(Icons.Filled.Favorite, Color.Red)
         } else {
-            AnimateIconProp(
-                icon = Icons.Outlined.FavoriteBorder, color = Color.Black.copy(alpha = 0.8f)
-            )
+            Pair(Icons.Outlined.FavoriteBorder, Color.Black.copy(alpha = 0.8f))
         }
         AnimateIcon(
-            prop = iconProp,
+            prop = props,
             onClick = {
                 isLiked = !isLiked
-            }
+            },
         )
 
         IconButton(onClick = { }) {
@@ -156,32 +152,26 @@ private fun PostLikeContent(post: Post) {
         var isSaved by remember {
             mutableStateOf(false)
         }
-        val savedIconProp = if (isSaved) {
-            AnimateIconProp(
-                icon = Icons.Filled.Bookmark, color = Color.Black
-            )
+        val savedProps = if (isSaved) {
+            Pair(Icons.Filled.Bookmark, Color.Black)
         } else {
-            AnimateIconProp(
-                icon = Icons.Outlined.BookmarkBorder, color = Color.Black.copy(alpha = 0.8f)
-            )
+            Pair(Icons.Outlined.BookmarkBorder, Color.Black.copy(alpha = 0.8f))
         }
         AnimateIcon(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(align = Alignment.End),
-            prop = savedIconProp,
+            prop = savedProps,
             onClick = {
                 isSaved = !isSaved
-            }
+            },
         )
     }
     Text(
-        text = post.getLikes(),
-        style = TextStyle(
+        text = post.getLikes(), style = TextStyle(
             fontSize = 14.sp,
             fontWeight = FontWeight.ExtraBold,
-        ),
-        modifier = Modifier.padding(start = 12.dp)
+        ), modifier = Modifier.padding(start = 12.dp)
     )
     Height(height = 6)
     ExpandableText(
@@ -197,8 +187,7 @@ private fun PostLikeContent(post: Post) {
 
 @Composable
 private fun PostTopContent(
-    profilePainter: ImagePainter,
-    post: Post
+    profilePainter: ImagePainter, post: Post
 ) {
     Row(
         modifier = Modifier
