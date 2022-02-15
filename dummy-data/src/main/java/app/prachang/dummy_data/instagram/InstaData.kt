@@ -248,4 +248,15 @@ val myPosts = listOf(
         description = getRandomString(),
         commentCount = 12,
     ),
+    Post(
+        postId = UUID.randomUUID().toString(),
+        username = "thisnotsaroj",
+        userImage = image2,
+        date = "7 days",
+        postImage = listOf(image2, image3, image4, image5),
+        likes = getRandomInt(),
+        lastLikeBy = emptyList(),
+        description = getRandomString(),
+        commentCount = 12,
+    ),
 )
