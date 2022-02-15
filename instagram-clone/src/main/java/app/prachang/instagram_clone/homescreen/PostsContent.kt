@@ -54,7 +54,7 @@ fun PostItem(post: Post) {
             profilePainter = profilePainter,
             post = post
         )
-        Height(height = 6)
+        Height(height = 6.dp)
 
         // PostImage
         Image(
@@ -215,7 +215,7 @@ private fun PostTopContent(
                 .background(Color.Gray),
             contentScale = ContentScale.Crop
         )
-        Width(width = 14)
+        Width(width = 14.dp)
         Text(
             text = post.username,
             style = TextStyle(

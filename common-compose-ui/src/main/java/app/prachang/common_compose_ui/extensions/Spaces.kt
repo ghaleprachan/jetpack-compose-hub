@@ -20,7 +20,8 @@ fun Height(
 }
 
 @Deprecated(
-    "This composable is deprecated instead use height in Dp.", ReplaceWith(
+    "This composable is deprecated instead use height in Dp.",
+    ReplaceWith(
         "Height(height = height.dp)",
         "androidx.compose.ui.unit.dp"
     )
@@ -30,6 +31,22 @@ fun Height(height: Int) {
     Spacer(modifier = Modifier.height(height.dp))
 }
 
+/**
+ * The composable Width() takes [width] as parameter.
+ *
+ * The width is in Dp and adds horizontal spacer between composable */
+@Composable
+fun Width(width: Dp) {
+    Spacer(modifier = Modifier.width(width = width))
+}
+
+@Deprecated(
+    "This composable is deprecated instead use width in Dp.",
+    ReplaceWith(
+        "Width(width = width.dp)",
+        "androidx.compose.ui.unit.dp"
+    )
+)
 @Composable
 fun Width(width: Int) {
     Spacer(modifier = Modifier.width(width.dp))
