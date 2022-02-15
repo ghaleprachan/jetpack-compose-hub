@@ -1,9 +1,8 @@
 package app.prachang.instagram_clone.homescreen
 
-import android.widget.Toast
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -21,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -31,9 +30,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.animations.AnimateIcon
-import app.prachang.common_compose_ui.animations.AnimateIconProp
+import app.prachang.common_compose_ui.animations.DoubleTapLikeAnim
+import app.prachang.common_compose_ui.animations.AnimationState
 import app.prachang.common_compose_ui.animations.ExpandableText
-import app.prachang.common_compose_ui.context
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
@@ -70,35 +69,21 @@ fun PostItem(post: Post) {
             mutableStateOf(false)
         }
 
-        val props = if (isLiked) {
-            Pair(Icons.Filled.Favorite, Color.Red)
-        } else {
-            Pair(Icons.Outlined.FavoriteBorder, Color.Black.copy(alpha = 0.8f))
-        }
         // PostImage
-        Image(
-            painter = postImage,
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .defaultMinSize(minHeight = 200.dp)
-                .background(Color.LightGray)
-                .pointerInput(Unit) {
-                    detectTapGestures(onDoubleTap = {
-                        isLiked = !isLiked
-                    })
-                },
-            contentScale = ContentScale.Crop
+        // Double tap like animation on over image todo(ghaleprachan)
+        PostImage(
+            postImage = postImage,
+            onLike = {
+                isLiked = true
+            },
         )
-
-
         Height(height = 6.dp)
 
         // Post Like, Share, Comment, Saved and Post Description Section
         // Have to change like process here todo(ghaleprachan)
         PostLikeContent(
             post = post,
-            props = props,
+            isLiked = isLiked,
             onLike = {
                 isLiked = !isLiked
             },
@@ -107,6 +92,42 @@ fun PostItem(post: Post) {
 
         // Post Comment count and add new comment section
         PostCommentContent(post = post)
+    }
+}
+
+
+@Composable
+private fun PostImage(
+    postImage: Painter,
+    onLike: () -> Unit,
+) {
+    var transitionState by remember {
+        mutableStateOf(MutableTransitionState(AnimationState.Idle))
+    }
+
+    Box(contentAlignment = Alignment.Center) {
+        Image(
+            painter = postImage,
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .defaultMinSize(minHeight = 200.dp)
+                .background(Color.LightGray)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onDoubleTap = {
+                            onLike()
+                            transitionState = MutableTransitionState(AnimationState.Start)
+                        },
+                    )
+                },
+            contentScale = ContentScale.Crop
+        )
+
+        DoubleTapLikeAnim(
+            transitionState = transitionState,
+            color = Color.White
+        )
     }
 }
 
@@ -149,12 +170,17 @@ private fun PostCommentContent(post: Post) {
 @Composable
 private fun PostLikeContent(
     post: Post,
-    props: Pair<ImageVector, Color>,
+    isLiked: Boolean,
     onLike: () -> Unit = {},
 ) {
     Row(
         modifier = Modifier.fillMaxWidth()
     ) {
+        val props = if (isLiked) {
+            Pair(Icons.Filled.Favorite, Color.Red)
+        } else {
+            Pair(Icons.Outlined.FavoriteBorder, Color.Black.copy(alpha = 0.8f))
+        }
         AnimateIcon(
             prop = props,
             onClick = onLike,

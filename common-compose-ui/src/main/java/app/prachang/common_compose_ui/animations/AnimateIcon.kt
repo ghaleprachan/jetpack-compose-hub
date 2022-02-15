@@ -4,24 +4,19 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
-data class AnimateIconProp(
-    val icon: ImageVector,
-    val color: Color,
-)
-
 private const val springRatio = Spring.DampingRatioHighBouncy
 
 @Composable
 fun AnimateIcon(
-    modifier: Modifier = Modifier,
-    prop: Pair<ImageVector, Color>,
-    onClick: () -> Unit = {}
+    modifier: Modifier = Modifier, prop: Pair<ImageVector, Color>, onClick: () -> Unit = {}
 ) {
     var transitionState by remember {
         mutableStateOf(MutableTransitionState(AnimationState.Idle))
@@ -34,14 +29,12 @@ fun AnimateIcon(
     val size by transition.animateDp(
         transitionSpec = {
             when {
-                AnimationState.Idle isTransitioningTo AnimationState.Start ->
-                    spring(dampingRatio = springRatio)
-                AnimationState.Start isTransitioningTo AnimationState.End ->
-                    tween(200)
+                AnimationState.Idle isTransitioningTo AnimationState.Start -> spring(dampingRatio = springRatio)
+                AnimationState.Start isTransitioningTo AnimationState.End -> tween(200)
                 else -> snap()
             }
         },
-        label = ""
+        label = "",
     ) { state ->
         when (state) {
             AnimationState.Idle -> 26.dp
@@ -49,13 +42,10 @@ fun AnimateIcon(
             AnimationState.End -> 26.dp
         }
     }
-    IconButton(
-        modifier = modifier,
-        onClick = {
-            onClick()
-            transitionState = MutableTransitionState(AnimationState.Start)
-        }
-    ) {
+    IconButton(modifier = modifier, onClick = {
+        onClick()
+        transitionState = MutableTransitionState(AnimationState.Start)
+    }) {
         Icon(
             prop.first,
             contentDescription = null,
@@ -63,4 +53,47 @@ fun AnimateIcon(
             tint = prop.second
         )
     }
+}
+
+@Composable
+fun DoubleTapLikeAnim(
+    modifier: Modifier = Modifier,
+    color: Color,
+    transitionState: MutableTransitionState<AnimationState>
+) {
+    if (transitionState.currentState == AnimationState.Start) {
+        transitionState.targetState = AnimationState.End
+    }
+    if (transitionState.currentState == AnimationState.End) {
+        transitionState.targetState = AnimationState.Idle
+    }
+    val transition = updateTransition(
+        transitionState = transitionState,
+        label = "IconTransition",
+    )
+
+    val size by transition.animateDp(
+        transitionSpec = {
+            when {
+                AnimationState.Idle isTransitioningTo AnimationState.Start -> tween(200)
+                AnimationState.Start isTransitioningTo AnimationState.End -> spring(dampingRatio = springRatio)
+                AnimationState.End isTransitioningTo AnimationState.Idle -> tween(100)
+                else -> snap()
+            }
+        },
+        label = "",
+    ) { state ->
+        when (state) {
+            AnimationState.Idle -> 0.dp
+            AnimationState.Start -> 80.dp
+            AnimationState.End -> 60.dp
+        }
+    }
+
+    Icon(
+        Icons.Filled.Favorite,
+        contentDescription = null,
+        modifier = modifier.size(size = size),
+        tint = color,
+    )
 }
