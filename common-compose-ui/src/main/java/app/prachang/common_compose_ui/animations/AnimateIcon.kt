@@ -4,8 +4,6 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -59,6 +57,7 @@ fun AnimateIcon(
 fun DoubleTapLikeAnim(
     modifier: Modifier = Modifier,
     color: Color,
+    icon: ImageVector,
     transitionState: MutableTransitionState<AnimationState>
 ) {
     if (transitionState.currentState == AnimationState.Start) {
@@ -91,7 +90,7 @@ fun DoubleTapLikeAnim(
     }
 
     Icon(
-        Icons.Filled.Favorite,
+        icon,
         contentDescription = null,
         modifier = modifier.size(size = size),
         tint = color,

@@ -125,7 +125,8 @@ private fun PostImage(
 
         DoubleTapLikeAnim(
             transitionState = transitionState,
-            color = Color.White
+            color = Color.White,
+            icon = Icons.Filled.Favorite
         )
     }
 }
