@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.runtime.*
@@ -16,6 +17,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.instagram_clone.R
 
@@ -33,12 +35,22 @@ fun HomeScreen() {
         derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0 }
     }
 
-    Scaffold(
-        topBar = {
-            TopBar(elevation = if (showElevation) 6.dp else 0.dp)
+    Scaffold(topBar = {
+        TopBar(elevation = if (showElevation) 6.dp else 0.dp)
+    }, bottomBar = {
+        BottomAppBar {
+            repeat(5) {
+                BottomNavigationItem(
+                    selected = false, onClick = { /*TODO*/ },
+                    icon = {
+                        Icon(Icons.Default.Home, contentDescription = null)
+                    },
+                )
+            }
         }
-    ) {
+    }) {
         LazyColumn(
+            contentPadding = it,
             state = scrollState,
             verticalArrangement = Arrangement.spacedBy(16.dp),
             content = {
@@ -49,7 +61,10 @@ fun HomeScreen() {
                 items(myPosts) {
                     PostItem(post = it)
                 }
-            }
+                item {
+                    Height(height = 12.dp)
+                }
+            },
         )
     }
 }
@@ -57,30 +72,26 @@ fun HomeScreen() {
 
 @Composable
 fun TopBar(elevation: Dp) {
-    TopAppBar(
-        elevation = elevation,
-        title = {
+    TopAppBar(elevation = elevation, title = {
+        Icon(
+            modifier = Modifier.height(45.dp),
+            painter = painterResource(id = R.drawable.ic_instagram),
+            contentDescription = null
+        )
+    }, actions = {
+        IconButton(onClick = { }) {
             Icon(
-                modifier = Modifier.height(45.dp),
-                painter = painterResource(id = R.drawable.ic_instagram),
-                contentDescription = null
+                Icons.Outlined.FavoriteBorder,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
             )
-        },
-        actions = {
-            IconButton(onClick = { }) {
-                Icon(
-                    Icons.Outlined.FavoriteBorder,
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-            IconButton(onClick = { }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_chat),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
-                )
-            }
         }
-    )
+        IconButton(onClick = { }) {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_chat),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    })
 }

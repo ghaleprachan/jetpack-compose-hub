@@ -6,6 +6,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
@@ -92,7 +93,9 @@ fun DoubleTapLikeAnim(
     Icon(
         icon,
         contentDescription = null,
-        modifier = modifier.size(size = size),
+        modifier = modifier
+            .shadow(elevation = 40.dp)
+            .size(size = size),
         tint = color,
     )
 }
