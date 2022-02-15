@@ -22,10 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    // HomeScreen()
-                    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
-                        ExpandableText(text = "Hello World! ".repeat(30))
-                    }
+                    HomeScreen()
                 }
             }
         }

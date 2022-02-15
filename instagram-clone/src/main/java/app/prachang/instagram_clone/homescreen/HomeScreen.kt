@@ -29,7 +29,6 @@ private fun HomeScreenPreview() {
 @Composable
 fun HomeScreen() {
     val scrollState = rememberLazyListState()
-    // val showElevation = scrollState.firstVisibleItemScrollOffset > 0
     val showElevation by remember {
         derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0 }
     }

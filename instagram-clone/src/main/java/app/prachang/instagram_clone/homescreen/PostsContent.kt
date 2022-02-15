@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.animations.AnimateIcon
 import app.prachang.common_compose_ui.animations.AnimateIconProp
+import app.prachang.common_compose_ui.animations.ExpandableText
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
@@ -80,8 +81,7 @@ fun PostItem(post: Post) {
                     .wrapContentWidth(align = Alignment.End)
             ) {
                 Icon(
-                    Icons.Default.MoreVert,
-                    contentDescription = null
+                    Icons.Default.MoreVert, contentDescription = null
                 )
             }
         }
@@ -104,21 +104,16 @@ fun PostItem(post: Post) {
             }
             val iconProp = if (isLiked) {
                 AnimateIconProp(
-                    icon = Icons.Filled.Favorite,
-                    color = Color.Red
+                    icon = Icons.Filled.Favorite, color = Color.Red
                 )
             } else {
                 AnimateIconProp(
-                    icon = Icons.Outlined.FavoriteBorder,
-                    color = Color.Black.copy(alpha = 0.8f)
+                    icon = Icons.Outlined.FavoriteBorder, color = Color.Black.copy(alpha = 0.8f)
                 )
             }
-            AnimateIcon(
-                prop = iconProp,
-                onClick = {
-                    isLiked = !isLiked
-                }
-            )
+            AnimateIcon(prop = iconProp, onClick = {
+                isLiked = !isLiked
+            })
 
             IconButton(onClick = { }) {
                 Icon(
@@ -140,24 +135,20 @@ fun PostItem(post: Post) {
             }
             val savedIconProp = if (isSaved) {
                 AnimateIconProp(
-                    icon = Icons.Filled.Bookmark,
-                    color = Color.Black
+                    icon = Icons.Filled.Bookmark, color = Color.Black
                 )
             } else {
                 AnimateIconProp(
-                    icon = Icons.Outlined.BookmarkBorder,
-                    color = Color.Black.copy(alpha = 0.8f)
+                    icon = Icons.Outlined.BookmarkBorder, color = Color.Black.copy(alpha = 0.8f)
                 )
             }
-            AnimateIcon(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentWidth(align = Alignment.End),
+            AnimateIcon(modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(align = Alignment.End),
                 prop = savedIconProp,
                 onClick = {
                     isSaved = !isSaved
-                }
-            )
+                })
         }
         Text(
             text = "${post.likes} likes",
@@ -168,16 +159,15 @@ fun PostItem(post: Post) {
             modifier = Modifier.padding(start = 12.dp)
         )
         Height(height = 6)
-        Text(
-            text = "Unless you've made a change to your Instagram bio, it will appear in Instagram's default font, Neue Helvetica. This font is used for the majority of text within the app, such as captions and comments",
-            style = TextStyle(
-                color = Color.DarkGray,
-                fontSize = 14.sp
+        ExpandableText(
+            modifier = Modifier.padding(horizontal = 12.dp),
+            text = "Unless you've made a change to your Instagram bio, it will appear in Instagram's default font, Neue Helvetica. ".repeat(
+                (1..6).random()
             ),
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 3,
-            modifier = Modifier.padding(
-                horizontal = 12.dp
+            minimumMaxLines = 3,
+            textStyle = TextStyle(
+                color = Color.DarkGray,
+                fontSize = 14.sp,
             )
         )
         Height(height = 8)
@@ -192,8 +182,7 @@ fun PostItem(post: Post) {
         )
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+            modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             val myProfilePainter = rememberImagePainter(data = kotlinIcon)
@@ -205,18 +194,13 @@ fun PostItem(post: Post) {
                     .clip(shape = CircleShape)
             )
             Text(
-                text = "Write your comment...",
-                style = TextStyle(
-                    fontSize = 13.sp,
-                    color = Color.Gray,
-                    fontWeight = FontWeight.SemiBold
+                text = "Write your comment...", style = TextStyle(
+                    fontSize = 13.sp, color = Color.Gray, fontWeight = FontWeight.SemiBold
                 )
             )
         }
         Text(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            text = post.date,
-            style = TextStyle(
+            modifier = Modifier.padding(horizontal = 12.dp), text = post.date, style = TextStyle(
                 fontSize = 12.sp,
                 color = Color.Gray,
             )

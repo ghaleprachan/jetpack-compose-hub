@@ -4,6 +4,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.keyframes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.IntSize
 fun ExpandableText(
     modifier: Modifier = Modifier,
     text: String,
+    textStyle: TextStyle = LocalTextStyle.current,
     minimumMaxLines: Int = 3
 ) {
     var textLayoutState by remember {
@@ -61,6 +63,7 @@ fun ExpandableText(
             maxLines = if (target) Int.MAX_VALUE else minimumMaxLines,
             overflow = TextOverflow.Ellipsis,
             onTextLayout = { textLayoutState = it },
+            style = textStyle
         )
     }
 }
