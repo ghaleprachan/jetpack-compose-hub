@@ -85,8 +85,8 @@ fun DoubleTapLikeAnim(
     ) { state ->
         when (state) {
             AnimationState.Idle -> 0.dp
-            AnimationState.Start -> 80.dp
-            AnimationState.End -> 60.dp
+            AnimationState.Start -> 100.dp
+            AnimationState.End -> 80.dp
         }
     }
 

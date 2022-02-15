@@ -70,7 +70,6 @@ fun PostItem(post: Post) {
         }
 
         // PostImage
-        // Double tap like animation on over image todo(ghaleprachan)
         PostImage(
             postImage = postImage,
             onLike = {
