@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -74,87 +75,85 @@ fun ProfileScreen() {
             }
         },
     ) {
-        Column {
-            LazyColumn(state = scrollState, content = {
-                item {
-                    Column(
-                        modifier = Modifier.padding(16.dp)
+        LazyColumn(state = scrollState, content = {
+            item {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.height(IntrinsicSize.Min)
                     ) {
-                        Row(
-                            modifier = Modifier.height(IntrinsicSize.Min)
-                        ) {
-                            val painter = rememberImagePainter(data = image2, builder = {
-                                transformations(CircleCropTransformation())
-                            })
-                            Image(
-                                modifier = Modifier.size(size = 85.dp),
-                                painter = painter,
-                                contentDescription = null,
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            FollowMeter(
-                                modifier = Modifier.weight(1f),
-                                count = profileData.totalPosts,
-                                label = "Posts"
-                            )
-                            FollowMeter(
-                                modifier = Modifier.weight(1f),
-                                count = profileData.followerCount,
-                                label = "Followers"
-                            )
-                            FollowMeter(
-                                modifier = Modifier.weight(1f),
-                                count = profileData.followingCount,
-                                label = "Following"
-                            )
-                        }
-                        Height(height = 8.dp)
-                        Text(
-                            text = profileData.name, fontSize = 16.sp, fontWeight = FontWeight.Black
+                        val painter = rememberImagePainter(data = image2, builder = {
+                            transformations(CircleCropTransformation())
+                        })
+                        Image(
+                            modifier = Modifier.size(size = 85.dp),
+                            painter = painter,
+                            contentDescription = null,
                         )
-                        Text(text = "Athlete", fontSize = 14.sp)
-                        Height(height = 8.dp)
+                        Spacer(modifier = Modifier.width(8.dp))
+                        FollowMeter(
+                            modifier = Modifier.weight(1f),
+                            count = profileData.totalPosts,
+                            label = "Posts"
+                        )
+                        FollowMeter(
+                            modifier = Modifier.weight(1f),
+                            count = profileData.followerCount,
+                            label = "Followers"
+                        )
+                        FollowMeter(
+                            modifier = Modifier.weight(1f),
+                            count = profileData.followingCount,
+                            label = "Following"
+                        )
                     }
+                    Height(height = 8.dp)
+                    Text(
+                        text = profileData.name, fontSize = 16.sp, fontWeight = FontWeight.Black
+                    )
+                    Text(text = "Athlete", fontSize = 14.sp)
+                    Height(height = 8.dp)
                 }
+            }
 
-                stickyHeader {
-                    Column(modifier = Modifier.background(Color.White)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(65.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(Icons.Default.Home, contentDescription = null)
-                            }
-                            IconButton(onClick = { /*TODO*/ }) {
-                                Icon(Icons.Default.Dashboard, contentDescription = null)
-                            }
+            stickyHeader {
+                Column(modifier = Modifier.background(Color.White)) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(65.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(Icons.Default.Dashboard, contentDescription = null)
+                        }
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(Icons.Default.Save, contentDescription = null)
                         }
                     }
                 }
+            }
 
-                items(
-                    items = myPosts,
-                    columns = 3,
-                    horizontalItemPadding = 2.dp,
-                    verticalItemPadding = 2.dp,
-                    contentPadding = PaddingValues(2.dp)
-                ) { post ->
-                    val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
-                        transformations(RoundedCornersTransformation())
-                    })
-                    Image(
-                        painter = painter,
-                        contentDescription = null,
-                        modifier = Modifier.aspectRatio(1f),
-                        contentScale = ContentScale.Crop
-                    )
-                }
-            })
-        }
+            items(
+                items = myPosts,
+                columns = 3,
+                horizontalItemPadding = 2.dp,
+                verticalItemPadding = 2.dp,
+                contentPadding = PaddingValues(2.dp)
+            ) { post ->
+                val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
+                    transformations(RoundedCornersTransformation())
+                })
+                Image(
+                    painter = painter,
+                    contentDescription = null,
+                    modifier = Modifier.aspectRatio(1f),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        })
     }
 }
 
