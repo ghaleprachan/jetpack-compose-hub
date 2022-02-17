@@ -1,16 +1,14 @@
 package app.prachang.instagram_clone.profilescreen
 
-import android.annotation.SuppressLint
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.runtime.*
@@ -22,14 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.layouts.items
-import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 
 
@@ -49,6 +44,9 @@ fun ProfileScreen() {
         derivedStateOf {
             scrollState.firstVisibleItemScrollOffset > 0
         }
+    }
+    var post by remember {
+        mutableStateOf(true)
     }
 
     Scaffold(
@@ -95,15 +93,67 @@ fun ProfileScreen() {
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+                            post = true
+                        }) {
                             Icon(Icons.Default.Dashboard, contentDescription = null)
                         }
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+                            post = false
+                        }) {
                             Icon(Icons.Default.Save, contentDescription = null)
                         }
                     }
                 }
             }
+
+            /*item {
+                Crossfade(targetState = post) {
+                    if (it) {
+                        Column {
+                            myPosts.windowed(3, 3).forEach { subList ->
+                                subList.forEach { post ->
+                                    Row {
+                                        val painter =
+                                            rememberImagePainter(
+                                                data = post.postImage[0],
+                                                builder = {
+                                                    transformations(RoundedCornersTransformation())
+                                                })
+                                        Image(
+                                            painter = painter,
+                                            contentDescription = null,
+                                            modifier = Modifier.aspectRatio(1f),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Column {
+                            myPosts.asReversed().windowed(3, 3).forEach { subList ->
+                                subList.forEach { post ->
+                                    Row {
+                                        val painter =
+                                            rememberImagePainter(
+                                                data = post.postImage[0],
+                                                builder = {
+                                                    transformations(RoundedCornersTransformation())
+                                                })
+                                        Image(
+                                            painter = painter,
+                                            contentDescription = null,
+                                            modifier = Modifier.aspectRatio(1f),
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }*/
 
             items(
                 items = myPosts,
@@ -112,9 +162,12 @@ fun ProfileScreen() {
                 verticalItemPadding = 2.dp,
                 contentPadding = PaddingValues(2.dp)
             ) { post ->
-                val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
-                    transformations(RoundedCornersTransformation())
-                })
+                val painter = rememberImagePainter(
+                    data = post?.postImage?.get(0),
+                    builder = {
+                        transformations(RoundedCornersTransformation())
+                    },
+                )
                 Image(
                     painter = painter,
                     contentDescription = null,
@@ -123,5 +176,48 @@ fun ProfileScreen() {
                 )
             }
         })
+    }
+}
+
+
+@Composable
+private fun LazyListScope.SavedPosts() {
+    items(
+        items = myPosts.subList(6, 12),
+        columns = 3,
+        horizontalItemPadding = 2.dp,
+        verticalItemPadding = 2.dp,
+        contentPadding = PaddingValues(2.dp)
+    ) { post ->
+        val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
+            transformations(RoundedCornersTransformation())
+        })
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.aspectRatio(1f),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
+
+@Composable
+private fun LazyListScope.MyPosts() {
+    items(
+        items = myPosts,
+        columns = 3,
+        horizontalItemPadding = 2.dp,
+        verticalItemPadding = 2.dp,
+        contentPadding = PaddingValues(2.dp)
+    ) { post ->
+        val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
+            transformations(RoundedCornersTransformation())
+        })
+        Image(
+            painter = painter,
+            contentDescription = null,
+            modifier = Modifier.aspectRatio(1f),
+            contentScale = ContentScale.Crop
+        )
     }
 }
