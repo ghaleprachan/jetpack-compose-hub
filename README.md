@@ -1,2 +1,2 @@
-## Compose Hub
+### Compose Hub
 ---
