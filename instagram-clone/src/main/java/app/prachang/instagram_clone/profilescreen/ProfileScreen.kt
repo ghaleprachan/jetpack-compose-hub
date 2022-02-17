@@ -7,10 +7,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,16 +50,17 @@ fun ProfileScreen() {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                elevation = if (showElevation) 6.dp else 0.dp,
-                title = {
-                    Text(
-                        text = profileData.username,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                    )
-                },
-            )
+            TopAppBar(elevation = if (showElevation) 6.dp else 0.dp, title = {
+                Text(
+                    text = profileData.username,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                )
+            }, actions = {
+                IconButton(onClick = {  }) {
+                    Icon(Icons.Default.MoreVert, contentDescription = null)
+                }
+            })
         },
     ) {
         LazyColumn(state = scrollState, content = {
@@ -98,9 +98,7 @@ fun ProfileScreen() {
                     }
                     Height(height = 8.dp)
                     Text(
-                        text = profileData.name,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Black
+                        text = profileData.name, fontSize = 16.sp, fontWeight = FontWeight.Black
                     )
                     Text(text = "Athlete", fontSize = 14.sp)
                     Height(height = 8.dp)
@@ -125,12 +123,9 @@ fun ProfileScreen() {
                 verticalItemPadding = 2.dp,
                 contentPadding = PaddingValues(2.dp)
             ) { post ->
-                val painter = rememberImagePainter(
-                    data = post?.postImage?.get(0),
-                    builder = {
-                        transformations(RoundedCornersTransformation())
-                    }
-                )
+                val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
+                    transformations(RoundedCornersTransformation())
+                })
                 Image(
                     painter = painter,
                     contentDescription = null,
