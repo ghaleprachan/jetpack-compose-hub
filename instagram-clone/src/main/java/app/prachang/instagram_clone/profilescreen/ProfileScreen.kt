@@ -77,8 +77,13 @@ fun ProfileScreen() {
     ) {
         LazyColumn(state = scrollState, content = {
             item {
-                // Top Content contains follow count, profile, name, edit and saved stories
+                // Top Content contains follow count, profile, name and edit profile
                 TopContent()
+            }
+
+            item {
+                // Pinned Stories
+                PinnedStoryContent()
             }
 
             stickyHeader {
