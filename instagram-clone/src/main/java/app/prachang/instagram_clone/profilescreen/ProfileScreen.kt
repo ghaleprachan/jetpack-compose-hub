@@ -52,28 +52,29 @@ fun ProfileScreen() {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                elevation = 0.dp,
-                title = {
-                    Text(
-                        text = profileData.username,
-                        fontSize = 24.sp,
-                        fontWeight = FontWeight.ExtraBold,
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = null)
-                    }
-                },
-            )
+            Column {
+                TopAppBar(
+                    elevation = 0.dp,
+                    title = {
+                        Text(
+                            text = profileData.username,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.ExtraBold,
+                        )
+                    },
+                    actions = {
+                        IconButton(onClick = { }) {
+                            Icon(Icons.Default.MoreVert, contentDescription = null)
+                        }
+                    },
+                )
+                if (showElevation) {
+                    Divider()
+                }
+            }
         },
     ) {
         Column {
-            if (showElevation) {
-                Divider()
-            }
-            
             LazyColumn(state = scrollState, content = {
                 item {
                     Column(
