@@ -34,7 +34,6 @@ import coil.compose.rememberImagePainter
 
 @Composable
 fun StoryContent() {
-    val gradient = Brush.sweepGradient(listOf(Color.Red, Color.Magenta))
     LazyRow(
         contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -43,7 +42,7 @@ fun StoryContent() {
                 MyStoryItem()
             }
             items(myPosts.take(10)) { post ->
-                StoryItem(post, gradient)
+                StoryItem(post)
             }
         }
     )
@@ -92,8 +91,7 @@ fun MyStoryItem() {
 
 @Composable
 fun StoryItem(
-    post: Post,
-    gradient: Brush
+    post: Post
 ) {
     val painter = rememberImagePainter(data = post.userImage)
     Column {

@@ -68,8 +68,6 @@ fun TopContent() {
         ) {
             Text(text = "Edit Profile", color = Color.Black)
         }
-
-        Height(height = 8.dp)
     }
 }
 
