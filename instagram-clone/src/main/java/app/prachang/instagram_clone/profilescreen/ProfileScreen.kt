@@ -77,44 +77,8 @@ fun ProfileScreen() {
     ) {
         LazyColumn(state = scrollState, content = {
             item {
-                Column(
-                    modifier = Modifier.padding(16.dp)
-                ) {
-                    Row(
-                        modifier = Modifier.height(IntrinsicSize.Min)
-                    ) {
-                        val painter = rememberImagePainter(data = image2, builder = {
-                            transformations(CircleCropTransformation())
-                        })
-                        Image(
-                            modifier = Modifier.size(size = 85.dp),
-                            painter = painter,
-                            contentDescription = null,
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        FollowMeter(
-                            modifier = Modifier.weight(1f),
-                            count = profileData.totalPosts,
-                            label = "Posts"
-                        )
-                        FollowMeter(
-                            modifier = Modifier.weight(1f),
-                            count = profileData.followerCount,
-                            label = "Followers"
-                        )
-                        FollowMeter(
-                            modifier = Modifier.weight(1f),
-                            count = profileData.followingCount,
-                            label = "Following"
-                        )
-                    }
-                    Height(height = 8.dp)
-                    Text(
-                        text = profileData.name, fontSize = 16.sp, fontWeight = FontWeight.Black
-                    )
-                    Text(text = "Athlete", fontSize = 14.sp)
-                    Height(height = 8.dp)
-                }
+                // Top Content contains follow count, profile, name, edit and saved stories
+                TopContent()
             }
 
             stickyHeader {
@@ -154,27 +118,5 @@ fun ProfileScreen() {
                 )
             }
         })
-    }
-}
-
-@Composable
-fun FollowMeter(
-    modifier: Modifier, count: String? = "2", label: String = "Posts"
-) {
-    Column(
-        modifier = modifier
-            .fillMaxHeight()
-            .clickable {
-
-            },
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = count ?: "0", fontSize = 18.sp, fontWeight = FontWeight.ExtraBold
-        )
-        Text(
-            text = label, fontSize = 13.sp, fontWeight = FontWeight.Light
-        )
     }
 }
