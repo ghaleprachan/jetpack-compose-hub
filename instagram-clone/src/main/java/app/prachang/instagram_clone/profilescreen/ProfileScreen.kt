@@ -1,11 +1,17 @@
 package app.prachang.instagram_clone.profilescreen
 
-import androidx.compose.animation.Crossfade
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Dashboard
@@ -26,6 +32,8 @@ import app.prachang.dummy_data.instagram.profileData
 import app.prachang.theme.ComposeHubTheme
 import coil.compose.rememberImagePainter
 import coil.transform.RoundedCornersTransformation
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @Preview(showSystemUi = true)
@@ -162,6 +170,7 @@ fun ProfileScreen() {
                 verticalItemPadding = 2.dp,
                 contentPadding = PaddingValues(2.dp)
             ) { post ->
+
                 val painter = rememberImagePainter(
                     data = post?.postImage?.get(0),
                     builder = {

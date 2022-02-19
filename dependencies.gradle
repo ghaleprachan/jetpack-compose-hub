@@ -1,6 +1,6 @@
 ext {
     versions = [
-            compose_version = '1.2.0-alpha02',
+            compose_version = '1.2.0-alpha03',
             compose_navigation = '2.5.0-alpha01',
             kotlin_version = '1.6.0',
             accompaniest_version = '0.24.1-alpha',
@@ -42,7 +42,7 @@ ext {
 }
 
 dependencies {
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha01'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0-alpha02'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'androidx.core:core-ktx:1.7.0'
 }

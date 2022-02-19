@@ -35,20 +35,11 @@ fun HomeScreen() {
         derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0 }
     }
 
-    Scaffold(topBar = {
-        TopBar(elevation = if (showElevation) 6.dp else 0.dp)
-    }, bottomBar = {
-        BottomAppBar {
-            repeat(5) {
-                BottomNavigationItem(
-                    selected = false, onClick = { /*TODO*/ },
-                    icon = {
-                        Icon(Icons.Default.Home, contentDescription = null)
-                    },
-                )
-            }
+    Scaffold(
+        topBar = {
+            TopBar(elevation = if (showElevation) 6.dp else 0.dp)
         }
-    }) {
+    ) {
         LazyColumn(
             contentPadding = it,
             state = scrollState,

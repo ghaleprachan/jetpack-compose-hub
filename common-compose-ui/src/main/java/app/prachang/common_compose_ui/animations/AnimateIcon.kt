@@ -15,7 +15,9 @@ private const val springRatio = Spring.DampingRatioHighBouncy
 
 @Composable
 fun AnimateIcon(
-    modifier: Modifier = Modifier, prop: Pair<ImageVector, Color>, onClick: () -> Unit = {}
+    modifier: Modifier = Modifier,
+    prop: Pair<ImageVector, Color>,
+    onClick: () -> Unit = {},
 ) {
     var transitionState by remember {
         mutableStateOf(MutableTransitionState(AnimationState.Idle))
