@@ -1,9 +1,11 @@
 package app.prachang.instagram_clone.profilescreen
 
+import android.widget.Toast
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,14 +16,13 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,8 +30,12 @@ import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.layouts.items
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
+import app.prachang.instagram_clone.R
 import app.prachang.theme.ComposeHubTheme
+import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,7 +49,7 @@ private fun ProfileScreenPreview() {
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class, ExperimentalCoilApi::class)
 @Composable
 fun ProfileScreen() {
     val scrollState = rememberLazyListState()
@@ -115,54 +120,6 @@ fun ProfileScreen() {
                 }
             }
 
-            /*item {
-                Crossfade(targetState = post) {
-                    if (it) {
-                        Column {
-                            myPosts.windowed(3, 3).forEach { subList ->
-                                subList.forEach { post ->
-                                    Row {
-                                        val painter =
-                                            rememberImagePainter(
-                                                data = post.postImage[0],
-                                                builder = {
-                                                    transformations(RoundedCornersTransformation())
-                                                })
-                                        Image(
-                                            painter = painter,
-                                            contentDescription = null,
-                                            modifier = Modifier.aspectRatio(1f),
-                                            contentScale = ContentScale.Crop
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        Column {
-                            myPosts.asReversed().windowed(3, 3).forEach { subList ->
-                                subList.forEach { post ->
-                                    Row {
-                                        val painter =
-                                            rememberImagePainter(
-                                                data = post.postImage[0],
-                                                builder = {
-                                                    transformations(RoundedCornersTransformation())
-                                                })
-                                        Image(
-                                            painter = painter,
-                                            contentDescription = null,
-                                            modifier = Modifier.aspectRatio(1f),
-                                            contentScale = ContentScale.Crop
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }*/
-
             items(
                 items = myPosts,
                 columns = 3,
@@ -170,17 +127,19 @@ fun ProfileScreen() {
                 verticalItemPadding = 2.dp,
                 contentPadding = PaddingValues(2.dp)
             ) { post ->
+                val context = LocalContext.current
+                val painter =
+                    rememberImagePainter(data = post?.postImage?.get(0) + "asdf", builder = {
+                        placeholder(R.drawable.anim_loading)
+                        error(R.drawable.anim_loading)
+                    })
 
-                val painter = rememberImagePainter(
-                    data = post?.postImage?.get(0),
-                    builder = {
-                        transformations(RoundedCornersTransformation())
-                    },
-                )
                 Image(
                     painter = painter,
                     contentDescription = null,
-                    modifier = Modifier.aspectRatio(1f),
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .background(Color.LightGray),
                     contentScale = ContentScale.Crop
                 )
             }
@@ -189,6 +148,7 @@ fun ProfileScreen() {
 }
 
 
+@OptIn(ExperimentalCoilApi::class)
 @Composable
 private fun LazyListScope.SavedPosts() {
     items(
@@ -201,12 +161,28 @@ private fun LazyListScope.SavedPosts() {
         val painter = rememberImagePainter(data = post?.postImage?.get(0), builder = {
             transformations(RoundedCornersTransformation())
         })
-        Image(
-            painter = painter,
-            contentDescription = null,
+        Box(
             modifier = Modifier.aspectRatio(1f),
-            contentScale = ContentScale.Crop
-        )
+            contentAlignment = Alignment.Center,
+        ) {
+            when (painter.state) {
+                is ImagePainter.State.Loading -> {
+                    CircularProgressIndicator()
+                }
+                is ImagePainter.State.Success -> {
+                    Image(
+                        painter = painter,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                is ImagePainter.State.Error -> {
+                    Icon(Icons.Default.Error, contentDescription = null)
+                }
+                ImagePainter.State.Empty -> {}
+            }
+        }
     }
 }
 
