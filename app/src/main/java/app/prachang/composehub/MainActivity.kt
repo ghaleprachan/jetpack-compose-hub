@@ -9,6 +9,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -81,38 +82,45 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
     }
     val paddingHorizontal: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 22.dp)
     val corner: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 8.dp)
-
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = paddingHorizontal)
-            .height(90.dp)
             .clip(shape = RoundedCornerShape(corner))
-            .background(Color.White)
-            .clickable(enabled = hasSubList) {
-                expanded = !expanded
-            }
-            .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically,
+            .background(Color.White),
     ) {
-        Image(
-            painter = painterResource(id = sample.icon),
-            contentDescription = null,
-        )
-        Width(width = 12.dp)
-        Text(
-            text = sample.title,
-            style = Typography.h5,
-        )
-    }
-
-    if (hasSubList) {
-        AnimatedVisibility(
-            visible = expanded,
-            enter = expandVertically(),
-            exit = shrinkVertically(),
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(90.dp)
+                .clickable(
+                    enabled = hasSubList,
+                    indication = LocalIndication.current,
+                    interactionSource = MutableInteractionSource()
+                ) {
+                    expanded = !expanded
+                }
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            SubItem(sample, paddingHorizontal)
+            Image(
+                painter = painterResource(id = sample.icon),
+                contentDescription = null,
+            )
+            Width(width = 12.dp)
+            Text(
+                text = sample.title,
+                style = Typography.h5,
+            )
+        }
+        if (hasSubList) {
+            AnimatedVisibility(
+                visible = expanded,
+                enter = expandVertically(),
+                exit = shrinkVertically(),
+            ) {
+                SubItem(sample)
+            }
         }
     }
 }
@@ -121,15 +129,11 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
 @Composable
 private fun SubItem(
     sample: SampleAppData.SampleAppType,
-    paddingHorizontal: Dp
 ) {
     Column {
         sample.samples.forEach { sample ->
             ListItem(
-                modifier = Modifier
-                    .padding(horizontal = paddingHorizontal)
-                    .background(Color.White)
-                    .padding(horizontal = 24.dp),
+                modifier = Modifier.padding(horizontal = 24.dp),
                 secondaryText = {
                     Text(
                         text = sample.description.orEmpty(), style = Typography.body2
@@ -146,8 +150,7 @@ private fun SubItem(
                 },
                 text = {
                     Text(
-                        text = sample.label,
-                        style = Typography.subtitle1.copy(color = Color.Gray)
+                        text = sample.label, style = Typography.subtitle1.copy(color = Color.Gray)
                     )
                 },
             )
