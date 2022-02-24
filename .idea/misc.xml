@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/prg/ComposeHub/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2115" />
         <entry key="..\:/prg/ComposeHub/common-compose-ui/src/main/res/drawable/anim_loading.xml" value="0.2115" />
         <entry key="..\:/prg/ComposeHub/common-compose-ui/src/main/res/drawable/ic_error_image.xml" value="0.2115" />
         <entry key="..\:/prg/ComposeHub/common-compose-ui/src/main/res/drawable/ic_loading_icon.xml" value="0.2115" />

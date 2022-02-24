@@ -3,7 +3,9 @@ package app.prachang.composehub
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
@@ -12,14 +14,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.prachang.common_compose_ui.animations.ExpandableText
 import app.prachang.common_compose_ui.components.ComposeImage
@@ -60,25 +61,28 @@ internal fun MainScreen() {
         },
         content = {
             val samples = SampleAppData.SampleAppType.values()
+
             LazyColumn(
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
                     items(samples) { sample ->
-                        val expanded = remember {
+                        val hasSubList = sample.samples.isNotEmpty()
+                        var expanded by remember {
                             mutableStateOf(false)
                         }
+                        val paddingHorizontal: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 22.dp)
+                        val corner: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 8.dp)
 
-                        val hasSubList = sample.samples.isNotEmpty()
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                                .height(85.dp)
-                                .clip(shape = RoundedCornerShape(12.dp))
+                                .padding(horizontal = paddingHorizontal)
+                                .height(90.dp)
+                                .clip(shape = RoundedCornerShape(corner))
                                 .background(Color.White)
                                 .clickable(enabled = hasSubList) {
-                                    expanded.value = !expanded.value
+                                    expanded = !expanded
                                 }
                                 .padding(16.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -96,18 +100,39 @@ internal fun MainScreen() {
 
                         if (hasSubList) {
                             AnimatedVisibility(
-                                visible = expanded.value,
+                                visible = expanded,
                                 enter = expandVertically(),
                                 exit = shrinkVertically(),
                             ) {
                                 Column {
                                     sample.samples.forEach { sample ->
-                                        ListItem(modifier = Modifier.padding(horizontal = 24.dp)) {
-                                            Text(
-                                                text = sample.label,
-                                                color = Color.Gray,
-                                            )
-                                        }
+                                        ListItem(
+                                            modifier = Modifier
+                                                .padding(horizontal = paddingHorizontal)
+                                                .background(Color.White)
+                                                .padding(horizontal = 24.dp),
+                                            secondaryText = {
+                                                Text(
+                                                    text = sample.description.orEmpty(),
+                                                    style = Typography.body2
+                                                )
+                                            },
+                                            icon = {
+                                                sample.icon?.let { icon ->
+                                                    Image(
+                                                        modifier = Modifier.size(30.dp),
+                                                        painter = painterResource(id = icon),
+                                                        contentDescription = null
+                                                    )
+                                                }
+                                            },
+                                            text = {
+                                                Text(
+                                                    text = sample.label,
+                                                    style = Typography.subtitle1.copy(color = Color.Gray)
+                                                )
+                                            },
+                                        )
                                     }
                                 }
                             }

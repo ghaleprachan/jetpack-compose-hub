@@ -1,1 +1,8 @@
 app.prachang.dummy_data
+drawable ic_animations
+drawable ic_facebook
+drawable ic_gmail
+drawable ic_instagram_icon
+drawable ic_material_design
+drawable ic_sample_apps
+drawable ic_tweeter
