@@ -47,7 +47,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun MainScreen() {
     Scaffold(
@@ -61,85 +60,97 @@ internal fun MainScreen() {
         },
         content = {
             val samples = SampleAppData.SampleAppType.values()
-
             LazyColumn(
                 contentPadding = PaddingValues(vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
                     items(samples) { sample ->
-                        val hasSubList = sample.samples.isNotEmpty()
-                        var expanded by remember {
-                            mutableStateOf(false)
-                        }
-                        val paddingHorizontal: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 22.dp)
-                        val corner: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 8.dp)
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = paddingHorizontal)
-                                .height(90.dp)
-                                .clip(shape = RoundedCornerShape(corner))
-                                .background(Color.White)
-                                .clickable(enabled = hasSubList) {
-                                    expanded = !expanded
-                                }
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Image(
-                                painter = painterResource(id = sample.icon),
-                                contentDescription = null,
-                            )
-                            Width(width = 12.dp)
-                            Text(
-                                text = sample.title,
-                                style = Typography.h5,
-                            )
-                        }
-
-                        if (hasSubList) {
-                            AnimatedVisibility(
-                                visible = expanded,
-                                enter = expandVertically(),
-                                exit = shrinkVertically(),
-                            ) {
-                                Column {
-                                    sample.samples.forEach { sample ->
-                                        ListItem(
-                                            modifier = Modifier
-                                                .padding(horizontal = paddingHorizontal)
-                                                .background(Color.White)
-                                                .padding(horizontal = 24.dp),
-                                            secondaryText = {
-                                                Text(
-                                                    text = sample.description.orEmpty(),
-                                                    style = Typography.body2
-                                                )
-                                            },
-                                            icon = {
-                                                sample.icon?.let { icon ->
-                                                    Image(
-                                                        modifier = Modifier.size(30.dp),
-                                                        painter = painterResource(id = icon),
-                                                        contentDescription = null
-                                                    )
-                                                }
-                                            },
-                                            text = {
-                                                Text(
-                                                    text = sample.label,
-                                                    style = Typography.subtitle1.copy(color = Color.Gray)
-                                                )
-                                            },
-                                        )
-                                    }
-                                }
-                            }
-                        }
+                        SampleItem(sample)
                     }
                 },
             )
         },
     )
+}
+
+@Composable
+private fun SampleItem(sample: SampleAppData.SampleAppType) {
+    val hasSubList = sample.samples.isNotEmpty()
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+    val paddingHorizontal: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 22.dp)
+    val corner: Dp by animateDpAsState(targetValue = if (expanded) 0.dp else 8.dp)
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = paddingHorizontal)
+            .height(90.dp)
+            .clip(shape = RoundedCornerShape(corner))
+            .background(Color.White)
+            .clickable(enabled = hasSubList) {
+                expanded = !expanded
+            }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            painter = painterResource(id = sample.icon),
+            contentDescription = null,
+        )
+        Width(width = 12.dp)
+        Text(
+            text = sample.title,
+            style = Typography.h5,
+        )
+    }
+
+    if (hasSubList) {
+        AnimatedVisibility(
+            visible = expanded,
+            enter = expandVertically(),
+            exit = shrinkVertically(),
+        ) {
+            SubItem(sample, paddingHorizontal)
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun SubItem(
+    sample: SampleAppData.SampleAppType,
+    paddingHorizontal: Dp
+) {
+    Column {
+        sample.samples.forEach { sample ->
+            ListItem(
+                modifier = Modifier
+                    .padding(horizontal = paddingHorizontal)
+                    .background(Color.White)
+                    .padding(horizontal = 24.dp),
+                secondaryText = {
+                    Text(
+                        text = sample.description.orEmpty(), style = Typography.body2
+                    )
+                },
+                icon = {
+                    sample.icon?.let { icon ->
+                        Image(
+                            modifier = Modifier.size(30.dp),
+                            painter = painterResource(id = icon),
+                            contentDescription = null
+                        )
+                    }
+                },
+                text = {
+                    Text(
+                        text = sample.label,
+                        style = Typography.subtitle1.copy(color = Color.Gray)
+                    )
+                },
+            )
+        }
+    }
 }
