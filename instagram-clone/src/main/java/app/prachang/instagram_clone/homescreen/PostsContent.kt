@@ -20,7 +20,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -30,9 +29,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.animations.AnimateIcon
-import app.prachang.common_compose_ui.animations.DoubleTapLikeAnim
 import app.prachang.common_compose_ui.animations.AnimationState
+import app.prachang.common_compose_ui.animations.DoubleTapLikeAnim
 import app.prachang.common_compose_ui.animations.ExpandableText
+import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.Post
@@ -40,7 +40,6 @@ import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.instagram_clone.R
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
-import coil.size.OriginalSize
 
 /**
  *  Here update post image using pager and other UI improvements
@@ -51,12 +50,12 @@ import coil.size.OriginalSize
 fun PostItem(post: Post) {
     val context = LocalContext.current
     val profilePainter = rememberImagePainter(data = post.userImage)
-    val postImage = rememberImagePainter(
+    /*val postImage = rememberImagePainter(
         data = post.postImage[0],
         builder = {
             size(OriginalSize)
         },
-    )
+    )*/
     Column {
         // Post Content With UserProfile, Username and More-Option Icon
         // Have to add more option action todo(ghaleprachan)
@@ -71,7 +70,7 @@ fun PostItem(post: Post) {
 
         // PostImage
         PostImage(
-            postImage = postImage,
+            postImage = post.postImage[0],
             onLike = {
                 isLiked = true
             },
@@ -97,7 +96,7 @@ fun PostItem(post: Post) {
 
 @Composable
 private fun PostImage(
-    postImage: Painter,
+    postImage: String,
     onLike: () -> Unit,
 ) {
     var transitionState by remember {
@@ -105,13 +104,10 @@ private fun PostImage(
     }
 
     Box(contentAlignment = Alignment.Center) {
-        Image(
-            painter = postImage,
-            contentDescription = null,
+        ComposeImage(
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 200.dp)
-                .background(Color.LightGray)
                 .pointerInput(Unit) {
                     detectTapGestures(
                         onDoubleTap = {
@@ -120,7 +116,7 @@ private fun PostImage(
                         },
                     )
                 },
-            contentScale = ContentScale.Crop
+            url = postImage,
         )
 
         DoubleTapLikeAnim(
