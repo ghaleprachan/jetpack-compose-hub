@@ -11,17 +11,17 @@ object SampleAppData {
     ) {
         DemoApps(
             title = "Demo Apps",
-            icon = R.drawable.ic_launcher_foreground,
+            icon = R.drawable.ic_sample_apps,
             samples = demoApps,
         ),
         Animations(
             title = "Animations",
-            icon = R.drawable.ic_launcher_foreground,
+            icon = R.drawable.ic_animations,
         ),
         Themes(
-            title = "Themes",
-            icon = R.drawable.ic_launcher_foreground,
-            samples = demoApps,
+            title = "Material Design",
+            icon = R.drawable.ic_material_design,
+            samples = materialDesign,
         ),
     }
 
@@ -40,6 +40,26 @@ object SampleAppData {
         ),
         SampleApp(
             label = "Facebook", route = "facebook", icon = R.drawable.ic_launcher_foreground
+        ),
+        SampleApp(
+            label = "Tweeter", route = "facebook", icon = R.drawable.ic_launcher_foreground
+        ),
+    )
+    val materialDesign = listOf(
+        SampleApp(
+            label = "App bar",
+            route = "appbar",
+            icon = R.drawable.ic_launcher_foreground,
+        ),
+        SampleApp(
+            label = "Bottom app bar",
+            route = "bottomappbar",
+            icon = R.drawable.ic_launcher_foreground
+        ),
+        SampleApp(
+            label = "Buttons",
+            route = "buttons",
+            icon = R.drawable.ic_launcher_foreground,
         ),
     )
 }
