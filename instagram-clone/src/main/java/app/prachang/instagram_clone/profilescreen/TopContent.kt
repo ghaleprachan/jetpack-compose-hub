@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.profileData
@@ -29,13 +30,17 @@ fun TopContent() {
         Row(
             modifier = Modifier.height(IntrinsicSize.Min)
         ) {
-            val painter = rememberImagePainter(data = image2, builder = {
+            /*val painter = rememberImagePainter(data = image2, builder = {
                 transformations(CircleCropTransformation())
             })
             Image(
                 modifier = Modifier.size(size = 85.dp),
                 painter = painter,
                 contentDescription = null,
+            )*/
+            CircleImage(
+                modifier = Modifier.size(85.dp),
+                url = image2,
             )
             Spacer(modifier = Modifier.width(8.dp))
             FollowMeter(

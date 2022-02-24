@@ -7,7 +7,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import app.prachang.dummy_data.instagram.myPosts
-import app.prachang.instagram_clone.homescreen.StoryItem
+import app.prachang.instagram_clone.commoncomponents.StoryItem
 
 @Composable
 fun PinnedStoryContent() {

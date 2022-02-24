@@ -1,6 +1,5 @@
 package app.prachang.instagram_clone.homescreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -15,22 +14,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Device
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.extensions.Height
-import app.prachang.common_compose_ui.modifiers.diagonalGradientBorder
-import app.prachang.dummy_data.instagram.Post
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.dummy_data.instagram.myPosts
-import coil.compose.rememberImagePainter
+import app.prachang.instagram_clone.commoncomponents.StoryItem
 
+
+@Preview(showSystemUi = true, device = Devices.NEXUS_6)
+@Composable
+private fun StoryContentPreview() {
+    StoryContent()
+}
 
 @Composable
 fun StoryContent() {
@@ -48,18 +53,16 @@ fun StoryContent() {
     )
 }
 
+@Preview
 @Composable
-fun MyStoryItem() {
-    val painter = rememberImagePainter(data = kotlinIcon)
+private fun MyStoryItem() {
     Column {
         Box(contentAlignment = Alignment.BottomEnd) {
-            Image(
-                painter = painter,
-                contentDescription = null,
+            CircleImage(
                 modifier = Modifier
                     .size(70.dp)
-                    .padding(5.dp)
-                    .clip(shape = CircleShape)
+                    .padding(5.dp),
+                url = kotlinIcon,
             )
             Icon(
                 Icons.Outlined.Add,
@@ -78,46 +81,6 @@ fun MyStoryItem() {
         Text(
             modifier = Modifier.width(70.dp),
             text = "Your story",
-            style = TextStyle(
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium
-            ),
-            textAlign = TextAlign.Center,
-            overflow = TextOverflow.Ellipsis,
-            maxLines = 1,
-        )
-    }
-}
-
-@Composable
-fun StoryItem(
-    post: Post
-) {
-    val painter = rememberImagePainter(data = post.userImage)
-    Column {
-        Image(
-            painter = painter,
-            modifier = Modifier
-                .size(70.dp)
-                .diagonalGradientBorder(
-                    borderSize = 1.5.dp,
-                    colors = listOf(
-                        Color(0xFFd71069),
-                        Color(0xFFe25d6a),
-                        Color(0xFFe9ad55),
-                    ),
-                    shape = CircleShape,
-                    isFromRight = true
-                )
-                .padding(5.dp)
-                .clip(shape = CircleShape),
-            contentScale = ContentScale.Crop,
-            contentDescription = null
-        )
-        Height(4)
-        Text(
-            modifier = Modifier.width(70.dp),
-            text = post.username,
             style = TextStyle(
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium
