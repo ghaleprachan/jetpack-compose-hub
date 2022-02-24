@@ -31,7 +31,7 @@ fun <T : Any> LazyListScope.items(
     contentPadding: PaddingValues = PaddingValues(),
     horizontalItemPadding: Dp = 0.dp,
     verticalItemPadding: Dp = 0.dp,
-    content: @Composable LazyItemScope.(T?) -> Unit
+    content: @Composable LazyItemScope.(T) -> Unit
 ) {
     val rows = when {
         items.size % columns == 0 -> {
