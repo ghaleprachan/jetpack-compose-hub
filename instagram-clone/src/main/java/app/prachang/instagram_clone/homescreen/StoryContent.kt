@@ -37,7 +37,7 @@ private fun StoryContentPreview() {
 }
 
 @Composable
-fun StoryContent() {
+internal fun StoryContent() {
     LazyRow(
         contentPadding = PaddingValues(16.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),

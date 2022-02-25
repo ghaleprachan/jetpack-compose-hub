@@ -43,7 +43,7 @@ private fun ProfileScreenPreview() {
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class, ExperimentalCoilApi::class)
 @Composable
-fun ProfileScreen() {
+internal fun ProfileScreen() {
     val scrollState = rememberLazyListState()
     val showElevation by remember {
         derivedStateOf {

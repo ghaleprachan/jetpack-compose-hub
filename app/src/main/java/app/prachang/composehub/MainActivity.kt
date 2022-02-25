@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.lerp
 import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.instagram.pagerImages
-import app.prachang.instagram_clone.homescreen.HomeScreen
+import app.prachang.instagram_clone.InstagramScreen
 import app.prachang.theme.ComposeHubTheme
 import app.prachang.theme.Typography
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -48,7 +48,8 @@ class MainActivity : ComponentActivity() {
                     color = Color.Gray//color = MaterialTheme.colors.background
                 ) {
                     // MainScreen()
-                    HomeScreen()
+                    // HomeScreen()
+                    InstagramScreen()
                 }
             }
         }

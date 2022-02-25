@@ -10,7 +10,7 @@ import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.instagram_clone.commoncomponents.StoryItem
 
 @Composable
-fun PinnedStoryContent() {
+internal fun PinnedStoryContent() {
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(16.dp),

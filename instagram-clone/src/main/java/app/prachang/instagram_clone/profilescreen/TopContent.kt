@@ -23,7 +23,7 @@ import coil.compose.rememberImagePainter
 import coil.transform.CircleCropTransformation
 
 @Composable
-fun TopContent() {
+internal fun TopContent() {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {

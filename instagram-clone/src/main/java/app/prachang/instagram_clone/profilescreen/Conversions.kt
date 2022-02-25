@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Float?.convertToDp(): Dp {
+internal fun Float?.convertToDp(): Dp {
     return with(LocalDensity.current) {
         this@convertToDp?.toDp() ?: 0.dp
     }
