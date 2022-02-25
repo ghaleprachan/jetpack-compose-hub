@@ -3,7 +3,6 @@ package app.prachang.composehub
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.expandVertically
@@ -23,11 +22,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.prachang.common_compose_ui.animations.ExpandableText
-import app.prachang.common_compose_ui.components.ComposeImage
+import app.prachang.common_compose_ui.animations.loading.ProgressAnimation
+import app.prachang.common_compose_ui.animations.loading.SpinKitLoading
+import app.prachang.common_compose_ui.animations.loading.WavesAnimation
 import app.prachang.common_compose_ui.extensions.Width
-import app.prachang.instagram_clone.homescreen.HomeScreen
-import app.prachang.instagram_clone.profilescreen.ProfileScreen
 import app.prachang.theme.ComposeHubTheme
 import app.prachang.theme.Typography
 
@@ -37,11 +35,23 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposeHubTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.Gray//color = MaterialTheme.colors.background
                 ) {
                     // HomeScreen()
                     // ProfileScreen()
-                    MainScreen()
+                    // MainScreen()
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentWidth(align = Alignment.CenterHorizontally),
+                        verticalArrangement = Arrangement.SpaceAround
+                    ) {
+                        SpinKitLoading()
+                        ProgressAnimation(modifier = Modifier.align(Alignment.CenterHorizontally))
+                        WavesAnimation(modifier = Modifier.align(Alignment.CenterHorizontally))
+                    }
                 }
             }
         }
@@ -133,10 +143,11 @@ private fun SubItem(
     Column {
         sample.samples.forEach { sample ->
             ListItem(
-                modifier = Modifier.padding(horizontal = 24.dp),
+                modifier = Modifier.padding(horizontal = 30.dp),
                 secondaryText = {
                     Text(
-                        text = sample.description.orEmpty(), style = Typography.body2
+                        text = sample.description.orEmpty(),
+                        style = Typography.body2,
                     )
                 },
                 icon = {
@@ -150,7 +161,8 @@ private fun SubItem(
                 },
                 text = {
                     Text(
-                        text = sample.label, style = Typography.subtitle1.copy(color = Color.Gray)
+                        text = sample.label,
+                        style = Typography.subtitle1.copy(color = Color.Gray),
                     )
                 },
             )

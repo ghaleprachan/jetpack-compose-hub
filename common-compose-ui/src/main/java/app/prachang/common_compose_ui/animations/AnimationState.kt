@@ -6,8 +6,11 @@ enum class AnimationState {
     End
 }
 
-enum class LikeImageState {
-    Idle,
-    Start,
-    End
+enum class AnimState {
+    StateIdle,
+    StateOne,
+    StateTwo,
+    StateThree,
+    StateFour,
+    StateFive
 }

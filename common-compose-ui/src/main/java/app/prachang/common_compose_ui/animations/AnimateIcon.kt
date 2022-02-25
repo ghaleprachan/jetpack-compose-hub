@@ -36,8 +36,8 @@ fun AnimateIcon(
             }
         },
         label = "",
-    ) { state ->
-        when (state) {
+    ) {
+        when (it) {
             AnimationState.Idle -> 26.dp
             AnimationState.Start -> 16.dp
             AnimationState.End -> 26.dp
