@@ -11,7 +11,7 @@ import androidx.compose.foundation.*
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -46,8 +46,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = Color.Gray//color = MaterialTheme.colors.background
                 ) {
-                    // HomeScreen()
-                    // ProfileScreen()
                     MainScreen()
                 }
             }
@@ -75,8 +73,11 @@ internal fun MainScreen() {
                     item {
                         HomeTopContent()
                     }
-                    items(samples) { sample ->
-                        SampleItem(sample)
+                    itemsIndexed(samples) { index, sample ->
+                        SampleItem(
+                            sample = sample,
+                            onItemSelected = {},
+                        )
                     }
                 },
             )
@@ -132,7 +133,7 @@ fun getWidth(percentage: Double = 1.0): Dp {
 }
 
 @Composable
-private fun SampleItem(sample: SampleAppData.SampleAppType) {
+private fun SampleItem(sample: SampleAppData.SampleAppType, onItemSelected: () -> Unit = {}) {
     val hasSubList = sample.samples.isNotEmpty()
     var expanded by remember {
         mutableStateOf(false)
@@ -157,6 +158,7 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
                     interactionSource = MutableInteractionSource()
                 ) {
                     expanded = !expanded
+                    onItemSelected()
                 }
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -177,7 +179,10 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
                 enter = expandVertically(),
                 exit = shrinkVertically(),
             ) {
-                SubItem(sample)
+                SubItem(
+                    sampleContent = sample,
+                    onItemClick = {},
+                )
             }
         }
     }
@@ -186,13 +191,17 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun SubItem(
-    sample: SampleAppData.SampleAppType,
+    sampleContent: SampleAppData.SampleAppType,
+    onItemClick: (sample: SampleAppData.SampleApp) -> Unit,
 ) {
     Column {
-        sample.samples.forEach { sample ->
+        sampleContent.samples.forEach { sample ->
             ListItem(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .clickable {
+                        onItemClick.invoke(sample)
+                    }
                     .padding(start = 30.dp),
                 secondaryText = {
                     Text(
@@ -203,7 +212,7 @@ private fun SubItem(
                 icon = {
                     sample.icon?.let { icon ->
                         Image(
-                            modifier = Modifier.size(30.dp),
+                            modifier = Modifier.size(40.dp),
                             painter = painterResource(id = icon),
                             contentDescription = null
                         )
