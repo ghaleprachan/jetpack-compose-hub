@@ -7,20 +7,24 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import app.prachang.common_compose_ui.animations.AnimState
+import app.prachang.common_compose_ui.annotations.ExperimentalCustomCompose
 import kotlinx.coroutines.delay
 
+@ExperimentalCustomCompose
 @Composable
 fun SpinKitLoading(
     modifier: Modifier = Modifier,
     tint: Color = MaterialTheme.colors.primary,
     spinKitHeight: SpinKitHeight = SpinKitHeight()
 ) {
+    // This animation is worst case possible change it later todo(ghaleprachan)
     val state = remember { mutableStateOf(AnimState.StateIdle) }
     val animItems = animationItemsHeight(spinKitHeight = spinKitHeight, state = state)
 

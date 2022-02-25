@@ -1,0 +1,3 @@
+package app.prachang.common_compose_ui.annotations
+
+annotation class ExperimentalCustomCompose
