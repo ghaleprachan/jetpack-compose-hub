@@ -1,13 +1,14 @@
 package app.prachang.instagram_clone
 
+import androidx.annotation.DrawableRes
 import app.prachang.dummy_data.R
 
 
 enum class BottomNavItems(
     val label: String,
     val route: String,
-    val icon: Int,
-    val selectedIcon: Int,
+    @DrawableRes val icon: Int,
+    @DrawableRes val selectedIcon: Int,
 ) {
     Home(
         label = "Home",
