@@ -3,7 +3,14 @@ package app.prachang.dummy_data.instagram
 import app.prachang.dummy_data.*
 import java.util.*
 
-val kotlinIcon = "https://cdn.iconscout.com/icon/free/png-256/kotlin-2752140-2284957.png"
+const val kotlinIcon = "https://cdn.iconscout.com/icon/free/png-256/kotlin-2752140-2284957.png"
+
+val pagerImages = listOf(
+    "https://blog.logrocket.com/wp-content/uploads/2022/01/adding-alertdialog-jetpack-compose-android-apps.png",
+    "https://marvel-b1-cdn.bc0a.com/f00000000156946/www.jrebel.com/sites/default/files/image/2021-01/what%20is%20kotlin%20banner%20image.png",
+    "https://repository-images.githubusercontent.com/305740280/9ab6bc00-6af9-11eb-9801-e668a5a930ec",
+)
+
 val profileData = Profile(
     userId = UUID.randomUUID().toString(),
     name = "Cristiano Ronaldo",

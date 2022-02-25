@@ -18,16 +18,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import app.prachang.common_compose_ui.animations.loading.ProgressAnimation
-import app.prachang.common_compose_ui.animations.loading.SpinKitLoading
-import app.prachang.common_compose_ui.animations.loading.WavesAnimation
+import androidx.compose.ui.unit.lerp
+import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Width
+import app.prachang.dummy_data.instagram.pagerImages
 import app.prachang.theme.ComposeHubTheme
 import app.prachang.theme.Typography
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.accompanist.pager.rememberPagerState
+import kotlin.math.absoluteValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,18 +48,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // HomeScreen()
                     // ProfileScreen()
-                    // MainScreen()
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentWidth(align = Alignment.CenterHorizontally),
-                        verticalArrangement = Arrangement.SpaceAround
-                    ) {
-                        SpinKitLoading()
-                        ProgressAnimation(modifier = Modifier.align(Alignment.CenterHorizontally))
-                        WavesAnimation(modifier = Modifier.align(Alignment.CenterHorizontally))
-                    }
+                    MainScreen()
                 }
             }
         }
@@ -61,7 +58,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 internal fun MainScreen() {
     Scaffold(
-        backgroundColor = Color.LightGray,
+        backgroundColor = Color(0xFFDFEDF3),
         topBar = {
             TopAppBar(
                 title = {
@@ -75,6 +72,9 @@ internal fun MainScreen() {
                 contentPadding = PaddingValues(vertical = 16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 content = {
+                    item {
+                        HomeTopContent()
+                    }
                     items(samples) { sample ->
                         SampleItem(sample)
                     }
@@ -82,6 +82,53 @@ internal fun MainScreen() {
             )
         },
     )
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+private fun HomeTopContent() {
+    val pagerState = rememberPagerState()
+    val widthOne = getWidth(percentage = 0.85)
+    val widthTwo = getWidth(percentage = 0.50)
+    val width = getWidth()
+    LaunchedEffect(key1 = true, block = {
+        pagerState.scrollToPage(1)
+    })
+    HorizontalPager(
+        count = pagerImages.size,
+        state = pagerState,
+        contentPadding = PaddingValues(horizontal = 50.dp),
+    ) { page ->
+        Card(
+            modifier = Modifier
+                .graphicsLayer {
+                    val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+                    lerp(
+                        start = widthOne, stop = width, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                    ).also { scale ->
+                        scaleX = (scale / width)
+                        scaleY = (scale / width)
+                    }
+                    alpha = lerp(
+                        start = widthTwo, stop = width, fraction = 1f - pageOffset.coerceIn(0f, 1f)
+                    ) / width
+                }
+                .height(180.dp),
+            elevation = 8.dp,
+        ) {
+            ComposeImage(
+                url = pagerImages[page],
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
+    }
+}
+
+@Composable
+fun getWidth(percentage: Double = 1.0): Dp {
+    val configuration = LocalConfiguration.current
+    val width = configuration.screenWidthDp
+    return (width * percentage).dp
 }
 
 @Composable
@@ -97,6 +144,7 @@ private fun SampleItem(sample: SampleAppData.SampleAppType) {
             .fillMaxWidth()
             .padding(horizontal = paddingHorizontal)
             .clip(shape = RoundedCornerShape(corner))
+            .shadow(elevation = 8.dp)
             .background(Color.White),
     ) {
         Row(
@@ -143,7 +191,9 @@ private fun SubItem(
     Column {
         sample.samples.forEach { sample ->
             ListItem(
-                modifier = Modifier.padding(horizontal = 30.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 30.dp),
                 secondaryText = {
                     Text(
                         text = sample.description.orEmpty(),

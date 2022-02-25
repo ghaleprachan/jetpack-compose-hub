@@ -19,11 +19,16 @@ object SampleAppData {
             title = "Animations",
             icon = R.drawable.ic_animations,
         ),
-        Themes(
+        MaterialDesign(
             title = "Material Design",
             icon = R.drawable.ic_material_design,
             samples = materialDesign,
         ),
+        MaterialDesign3(
+            title = "Material Design 3",
+            icon = R.drawable.ic_material_design_you,
+            samples = materialDesign3,
+        )
     }
 
     data class SampleApp(
@@ -48,7 +53,9 @@ object SampleAppData {
             description = "Gmail sample app."
         ),
         SampleApp(
-            label = "Facebook", route = "facebook", icon = R.drawable.ic_facebook,
+            label = "Facebook",
+            route = "facebook",
+            icon = R.drawable.ic_facebook,
             description = "Facebook sample app."
         ),
         SampleApp(
@@ -66,9 +73,23 @@ object SampleAppData {
             icon = R.drawable.ic_instagram_icon,
         ),
         SampleApp(
-            label = "Bottom app bar",
-            route = "bottomappbar",
-            icon = R.drawable.ic_facebook
+            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
+        ),
+        SampleApp(
+            label = "Buttons",
+            route = "buttons",
+            icon = R.drawable.ic_tweeter,
+        ),
+    )
+
+    val materialDesign3 = listOf(
+        SampleApp(
+            label = "App bar",
+            route = "appbar",
+            icon = R.drawable.ic_instagram_icon,
+        ),
+        SampleApp(
+            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
         ),
         SampleApp(
             label = "Buttons",

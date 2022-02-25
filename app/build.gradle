@@ -57,5 +57,8 @@ dependencies {
     implementation compose
     implementation coil
     implementation lottieAnimation
+    implementation accompaniest.pager
+    implementation accompaniest.pager_indicator
+
     implementation testing
 }
