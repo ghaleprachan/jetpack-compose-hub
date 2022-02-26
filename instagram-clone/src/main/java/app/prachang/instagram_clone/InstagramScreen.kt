@@ -1,5 +1,7 @@
 package app.prachang.instagram_clone
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
@@ -8,17 +10,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.dummy_data.instagram.kotlinIcon
-import app.prachang.instagram_clone.homescreen.HomeScreen
-import app.prachang.instagram_clone.profilescreen.ProfileScreen
+import app.prachang.instagram_clone.home.HomeScreen
+import app.prachang.instagram_clone.profile.ProfileScreen
+import app.prachang.instagram_clone.search.SearchScreen
+import app.prachang.instagram_clone.shop.ShopScreen
 
 @Composable
 fun InstagramScreen() {
@@ -28,13 +34,11 @@ fun InstagramScreen() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainScreenContent() {
-    val context = LocalContext.current
     val bottomNavItems = BottomNavItems.values()
 
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
-
 
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -46,55 +50,92 @@ private fun MainScreenContent() {
         sheetState = modalBottomSheetState,
     ) {
         Column {
-            NavHost(
+            InstagramContent(
                 modifier = Modifier.weight(1f),
                 navController = navController,
-                startDestination = BottomNavItems.Home.route,
-                builder = {
-                    composable(BottomNavItems.Home.route) {
-                        HomeScreen()
-                    }
-                    composable(BottomNavItems.Profile.route) {
-                        ProfileScreen()
+            )
+
+            BottomNavView(
+                bottomNavItems = bottomNavItems,
+                currentRoute = currentRoute,
+                navController = navController,
+            )
+        }
+    }
+}
+
+@Composable
+private fun InstagramContent(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = BottomNavItems.Home.route,
+        builder = {
+            composable(BottomNavItems.Home.route) {
+                HomeScreen()
+            }
+            composable(BottomNavItems.Search.route) {
+                SearchScreen()
+            }
+            composable(BottomNavItems.Shop.route) {
+                ShopScreen()
+            }
+            composable(BottomNavItems.Profile.route) {
+                ProfileScreen()
+            }
+        },
+    )
+}
+
+@Composable
+private fun BottomNavView(
+    bottomNavItems: Array<BottomNavItems>,
+    currentRoute: String?,
+    navController: NavHostController,
+) {
+    BottomAppBar(
+        modifier = Modifier.background(Color.Red),
+        contentColor = Color.Red,
+    ) {
+        bottomNavItems.forEachIndexed { _, bottomNavItem ->
+            val isItemSelected = currentRoute == bottomNavItem.route
+            val icon = if (isItemSelected) {
+                bottomNavItem.selectedIcon
+            } else {
+                bottomNavItem.icon
+            }
+
+            BottomNavigationItem(
+                selected = isItemSelected,
+                onClick = {
+                    navController.navigate(route = bottomNavItem.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route = route)
+                        }
+                        restoreState = true
+                        launchSingleTop = true
                     }
                 },
-            )
-            BottomAppBar(
-                modifier = Modifier.background(Color.Red),
-                contentColor = Color.Red,
-            ) {
-                bottomNavItems.forEachIndexed { index, bottomNavItem ->
-                    val isItemSelected = currentRoute == bottomNavItem.route
-                    val icon = if (isItemSelected) {
-                        bottomNavItem.selectedIcon
+                icon = {
+                    if (bottomNavItem == BottomNavItems.Profile) {
+                        CircleImage(
+                            modifier = Modifier.size(24.dp),
+                            url = kotlinIcon,
+                        )
                     } else {
-                        bottomNavItem.icon
+                        Image(
+                            modifier = Modifier.size(24.dp),
+                            painter = painterResource(id = icon),
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                        )
                     }
-
-                    BottomNavigationItem(
-                        selected = isItemSelected,
-                        onClick = {
-                            navController.navigate(route = bottomNavItem.route)
-                        },
-                        icon = {
-                            if (bottomNavItem == BottomNavItems.Profile) {
-                                CircleImage(
-                                    modifier = Modifier.size(24.dp),
-                                    url = kotlinIcon,
-                                )
-                            } else {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    painter = painterResource(id = icon),
-                                    contentDescription = null,
-                                    tint = Color.Black,
-                                )
-                            }
-                        },
-                        selectedContentColor = Color.Black,
-                    )
-                }
-            }
+                },
+                selectedContentColor = Color.Black,
+            )
         }
     }
 }

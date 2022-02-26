@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone.homescreen
+package app.prachang.instagram_clone.home
 
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.foundation.Image

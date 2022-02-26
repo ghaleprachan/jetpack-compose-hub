@@ -1,10 +1,7 @@
-package app.prachang.instagram_clone.profilescreen
+package app.prachang.instagram_clone.profile
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ButtonColors
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -19,8 +16,6 @@ import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.image2
 import app.prachang.dummy_data.instagram.profileData
-import coil.compose.rememberImagePainter
-import coil.transform.CircleCropTransformation
 
 @Composable
 internal fun TopContent() {

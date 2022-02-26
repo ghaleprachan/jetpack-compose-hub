@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone.profilescreen
+package app.prachang.instagram_clone.profile
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

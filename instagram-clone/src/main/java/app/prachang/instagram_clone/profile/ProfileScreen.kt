@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone.profilescreen
+package app.prachang.instagram_clone.profile
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

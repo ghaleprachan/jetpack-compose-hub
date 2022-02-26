@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone.homescreen
+package app.prachang.instagram_clone.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
