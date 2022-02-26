@@ -7,5 +7,8 @@ drawable ic_home_outlined
 drawable ic_instagram_icon
 drawable ic_material_design
 drawable ic_material_design_you
+drawable ic_outlined_add
 drawable ic_sample_apps
+drawable ic_search_filled
+drawable ic_search_outlined
 drawable ic_tweeter

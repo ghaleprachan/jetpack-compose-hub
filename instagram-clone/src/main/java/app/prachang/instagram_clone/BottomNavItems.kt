@@ -19,14 +19,14 @@ enum class BottomNavItems(
     Search(
         label = "Search",
         route = "Search",
-        icon = R.drawable.ic_home_outlined,
-        selectedIcon = R.drawable.ic_home_filled,
+        icon = R.drawable.ic_search_outlined,
+        selectedIcon = R.drawable.ic_search_filled,
     ),
     AddPost(
         label = "Add Post",
         route = "addpost",
-        icon = R.drawable.ic_home_outlined,
-        selectedIcon = R.drawable.ic_home_filled,
+        icon = R.drawable.ic_outlined_add,
+        selectedIcon = R.drawable.ic_outlined_add,
     ),
     Shop(
         label = "Shop",
