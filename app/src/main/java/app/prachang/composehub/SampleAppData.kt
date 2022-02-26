@@ -4,69 +4,53 @@ import androidx.annotation.DrawableRes
 import app.prachang.dummy_data.R
 
 object SampleAppData {
-
-    enum class SampleAppType(
-        val title: String,
-        @DrawableRes val icon: Int,
-        val samples: List<SampleApp> = emptyList(),
-    ) {
-        DemoApps(
-            title = "Demo Apps",
-            icon = R.drawable.ic_sample_apps,
-            samples = demoApps,
-        ),
-        Animations(
-            title = "Animations",
-            icon = R.drawable.ic_animations,
-        ),
-        MaterialDesign(
-            title = "Material Design",
-            icon = R.drawable.ic_material_design,
-            samples = materialDesign,
-        ),
-        MaterialDesign3(
-            title = "Material Design 3",
-            icon = R.drawable.ic_material_design_you,
-            samples = materialDesign3,
-        )
-    }
-
-    data class SampleApp(
-        val label: String,
-        val route: String,
-        @DrawableRes val icon: Int?,
-        val description: String? = null,
-    )
-
     // Type of sample apps
-    val demoApps = listOf(
+    private val demoApps = listOf(
         SampleApp(
             label = "Instagram",
-            route = "instagram",
+            route = Routes.Instagram,
             icon = R.drawable.ic_instagram_icon,
             description = "Clone app of instagram. It is developed only for UI not for functionalities."
         ),
         SampleApp(
             label = "Gmail",
-            route = "gmail",
+            route = Routes.Gmail,
             icon = R.drawable.ic_gmail,
             description = "Gmail sample app."
         ),
         SampleApp(
             label = "Facebook",
-            route = "facebook",
+            route = Routes.Facebook,
             icon = R.drawable.ic_facebook,
             description = "Facebook sample app."
         ),
         SampleApp(
             label = "Tweeter",
-            route = "facebook",
+            route = Routes.Tweeter,
             icon = R.drawable.ic_tweeter,
             description = "Tweeter sample app",
         ),
     )
 
-    val materialDesign = listOf(
+    // Type of material design
+    private val materialDesign = listOf(
+        SampleApp(
+            label = "App bar",
+            route = null,
+            icon = R.drawable.ic_instagram_icon,
+        ),
+        SampleApp(
+            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
+        ),
+        SampleApp(
+            label = "Buttons",
+            route = "buttons",
+            icon = R.drawable.ic_tweeter,
+        ),
+    )
+
+    // Types of material design you
+    private val materialDesign3 = listOf(
         SampleApp(
             label = "App bar",
             route = "appbar",
@@ -82,19 +66,37 @@ object SampleAppData {
         ),
     )
 
-    val materialDesign3 = listOf(
+    val sampleApps = listOf(
         SampleApp(
-            label = "App bar",
-            route = "appbar",
-            icon = R.drawable.ic_instagram_icon,
+            label = "Demo Apps",
+            route = Routes.Dashboard,
+            icon = R.drawable.ic_sample_apps,
+            subSamples = demoApps,
         ),
         SampleApp(
-            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
+            label = "Animations",
+            route = Routes.Animation,
+            icon = R.drawable.ic_animations,
         ),
         SampleApp(
-            label = "Buttons",
-            route = "buttons",
-            icon = R.drawable.ic_tweeter,
+            label = "Material Design",
+            route = Routes.Animation,
+            icon = R.drawable.ic_material_design,
+            subSamples = materialDesign
         ),
+        SampleApp(
+            label = "Material Design",
+            route = Routes.Animation,
+            icon = R.drawable.ic_material_design_you,
+            subSamples = materialDesign3
+        ),
+    )
+
+    data class SampleApp(
+        val label: String,
+        val route: String? = null,
+        @DrawableRes val icon: Int,
+        val description: String? = null,
+        val subSamples: List<SampleApp> = emptyList()
     )
 }
