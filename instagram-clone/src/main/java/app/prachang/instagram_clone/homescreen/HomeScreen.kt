@@ -47,50 +47,23 @@ internal fun HomeScreen() {
             TopBar(elevation = if (showElevation) 6.dp else 0.dp)
         },
     ) {
-        Column {
-            LazyColumn(
-                modifier = Modifier.weight(1f),
-                contentPadding = it,
-                state = scrollState,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                content = {
-                    item {
-                        StoryContent()
-                        Divider()
-                    }
-                    items(myPosts) { post ->
-                        PostItem(post = post)
-                    }
-                    item {
-                        Height(height = 12.dp)
-                    }
-                },
-            )
-            val bottomNavItems = BottomNavItems.values()
-
-            BottomAppBar(
-                contentColor = Color.Red,
-            ) {
-                bottomNavItems.forEachIndexed { index, bottomNavItem ->
-                    BottomNavigationItem(
-                        selected = true,
-                        onClick = { },
-                        icon = {
-                            val icon =
-                                if (bottomNavItem == BottomNavItems.Home) bottomNavItem.selectedIcon
-                                else bottomNavItem.icon
-                            Icon(
-                                modifier = Modifier.size(24.dp),
-                                painter = painterResource(id = icon),
-                                contentDescription = null,
-                                tint = Color.Black,
-                            )
-                        },
-                        selectedContentColor = Color.Black,
-                    )
+        LazyColumn(
+            contentPadding = it,
+            state = scrollState,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            content = {
+                item {
+                    StoryContent()
+                    Divider()
                 }
-            }
-        }
+                items(myPosts) { post ->
+                    PostItem(post = post)
+                }
+                item {
+                    Height(height = 12.dp)
+                }
+            },
+        )
     }
 }
 
