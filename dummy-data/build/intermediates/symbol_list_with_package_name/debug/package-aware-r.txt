@@ -1,6 +1,7 @@
 app.prachang.dummy_data
 drawable ic_animations
 drawable ic_facebook
+drawable ic_filled_reels
 drawable ic_gmail
 drawable ic_home_filled
 drawable ic_home_outlined
@@ -8,6 +9,7 @@ drawable ic_instagram_icon
 drawable ic_material_design
 drawable ic_material_design_you
 drawable ic_outlined_add
+drawable ic_outlined_reels
 drawable ic_sample_apps
 drawable ic_search_filled
 drawable ic_search_outlined

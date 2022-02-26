@@ -31,8 +31,8 @@ enum class BottomNavItems(
     Shop(
         label = "Shop",
         route = "shop",
-        icon = R.drawable.ic_home_outlined,
-        selectedIcon = R.drawable.ic_home_filled,
+        icon = R.drawable.ic_outlined_reels,
+        selectedIcon = R.drawable.ic_filled_reels,
     ),
     Profile(
         label = "Profile",
