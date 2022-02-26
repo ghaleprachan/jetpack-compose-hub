@@ -1,21 +1,20 @@
 package app.prachang.composehub
 
-import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
+import app.prachang.common_compose_ui.dialogs.ShowDialog
 import app.prachang.composehub.screens.DashboardScreen
 import app.prachang.instagram_clone.InstagramScreen
 import app.prachang.theme.ComposeHubTheme
@@ -40,7 +39,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 internal fun MainScreen() {
     val navController = rememberNavController()
-    val context = LocalContext.current
+    val showDialog = remember {
+        mutableStateOf(false)
+    }
+    ShowDialog(showDialog = showDialog)
 
     NavHost(
         navController = navController,
@@ -49,34 +51,17 @@ internal fun MainScreen() {
             composable(Routes.Dashboard) {
                 DashboardScreen { sample ->
                     val route = sample.route
-                    navigateNext(route, navController, context)
+                    try {
+                        navController.navigate(route = route.orEmpty())
+                    } catch (ex: Exception) {
+                        showDialog.value = !showDialog.value
+                    }
                 }
             }
 
             composable(Routes.Instagram) {
                 InstagramScreen()
             }
-
-            dialog(Routes.Dialog) {
-
-            }
         },
     )
-}
-
-private fun navigateNext(
-    route: String?,
-    navController: NavHostController,
-    context: Context,
-) {
-    // Optimize it later todo(ghaleprachan)
-    try {
-        if (route != null) {
-            navController.navigate(route = route)
-        } else {
-            Toast.makeText(context, "Work on progress", Toast.LENGTH_SHORT).show()
-        }
-    } catch (ex: Exception) {
-        Toast.makeText(context, "Work on progress", Toast.LENGTH_SHORT).show()
-    }
 }
