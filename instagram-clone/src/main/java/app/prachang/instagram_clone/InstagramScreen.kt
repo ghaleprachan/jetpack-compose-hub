@@ -1,39 +1,73 @@
 package app.prachang.instagram_clone
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import app.prachang.instagram_clone.homescreen.HomeScreen
+import app.prachang.instagram_clone.profilescreen.ProfileScreen
 
 @Composable
 fun InstagramScreen() {
     MainScreenContent()
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainScreenContent() {
     val bottomNavItems = BottomNavItems.values()
 
-    /*BottomSheetScaffold(sheetContent = {}) {
+    val navController = rememberNavController()
+    val navBackStack by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStack?.destination?.route
 
-    }*/
-
-    Scaffold(
-        bottomBar = {
-            BottomAppBar {
+    BottomSheetScaffold(
+        sheetContent = {
+            Text(text = "Here is none")
+        },
+    ) {
+        Column {
+            NavHost(
+                modifier = Modifier.weight(1f),
+                navController = navController,
+                startDestination = BottomNavItems.Home.route,
+                builder = {
+                    composable(BottomNavItems.Home.route) {
+                        HomeScreen()
+                    }
+                    composable(BottomNavItems.Profile.route) {
+                        ProfileScreen()
+                    }
+                },
+            )
+            BottomAppBar(
+                modifier = Modifier.background(Color.Red),
+                contentColor = Color.Red,
+            ) {
                 bottomNavItems.forEachIndexed { index, bottomNavItem ->
+                    val isItemSelected = currentRoute == bottomNavItem.route
+                    val icon = if (isItemSelected) {
+                        bottomNavItem.selectedIcon
+                    } else {
+                        bottomNavItem.icon
+                    }
+
                     BottomNavigationItem(
-                        selected = true,
-                        onClick = { },
+                        selected = isItemSelected,
+                        onClick = {
+
+                        },
                         icon = {
-                            val icon =
-                                if (bottomNavItem == BottomNavItems.Home) bottomNavItem.selectedIcon
-                                else bottomNavItem.icon
                             Icon(
                                 modifier = Modifier.size(24.dp),
                                 painter = painterResource(id = icon),
@@ -45,20 +79,6 @@ private fun MainScreenContent() {
                     )
                 }
             }
-        },
-    ) {
-        Box(modifier = Modifier.padding(it)) {
-            HomeScreen()
         }
     }
-
-    /*BottomSheetScaffold(sheetContent = {}) {
-        Column(modifier = Modifier.padding(it)) {
-            *//*Surface(modifier = Modifier.fillMaxSize(1f)) {
-
-            }*//*
-            // HomeScreen()
-
-        }
-    }*/
 }
