@@ -1,4 +1,4 @@
-package app.prachang.instagram_clone.commoncomponents
+package app.prachang.common_compose_ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -16,6 +16,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.dialogs.ShowDialog
 import app.prachang.composehub.screens.DashboardScreen
+import app.prachang.gmail_clone.GmailScreen
 import app.prachang.instagram_clone.InstagramScreen
 import app.prachang.theme.ComposeHubTheme
 
@@ -61,6 +62,10 @@ internal fun MainScreen() {
 
             composable(Routes.Instagram) {
                 InstagramScreen()
+            }
+
+            composable(Routes.Gmail) {
+                GmailScreen()
             }
         },
     )
