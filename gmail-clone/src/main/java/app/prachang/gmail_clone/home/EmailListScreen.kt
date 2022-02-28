@@ -10,14 +10,20 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Beenhere
+import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.SaveAlt
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -49,7 +55,11 @@ fun EmailListContent(
                 Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
             }
             items(MailsData.mails) { mail ->
-                EmailItem(mail = mail)
+                if (mail.tags == MailsData.Tags.Email) {
+                    EmailItem(mail = mail)
+                } else {
+                    OtherItem(type = mail.tags)
+                }
             }
         },
     )
@@ -57,7 +67,9 @@ fun EmailListContent(
 
 @Composable
 private fun EmailItem(mail: MailsData.MailsData) {
-    val color = colors.random()
+    val color = remember {
+        colors.random()
+    }
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Surface(
             color = color,
@@ -81,7 +93,12 @@ private fun EmailItem(mail: MailsData.MailsData) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                Text(text = mail.sender.orEmpty(), style = MaterialTheme.typography.headlineMedium)
+                Text(
+                    text = mail.sender.orEmpty(),
+                    style = MaterialTheme.typography.headlineMedium.copy(
+                        fontWeight = if (mail.isRead) FontWeight.Normal else FontWeight.Bold
+                    )
+                )
                 Text(
                     text = mail.dataTime.orEmpty(),
                     style = TextStyle(
@@ -95,7 +112,9 @@ private fun EmailItem(mail: MailsData.MailsData) {
                 ) {
                     Text(
                         text = mail.subTitle.orEmpty(),
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = if (mail.isRead) FontWeight.Normal else FontWeight.Bold
+                        ),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
@@ -118,6 +137,46 @@ private fun EmailItem(mail: MailsData.MailsData) {
     }
 }
 
+@Composable
+private fun OtherItem(
+    type: MailsData.Tags
+) {
+    val icon =
+        if (type == MailsData.Tags.Promotions) Icons.Outlined.Beenhere else Icons.Outlined.Person
+
+    val (message, title) = if (type == MailsData.Tags.Promotions) listOf(
+        "Android Authority, Stackshare  Weekly, Quora, Android Authority",
+        "Promotions"
+    ) else listOf("Linkedin, Youtube, Facebook", "Social")
+
+    Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+        Icon(
+            icon,
+            contentDescription = null,
+            tint = Color(0xFF4CAF50),
+            modifier = Modifier.padding(start = 12.dp, top = 6.dp)
+        )
+
+        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Column {
+                    Text(text = title, style = MaterialTheme.typography.headlineMedium)
+
+                    Text(
+                        text = message,
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        }
+    }
+}
 
 val colors = listOf(
     Color(0xFF2196F3),

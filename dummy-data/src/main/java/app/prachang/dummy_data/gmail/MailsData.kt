@@ -24,6 +24,7 @@ object MailsData {
     )
 
     val mails = listOf(
+        MailsData(tags = Tags.Promotions),
         MailsData(
             sender = "External Partnership",
             image = generateUrl("Ex+Part"),
@@ -32,6 +33,7 @@ object MailsData {
             dataTime = "4:06 pm",
             isRead = true,
         ),
+        MailsData(tags = Tags.Social),
         MailsData(
             sender = "Google Play | Apps & Games",
             image = generateUrl("Google+Play"),
