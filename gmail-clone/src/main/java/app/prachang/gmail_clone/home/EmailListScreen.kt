@@ -57,9 +57,10 @@ fun EmailListContent(
 
 @Composable
 private fun EmailItem(mail: MailsData.MailsData) {
+    val color = colors.random()
     Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
         Surface(
-            color = colors.random(),
+            color = color,
             shape = CircleShape,
             modifier = Modifier.size(45.dp),
         ) {
