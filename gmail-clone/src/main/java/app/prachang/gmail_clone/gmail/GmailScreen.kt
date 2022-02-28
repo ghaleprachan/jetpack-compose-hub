@@ -2,10 +2,13 @@
 
 package app.prachang.gmail_clone.gmail
 
+import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -21,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -30,6 +34,7 @@ import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.gmail_clone.GmailRoutes
+import app.prachang.gmail_clone.home.BottomNavItems
 import app.prachang.gmail_clone.home.HomeScreen
 import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.materialyoutheme.GmailTheme
@@ -52,15 +57,22 @@ private fun GmailContent() {
     }
 
     val emailScrollState = rememberLazyListState()
-    val isScrollingUp = emailScrollState.isScrollingUp()
 
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
 
-    val searchValue = remember {
-        mutableStateOf("")
-    }
+    val homeNavController = rememberNavController()
+    val homeNavBackStack by homeNavController.currentBackStackEntryAsState()
+    val homeCurrentRoute = homeNavBackStack?.destination?.route
+
+    val gmailUtils = GmailUtils(
+        emailScrollState = emailScrollState,
+        searchValue = remember { mutableStateOf("") },
+        focusRequester = FocusRequester(),
+        navController = homeNavController,
+        currentRoute = homeCurrentRoute
+    )
 
     NavigationDrawer(
         drawerContent = {
@@ -72,25 +84,31 @@ private fun GmailContent() {
                 .fillMaxSize()
                 .background(Material3Colors.background)
         ) {
-            TopContent(
-                focusRequester = focusRequester,
-                searchValue = searchValue,
-                isEnabled = currentRoute == GmailRoutes.SearchScreen,
-                onClick = {
-                    navController.navigate(route = GmailRoutes.SearchScreen) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route = route)
+            AnimatedVisibility(
+                visible = gmailUtils.emailScrollState.isScrollingUp() && homeCurrentRoute != BottomNavItems.Bookings.route,
+            ) {
+                TopContent(
+                    focusRequester = gmailUtils.focusRequester,
+                    searchValue = gmailUtils.searchValue,
+                    isEnabled = currentRoute == GmailRoutes.SearchScreen,
+                    onClick = {
+                        navController.navigate(route = GmailRoutes.SearchScreen) {
+                            gmailUtils.navController.graph.startDestinationRoute?.let { route ->
+                                popUpTo(route = route)
+                            }
+                            restoreState = true
+                            launchSingleTop = true
                         }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
-                },
-            )
+                    },
+                )
+            }
             NavHost(
                 navController = navController, startDestination = GmailRoutes.HomeScreen,
                 builder = {
                     composable(GmailRoutes.HomeScreen) {
-                        HomeScreen(state = emailScrollState)
+                        HomeScreen(
+                            gmailUtils = gmailUtils,
+                        )
                     }
                     composable(GmailRoutes.SearchScreen) {
                         SearchScreen(
@@ -103,6 +121,7 @@ private fun GmailContent() {
     }
 }
 
+
 @Composable
 private fun TopContent(
     modifier: Modifier = Modifier,
@@ -112,9 +131,11 @@ private fun TopContent(
     focusRequester: FocusRequester,
 ) {
     Box(
-        modifier = modifier.padding(
-            horizontal = 16.dp, vertical = 8.dp
-        )
+        modifier = modifier
+            .background(Material3Colors.primary)
+            .padding(
+                horizontal = 16.dp, vertical = 8.dp
+            )
     ) {
         TextField(
             modifier = Modifier
