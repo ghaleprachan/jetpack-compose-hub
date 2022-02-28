@@ -7,6 +7,10 @@ import androidx.compose.ui.graphics.Color
 object Material3Colors {
     val primary @Composable get() = MaterialTheme.colorScheme.primary
 
+    val secondary @Composable get() = MaterialTheme.colorScheme.secondary
+
+    val onSecondary @Composable get() = MaterialTheme.colorScheme.onSecondary
+
     val onPrimary @Composable get() = MaterialTheme.colorScheme.onPrimary
 
     val background @Composable get() = MaterialTheme.colorScheme.background
