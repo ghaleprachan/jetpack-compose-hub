@@ -5,6 +5,8 @@ package app.prachang.gmail_clone.gmail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TextField
@@ -19,14 +21,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.components.CircleImage
+import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.gmail_clone.GmailRoutes
 import app.prachang.gmail_clone.home.HomeScreen
@@ -49,6 +50,9 @@ private fun GmailContent() {
     val focusRequester = remember {
         FocusRequester()
     }
+
+    val emailScrollState = rememberLazyListState()
+    val isScrollingUp = emailScrollState.isScrollingUp()
 
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
@@ -86,7 +90,7 @@ private fun GmailContent() {
                 navController = navController, startDestination = GmailRoutes.HomeScreen,
                 builder = {
                     composable(GmailRoutes.HomeScreen) {
-                        HomeScreen()
+                        HomeScreen(state = emailScrollState)
                     }
                     composable(GmailRoutes.SearchScreen) {
                         SearchScreen(
