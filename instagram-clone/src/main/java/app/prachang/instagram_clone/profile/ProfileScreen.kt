@@ -9,23 +9,23 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Dashboard
-import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.components.ComposeImage
+import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.layouts.items
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
+import app.prachang.dummy_data.R
 import app.prachang.theme.ComposeHubTheme
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
@@ -93,22 +93,34 @@ internal fun ProfileScreen() {
 
                 stickyHeader {
                     Column(modifier = Modifier.background(Color.White)) {
+                        Height(height = 16.dp)
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(65.dp),
-                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.Bottom,
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            IconButton(onClick = {
-                                post = true
-                            }) {
-                                Icon(Icons.Default.Dashboard, contentDescription = null)
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    painterResource(id = R.drawable.ic_grid),
+                                    contentDescription = null
+                                )
+                                Height(height = 6.dp)
+                                Divider(color = Color.Black)
                             }
-                            IconButton(onClick = {
-                                post = false
-                            }) {
-                                Icon(Icons.Default.Save, contentDescription = null)
+                            Column(
+                                modifier = Modifier.weight(1f),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Icon(
+                                    Icons.Default.PermContactCalendar,
+                                    contentDescription = null,
+                                    tint = Color.Gray
+                                )
+                                Height(height = 8.dp)
+                                Divider(color = Color.Transparent)
                             }
                         }
                     }
