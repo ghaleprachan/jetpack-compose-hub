@@ -1,0 +1,45 @@
+package app.prachang.theme.materialyoutheme
+
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import app.prachang.theme.Black500
+import app.prachang.theme.CustomColors
+
+private val DarkColorScheme = darkColorScheme()
+
+private val LightColorScheme = lightColorScheme(
+    primary = Color.White,
+    onPrimary = Color.Black,
+    primaryContainer = Color.White,
+    onPrimaryContainer = Color.Black,
+    secondary = CustomColors.LightBlue,
+    onSecondary = Color.Black,
+    background = Color.White,
+    onBackground = Color.Black,
+    surface = CustomColors.VeryLightBlue,
+    onSurface = Color.Black,
+)
+
+@Composable
+fun GmailTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    val context = LocalContext.current
+    val colors = if (darkTheme) {
+        dynamicDarkColorScheme(context)
+    } else {
+        LightColorScheme
+    }
+    MaterialTheme(
+        colorScheme = colors,
+        typography = Typography,
+        content = content,
+    )
+}

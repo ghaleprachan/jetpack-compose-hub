@@ -1,4 +1,4 @@
-package app.prachang.theme
+package app.prachang.theme.materialtheme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color

@@ -16,3 +16,8 @@ val White200 = Color(0xFFD1CFCF)
 val Black700 = Color(0xFF000000)
 val Black500 = Color(0xFF141414)
 val Black200 = Color(0xFF2B2A2A)
+
+object CustomColors {
+    val LightBlue = Color(0xFFBEE0FC)
+    val VeryLightBlue = Color(0xFFE7F0F8)
+}

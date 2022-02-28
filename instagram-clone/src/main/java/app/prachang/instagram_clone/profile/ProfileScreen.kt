@@ -29,7 +29,7 @@ import app.prachang.common_compose_ui.layouts.items
 import app.prachang.dummy_data.R
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
-import app.prachang.theme.ComposeHubTheme
+import app.prachang.theme.materialtheme.ComposeHubTheme
 
 
 @Preview(showSystemUi = true)

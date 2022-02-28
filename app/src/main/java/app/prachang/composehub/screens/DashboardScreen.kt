@@ -30,7 +30,7 @@ import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.composehub.SampleAppData
 import app.prachang.dummy_data.instagram.pagerImages
-import app.prachang.theme.Typography
+import app.prachang.theme.materialtheme.Typography
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage

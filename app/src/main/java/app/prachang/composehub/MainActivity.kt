@@ -10,15 +10,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.dialogs.ShowDialog
 import app.prachang.composehub.screens.DashboardScreen
-import app.prachang.gmail_clone.GmailScreen
+import app.prachang.gmail_clone.gmail.GmailScreen
 import app.prachang.instagram_clone.InstagramScreen
-import app.prachang.theme.ComposeHubTheme
+import app.prachang.theme.materialtheme.ComposeHubTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

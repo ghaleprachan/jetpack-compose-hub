@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.instagram_clone.R
-import app.prachang.theme.ComposeHubTheme
+import app.prachang.theme.materialtheme.ComposeHubTheme
 
 @Preview(showSystemUi = true)
 @Composable
