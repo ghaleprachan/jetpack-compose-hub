@@ -8,6 +8,9 @@ import androidx.compose.material.icons.outlined.VideoCall
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun HomeScreen() {
@@ -18,6 +21,8 @@ fun HomeScreen() {
 @Composable
 private fun HomeContent() {
     val navigationItems = BottomNavItems.values()
+    val navController = rememberNavController()
+
     Scaffold(bottomBar = {
         NavigationBar {
             navigationItems.forEach { bottomNavItem ->
@@ -36,7 +41,18 @@ private fun HomeContent() {
             }
         }
     }) {
-
+        NavHost(
+            navController = navController,
+            startDestination = BottomNavItems.Home.route,
+            builder = {
+                composable(BottomNavItems.Home.route) {
+                    EmailListScreen()
+                }
+                composable(BottomNavItems.Bookings.route) {
+                    MeetScreen()
+                }
+            },
+        )
     }
 }
 
@@ -47,9 +63,6 @@ enum class BottomNavItems(
     val unselectedIcon: ImageVector,
 ) {
     Home("Mail", "route-home", Icons.Filled.Mail, Icons.Outlined.Mail), Bookings(
-        "Meet",
-        "route-meet",
-        Icons.Filled.VideoCall,
-        Icons.Outlined.VideoCall
+        "Meet", "route-meet", Icons.Filled.VideoCall, Icons.Outlined.VideoCall
     ),
 }
