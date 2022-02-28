@@ -1,17 +1,18 @@
 package app.prachang.instagram_clone
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -122,7 +123,21 @@ private fun BottomNavView(
                 icon = {
                     if (bottomNavItem == BottomNavItems.Profile) {
                         CircleImage(
-                            modifier = Modifier.size(24.dp),
+                            modifier = Modifier
+                                .size(24.dp)
+                                .then(
+                                    if (isItemSelected) {
+                                        Modifier
+                                            .border(
+                                                width = 1.dp,
+                                                color = Color.Black,
+                                                shape = CircleShape,
+                                            )
+                                            .padding(3.dp)
+                                    } else {
+                                        Modifier
+                                    }
+                                ),
                             url = kotlinIcon,
                         )
                     } else {
