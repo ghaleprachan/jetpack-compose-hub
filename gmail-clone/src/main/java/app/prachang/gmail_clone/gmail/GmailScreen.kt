@@ -2,9 +2,6 @@
 
 package app.prachang.gmail_clone.gmail
 
-import android.location.provider.ProviderProperties
-import android.widget.Toast
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -22,23 +19,20 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalInputModeManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.dummy_data.instagram.kotlinIcon
+import app.prachang.gmail_clone.GmailRoutes
 import app.prachang.gmail_clone.home.HomeScreen
 import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-
-enum class GmailTargetState {
-    HomeScreen, SearchScreen
-}
 
 @Composable
 fun GmailScreen() {
@@ -48,21 +42,17 @@ fun GmailScreen() {
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class
 )
 @Composable
 private fun GmailContent() {
-    val localContext = LocalContext.current
     val focusRequester = remember {
         FocusRequester()
     }
-    val scope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
 
-    var currentScreen by remember {
-        mutableStateOf(GmailTargetState.HomeScreen)
-    }
+    val navController = rememberNavController()
+    val navBackStack by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStack?.destination?.route
 
     val searchValue = remember {
         mutableStateOf("")
@@ -81,22 +71,30 @@ private fun GmailContent() {
             TopContent(
                 focusRequester = focusRequester,
                 searchValue = searchValue,
-                isEnabled = currentScreen == GmailTargetState.SearchScreen,
+                isEnabled = currentRoute == GmailRoutes.SearchScreen,
                 onClick = {
-                    currentScreen = if (currentScreen == GmailTargetState.HomeScreen) {
-                        GmailTargetState.SearchScreen
-                    } else {
-                        focusRequester.freeFocus()
-                        GmailTargetState.HomeScreen
+                    navController.navigate(route = GmailRoutes.SearchScreen) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route = route)
+                        }
+                        restoreState = true
+                        launchSingleTop = true
                     }
                 },
             )
-            Crossfade(targetState = currentScreen) {
-                when (it) {
-                    GmailTargetState.HomeScreen -> HomeScreen()
-                    GmailTargetState.SearchScreen -> SearchScreen()
-                }
-            }
+            NavHost(
+                navController = navController, startDestination = GmailRoutes.HomeScreen,
+                builder = {
+                    composable(GmailRoutes.HomeScreen) {
+                        HomeScreen()
+                    }
+                    composable(GmailRoutes.SearchScreen) {
+                        SearchScreen(
+                            focusRequester = focusRequester
+                        )
+                    }
+                },
+            )
         }
     }
 }
