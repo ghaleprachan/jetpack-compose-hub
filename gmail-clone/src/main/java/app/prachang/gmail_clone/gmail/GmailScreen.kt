@@ -2,8 +2,11 @@
 
 package app.prachang.gmail_clone.gmail
 
+import android.location.provider.ProviderProperties
+import android.widget.Toast
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -13,10 +16,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalInputModeManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.dummy_data.instagram.kotlinIcon
@@ -24,6 +33,8 @@ import app.prachang.gmail_clone.home.HomeScreen
 import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 enum class GmailTargetState {
     HomeScreen, SearchScreen
@@ -36,15 +47,23 @@ fun GmailScreen() {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 private fun GmailContent() {
+    val localContext = LocalContext.current
     val focusRequester = remember {
         FocusRequester()
     }
+    val scope = rememberCoroutineScope()
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     var currentScreen by remember {
         mutableStateOf(GmailTargetState.HomeScreen)
     }
+
     val searchValue = remember {
         mutableStateOf("")
     }
@@ -65,7 +84,6 @@ private fun GmailContent() {
                 isEnabled = currentScreen == GmailTargetState.SearchScreen,
                 onClick = {
                     currentScreen = if (currentScreen == GmailTargetState.HomeScreen) {
-                        focusRequester.requestFocus()
                         GmailTargetState.SearchScreen
                     } else {
                         focusRequester.freeFocus()
@@ -99,12 +117,14 @@ private fun TopContent(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester),
+                .focusRequester(focusRequester)
+                .clip(shape = CircleShape)
+                .clickable { onClick() },
             placeholder = {
                 Text(text = "Search in emails")
             },
             leadingIcon = {
-                IconButton(onClick = onClick) {
+                IconButton(onClick = {}) {
                     Icon(
                         Icons.Default.Menu,
                         contentDescription = null,

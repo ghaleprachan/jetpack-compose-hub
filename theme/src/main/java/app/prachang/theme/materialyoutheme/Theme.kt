@@ -24,6 +24,10 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color.Black,
     surface = CustomColors.VeryLightBlue,
     onSurface = Color.Black,
+    inverseSurface = CustomColors.LightBlue,
+    inverseOnSurface = Color.Black,
+    tertiary = CustomColors.LightBlue,
+    onTertiary = Color.White,
 )
 
 @Composable

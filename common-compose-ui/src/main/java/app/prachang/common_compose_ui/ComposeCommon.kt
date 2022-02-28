@@ -16,9 +16,9 @@ fun getContext(): Context {
         return LocalContext.current
     }*/
 
-val context
+/*val context
     @Composable
-    get() = LocalContext.current
+    get() = LocalContext.current*/
 
 /*
 val context: @Composable () -> Context = {
