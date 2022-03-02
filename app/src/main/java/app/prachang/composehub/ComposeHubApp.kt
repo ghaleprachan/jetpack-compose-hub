@@ -5,25 +5,12 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class ComposeHubApp : Application() {
+    companion object {
+        lateinit var instance: Application
+    }
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
     }
 }
-
-/*
-class AppInitializers @Inject constructor(
-    private val initializers: Set<@JvmSuppressWildcards AppInitializer>
-) {
-    fun init(application: Application) {
-        initializers.forEach {
-            it.init(application)
-        }
-    }
-}
-
-interface AppInitializer {
-    fun init(application: Application)
-}
-*/
-
