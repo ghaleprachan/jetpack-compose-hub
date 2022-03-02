@@ -6,6 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -34,9 +35,8 @@ import app.prachang.dummy_data.gmail.MailsDataTable
 @Composable
 internal fun EmailListScreen(
     scrollState: LazyListState,
-    // homeViewModel: HomeViewModel = viewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
-    val homeViewModel = hiltViewModel<HomeViewModel>()
     val gmailState = homeViewModel.gmailList.collectAsState()
     LaunchedEffect(key1 = true, block = {
         homeViewModel.getGmail()
@@ -61,6 +61,7 @@ private fun EmailListScreen(
             item {
                 Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
             }
+
             items(gmailState.value) { mail ->
                 if (mail.tags == MailsData.Tags.Email) {
                     EmailItem(mail = mail)

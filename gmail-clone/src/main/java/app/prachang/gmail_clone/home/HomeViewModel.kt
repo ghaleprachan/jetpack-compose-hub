@@ -15,10 +15,10 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val gmailDao: GmailDao
 ) : ViewModel() {
+
     private val _gmailList = MutableStateFlow<List<MailsDataTable>>(emptyList())
     val gmailList = _gmailList.asStateFlow()
     fun getGmail() = viewModelScope.launch {
-        // delay(2000)
         _gmailList.value = gmailDao.getAllEmails()
     }
 }
