@@ -4,7 +4,8 @@ ext {
             compose_navigation = '2.5.0-alpha01',
             kotlin_version = '1.6.0',
             accompaniest_version = '0.24.1-alpha',
-            hilt_version = '2.40.5'
+            hilt_version = '2.40.5',
+            room_version = '2.4.2'
     ]
 
     materialDesign = [
@@ -35,6 +36,12 @@ ext {
     hilt = [
             "hilt"         : "com.google.dagger:hilt-android:$hilt_version",
             "hilt_compiler": "com.google.dagger:hilt-android-compiler:$hilt_version"
+    ]
+
+    room = [
+            "room_db"      : "androidx.room:room-ktx:$room_version",
+            "room_runtime" : "androidx.room:room-runtime:$room_version",
+            "room_compiler": "androidx.room:room-compiler:$room_version",
     ]
 
     testing = [

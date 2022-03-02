@@ -68,9 +68,8 @@ fun ComposeImage(
             contentScale = contentScale,
         )
 
-        /*
-        make instagram like loading and do in following way todo(ghaleprachan)
-        when (painter.state) {
+        // make instagram like loading and do in following way todo(ghaleprachan)
+        /*when (painter.state) {
             is ImagePainter.State.Loading -> {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),

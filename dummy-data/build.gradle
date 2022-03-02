@@ -2,6 +2,9 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
+apply plugin: 'kotlin-kapt'
+
+apply from: "$rootDir/dependencies.gradle"
 
 android {
     compileSdk 31
@@ -24,11 +27,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
 
     dependencies {
         implementation(project(":android-common"))
+
+        implementation hilt.hilt
+        kapt hilt.hilt_compiler
+        implementation room.room_db
+        implementation room.room_runtime
+        kapt room.room_compiler
     }
 }
+
