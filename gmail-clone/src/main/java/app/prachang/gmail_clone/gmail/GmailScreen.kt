@@ -62,13 +62,15 @@ private fun GmailContent() {
     val homeNavBackStack by homeNavController.currentBackStackEntryAsState()
     val homeCurrentRoute = homeNavBackStack?.destination?.route
 
-    val gmailUtils = GmailUtils(
-        emailScrollState = emailScrollState,
-        searchValue = remember { mutableStateOf("") },
-        focusRequester = FocusRequester(),
-        navController = homeNavController,
-        currentRoute = homeCurrentRoute,
-    )
+    val gmailUtils = remember {
+        GmailUtils(
+            emailScrollState = emailScrollState,
+            searchValue = mutableStateOf(""),
+            focusRequester = FocusRequester(),
+            navController = homeNavController,
+            currentRoute = homeCurrentRoute,
+        )
+    }
     val isScrollingUp = gmailUtils.emailScrollState.isScrollingUp()
 
     NavigationDrawer(

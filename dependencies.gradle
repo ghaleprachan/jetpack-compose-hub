@@ -34,8 +34,9 @@ ext {
     ]
 
     hilt = [
-            "hilt"         : "com.google.dagger:hilt-android:$hilt_version",
-            "hilt_compiler": "com.google.dagger:hilt-android-compiler:$hilt_version"
+            "hilt"           : "com.google.dagger:hilt-android:$hilt_version",
+            "hilt_compiler"  : "com.google.dagger:hilt-android-compiler:$hilt_version",
+            "hilt_navigation": "androidx.hilt:hilt-navigation-compose:1.0.0",
     ]
 
     room = [

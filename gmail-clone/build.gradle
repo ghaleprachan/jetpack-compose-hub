@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 apply from: "$rootDir/dependencies.gradle"
@@ -46,6 +47,10 @@ dependencies {
     implementation(project(":dummy-data"))
     implementation compose
     implementation accompaniest.flow_layout
+
+    implementation hilt.hilt
+    implementation hilt.hilt_navigation
+    kapt hilt.hilt_compiler
 
     implementation materialDesign.material3
 }

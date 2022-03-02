@@ -15,8 +15,7 @@ import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,24 +24,34 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.gmail.MailsData
 import app.prachang.dummy_data.gmail.MailsDataTable
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun EmailListScreen(
-    scrollState: LazyListState, contentPadding: PaddingValues
+internal fun EmailListScreen(
+    scrollState: LazyListState,
+    // homeViewModel: HomeViewModel = viewModel(),
 ) {
-    EmailListContent(
-        scrollState = scrollState, contentPadding = contentPadding
+    val homeViewModel = hiltViewModel<HomeViewModel>()
+    val gmailState = homeViewModel.gmailList.collectAsState()
+    LaunchedEffect(key1 = true, block = {
+        homeViewModel.getGmail()
+    })
+    EmailListScreen(
+        scrollState = scrollState,
+        gmailState = gmailState,
     )
 }
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
-fun EmailListContent(
-    scrollState: LazyListState, contentPadding: PaddingValues
+private fun EmailListScreen(
+    scrollState: LazyListState,
+    gmailState: State<List<MailsDataTable>>,
 ) {
     LazyColumn(
         contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
@@ -52,7 +61,7 @@ fun EmailListContent(
             item {
                 Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
             }
-            items(MailsData.mails) { mail ->
+            items(gmailState.value) { mail ->
                 if (mail.tags == MailsData.Tags.Email) {
                     EmailItem(mail = mail)
                 } else {
@@ -143,8 +152,7 @@ private fun OtherItem(
         if (type == MailsData.Tags.Promotions) Icons.Outlined.Beenhere else Icons.Outlined.Person
 
     val (message, title) = if (type == MailsData.Tags.Promotions) listOf(
-        "Android Authority, Stackshare  Weekly, Quora, Android Authority",
-        "Promotions"
+        "Android Authority, Stackshare  Weekly, Quora, Android Authority", "Promotions"
     ) else listOf("Linkedin, Youtube, Facebook", "Social")
 
     Row(horizontalArrangement = Arrangement.spacedBy(20.dp)) {

@@ -3,10 +3,7 @@
 package app.prachang.gmail_clone.home
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -27,22 +24,25 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import app.prachang.common_compose_ui.extensions.Width
-import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.gmail_clone.gmail.GmailUtils
 import app.prachang.theme.materialyoutheme.Material3Colors
 
+/* val exampleViewModel = hiltViewModel<ExampleViewModel>()
+            ExampleScreen(exampleViewModel)*/
 @Composable
 fun HomeScreen(
-    gmailUtils: GmailUtils, isScrollingUp: Boolean
+    gmailUtils: GmailUtils,
+    isScrollingUp: Boolean,
 ) {
-    HomeContent(
-        gmailUtils = gmailUtils, isScrollingUp = isScrollingUp
+    HomeScreenContent(
+        gmailUtils = gmailUtils,
+        isScrollingUp = isScrollingUp,
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun HomeContent(
+private fun HomeScreenContent(
     gmailUtils: GmailUtils,
     isScrollingUp: Boolean,
 ) {
@@ -67,7 +67,7 @@ private fun HomeContent(
             builder = {
                 composable(BottomNavItems.Home.route) {
                     EmailListScreen(
-                        scrollState = gmailUtils.emailScrollState, contentPadding = contentPadding
+                        scrollState = gmailUtils.emailScrollState,
                     )
                 }
                 composable(BottomNavItems.Bookings.route) {
@@ -146,15 +146,9 @@ enum class BottomNavItems(
     val unselectedIcon: ImageVector,
 ) {
     Home(
-        "Mail",
-        "route-home",
-        Icons.Filled.Mail,
-        Icons.Outlined.Mail
+        "Mail", "route-home", Icons.Filled.Mail, Icons.Outlined.Mail
     ),
     Bookings(
-        "Meet",
-        "route-meet",
-        Icons.Filled.VideoCall,
-        Icons.Outlined.VideoCall
+        "Meet", "route-meet", Icons.Filled.VideoCall, Icons.Outlined.VideoCall
     ),
 }

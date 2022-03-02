@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import app.prachang.dummy_data.data.dao.GmailDao
 import app.prachang.dummy_data.data.database.AppRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -48,5 +49,5 @@ object DatabaseDaoModule {
     @Provides
     fun provideGmailDao(
         db: AppRoomDatabase
-    ) = db.getGmailDao()
+    ): GmailDao = db.getGmailDao()
 }
