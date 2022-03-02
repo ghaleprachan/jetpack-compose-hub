@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -18,7 +19,9 @@ import app.prachang.composehub.screens.DashboardScreen
 import app.prachang.gmail_clone.gmail.GmailScreen
 import app.prachang.instagram_clone.InstagramScreen
 import app.prachang.theme.materialtheme.ComposeHubTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
             ComposeHubTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = Color.Gray//color = MaterialTheme.colors.background
+                    color = MaterialTheme.colors.background,
                 ) {
                     MainScreen()
                 }
@@ -43,7 +46,8 @@ internal fun MainScreen() {
         mutableStateOf(false)
     }
     ShowDialog(showDialog = showDialog)
-
+    /*navController.navigate(Route.Dashboard.route)
+    navController.navigate(Route.Instagram.getRoute(id = "gjgh"))*/
     NavHost(
         navController = navController,
         startDestination = Routes.Dashboard,
@@ -68,4 +72,13 @@ internal fun MainScreen() {
             }
         },
     )
+}
+
+sealed class Route(val route: String) {
+    object Dashboard : Route(route = Routes.Dashboard)
+    object Instagram : Route(route = "${Routes.Instagram}/{id}") {
+        fun getRoute(id: String): String {
+            return "${Routes.Instagram}/$id"
+        }
+    }
 }
