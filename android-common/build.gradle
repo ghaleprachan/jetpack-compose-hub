@@ -2,7 +2,10 @@ plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
+
 apply from: "$rootDir/dependencies.gradle"
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdk 31
 
@@ -31,4 +34,7 @@ android {
 
 dependencies {
     implementation(compose)
+
+    implementation hilt.hilt
+    kapt hilt.hilt_compiler
 }

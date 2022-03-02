@@ -2,10 +2,7 @@
 
 package app.prachang.gmail_clone.gmail
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,7 +21,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -71,8 +67,9 @@ private fun GmailContent() {
         searchValue = remember { mutableStateOf("") },
         focusRequester = FocusRequester(),
         navController = homeNavController,
-        currentRoute = homeCurrentRoute
+        currentRoute = homeCurrentRoute,
     )
+    val isScrollingUp = gmailUtils.emailScrollState.isScrollingUp()
 
     NavigationDrawer(
         drawerContent = {
@@ -85,7 +82,7 @@ private fun GmailContent() {
                 .background(Material3Colors.background)
         ) {
             AnimatedVisibility(
-                visible = gmailUtils.emailScrollState.isScrollingUp() && homeCurrentRoute != BottomNavItems.Bookings.route,
+                visible = isScrollingUp && homeCurrentRoute != BottomNavItems.Bookings.route,
             ) {
                 TopContent(
                     focusRequester = gmailUtils.focusRequester,
@@ -108,6 +105,7 @@ private fun GmailContent() {
                     composable(GmailRoutes.HomeScreen) {
                         HomeScreen(
                             gmailUtils = gmailUtils,
+                            isScrollingUp = isScrollingUp,
                         )
                     }
                     composable(GmailRoutes.SearchScreen) {

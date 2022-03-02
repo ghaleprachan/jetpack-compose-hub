@@ -33,17 +33,18 @@ import app.prachang.theme.materialyoutheme.Material3Colors
 
 @Composable
 fun HomeScreen(
-    gmailUtils: GmailUtils
+    gmailUtils: GmailUtils, isScrollingUp: Boolean
 ) {
     HomeContent(
-        gmailUtils = gmailUtils
+        gmailUtils = gmailUtils, isScrollingUp = isScrollingUp
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeContent(
-    gmailUtils: GmailUtils
+    gmailUtils: GmailUtils,
+    isScrollingUp: Boolean,
 ) {
     val navigationItems = BottomNavItems.values()
 
@@ -56,7 +57,7 @@ private fun HomeContent(
             )
         },
         floatingActionButton = {
-            ExpandableFloatingButton(isScrollingUp = gmailUtils.emailScrollState.isScrollingUp())
+            ExpandableFloatingButton(isScrollingUp = isScrollingUp)
         },
     ) { contentPadding ->
         NavHost(
@@ -144,7 +145,16 @@ enum class BottomNavItems(
     val selectedIcon: ImageVector,
     val unselectedIcon: ImageVector,
 ) {
-    Home("Mail", "route-home", Icons.Filled.Mail, Icons.Outlined.Mail), Bookings(
-        "Meet", "route-meet", Icons.Filled.VideoCall, Icons.Outlined.VideoCall
+    Home(
+        "Mail",
+        "route-home",
+        Icons.Filled.Mail,
+        Icons.Outlined.Mail
+    ),
+    Bookings(
+        "Meet",
+        "route-meet",
+        Icons.Filled.VideoCall,
+        Icons.Outlined.VideoCall
     ),
 }
