@@ -36,9 +36,12 @@ import app.prachang.gmail_clone.GmailRoutes
 import app.prachang.gmail_clone.home.BottomNavItems
 import app.prachang.gmail_clone.home.HomeScreen
 import app.prachang.gmail_clone.search.SearchScreen
+import app.prachang.theme.CustomColors
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun GmailScreen() {
@@ -55,7 +58,8 @@ private fun GmailContent() {
     val focusRequester = remember {
         FocusRequester()
     }
-
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val coroutineScope = rememberCoroutineScope()
     val emailScrollState = rememberLazyListState()
 
     val navController = rememberNavController()
@@ -82,6 +86,7 @@ private fun GmailContent() {
         drawerContent = {
             Text("Here is drawer content")
         },
+        drawerState = drawerState,
     ) {
         Column(
             modifier = Modifier
@@ -102,6 +107,15 @@ private fun GmailContent() {
                             }
                             restoreState = true
                             launchSingleTop = true
+                        }
+                    },
+                    onLeadingIconClick = {
+                        if (currentRoute == GmailRoutes.SearchScreen) {
+                            navController.popBackStack()
+                        } else {
+                            coroutineScope.launch {
+                                drawerState.open()
+                            }
                         }
                     },
                 )
@@ -134,17 +148,27 @@ private fun TopContent(
     isEnabled: Boolean,
     onClick: () -> Unit,
     focusRequester: FocusRequester,
+    onLeadingIconClick: () -> Unit = {},
+    onProfileIconClick: () -> Unit = {},
 ) {
+    val systemUiController = rememberSystemUiController()
     var icon by remember {
         mutableStateOf(Icons.Default.Menu)
     }
-    LaunchedEffect(key1 = isEnabled, block = {
-        delay(300)
-        icon = if (isEnabled) Icons.Default.ArrowBack else Icons.Default.Menu
-    })
+    LaunchedEffect(
+        key1 = isEnabled,
+        block = {
+            delay(300)
+            icon = if (isEnabled) Icons.Default.ArrowBack else Icons.Default.Menu
+        },
+    )
     val backgroundColor = animateColorAsState(
         targetValue = if (isEnabled) Material3Colors.surface else Material3Colors.primary
     )
+    SideEffect {
+        systemUiController.setSystemBarsColor(backgroundColor.value)
+        systemUiController.setNavigationBarColor(CustomColors.VeryLightBlue)
+    }
 
     Box(
         modifier = modifier
@@ -163,16 +187,22 @@ private fun TopContent(
                 Text(text = "Search in emails")
             },
             leadingIcon = {
-                IconButton(onClick = {
-
-                }) {
+                IconButton(onClick = onLeadingIconClick) {
                     RotateIcon(
-                        state = isEnabled, icon = icon, angle = 360F, duration = 600
+                        state = isEnabled,
+                        icon = icon,
+                        angle = 360F,
+                        duration = 600,
                     )
                 }
             },
             trailingIcon = {
-                CircleImage(url = kotlinIcon, modifier = Modifier.size(30.dp))
+                IconButton(onClick = onProfileIconClick) {
+                    CircleImage(
+                        url = kotlinIcon,
+                        modifier = Modifier.size(30.dp),
+                    )
+                }
             },
             value = searchValue.value,
             onValueChange = { searchValue.value = it },

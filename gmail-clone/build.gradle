@@ -52,5 +52,7 @@ dependencies {
     implementation hilt.hilt_navigation
     kapt hilt.hilt_compiler
 
+    implementation accompaniest.ui_controller
+
     implementation materialDesign.material3
 }

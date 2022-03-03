@@ -1,6 +1,5 @@
 package app.prachang.theme.materialyoutheme
 
-import android.view.WindowInsets
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -10,10 +9,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import app.prachang.theme.Black500
 import app.prachang.theme.CustomColors
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
+// Add dark theme support for email todo(ghaleprachan)
 private val DarkColorScheme = darkColorScheme()
 
 private val LightColorScheme = lightColorScheme(
@@ -40,16 +39,13 @@ fun GmailTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val systemUiController = rememberSystemUiController()
     val context = LocalContext.current
     val colors = if (darkTheme) {
         dynamicDarkColorScheme(context)
     } else {
         LightColorScheme
     }
-    SideEffect {
-        systemUiController.setSystemBarsColor(color = colors.surface)
-    }
+
     MaterialTheme(
         colorScheme = colors,
         typography = Typography,
