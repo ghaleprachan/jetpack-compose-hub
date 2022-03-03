@@ -1,12 +1,12 @@
 package app.prachang.android_common.handlers
 
-import app.prachang.android_common.apputils.Error
-import app.prachang.android_common.apputils.UiStates
+import app.prachang.android_common.apputils.ErrorState
+import app.prachang.android_common.apputils.LoadResults
 
-inline fun <T> doTryCatch(crossinline task: () -> UiStates<T>): UiStates<T> {
+inline fun <T> doTryCatch(crossinline task: () -> LoadResults<T>): LoadResults<T> {
     return try {
         task.invoke()
     } catch (e: Exception) {
-        Error(message = e.message)
+        ErrorState(message = e.message)
     }
 }

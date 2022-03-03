@@ -30,8 +30,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import app.prachang.android_common.apputils.Loading
-import app.prachang.android_common.apputils.UiStates
+import app.prachang.android_common.apputils.LoadingState
+import app.prachang.android_common.apputils.LoadResults
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.gmail.MailsData
 import app.prachang.dummy_data.gmail.MailsDataTable
@@ -62,7 +62,7 @@ internal fun EmailListScreen(
 private fun EmailListScreen(
     scrollState: LazyListState,
     isScrollingUp: Boolean,
-    gmailState: State<UiStates<List<MailsDataTable>>>,
+    gmailState: State<LoadResults<List<MailsDataTable>>>,
 ) {
     Scaffold(floatingActionButton = {
         ExpandableFloatingButton(isScrollingUp = isScrollingUp)
@@ -75,7 +75,7 @@ private fun EmailListScreen(
                 item {
                     Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
                 }
-                if (gmailState.value is Loading) {
+                if (gmailState.value is LoadingState) {
                     item {
                         Box(
                             modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
