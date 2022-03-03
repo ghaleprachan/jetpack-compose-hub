@@ -3,7 +3,7 @@ ext {
             compose_version = '1.2.0-alpha04',
             compose_navigation = '2.5.0-alpha03',
             kotlin_version = '1.6.10',
-            accompaniest_version = '0.24.1-alpha',
+            accompaniest_version = '0.24.3-alpha',
             hilt_version = '2.40.5',
             room_version = '2.4.2'
     ]
