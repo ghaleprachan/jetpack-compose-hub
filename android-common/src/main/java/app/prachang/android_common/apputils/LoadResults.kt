@@ -2,8 +2,8 @@ package app.prachang.android_common.apputils
 
 /**
  * This is to handle different state during API calls.
- - Here [data] is received on success response
- - Here [message] is referred as error message
+ * - Here [data] is received on success response
+ * - Here [message] is referred as error message
  * */
 sealed class LoadResults<T>(
     val data: T? = null,
