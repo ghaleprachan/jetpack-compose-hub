@@ -57,9 +57,9 @@ fun GmailScreen() {
 )
 @Composable
 private fun GmailContent() {
-    val focusRequester = remember {
-        FocusRequester()
-    }
+    val focusRequester = remember { FocusRequester() }
+    val searchValue = remember { mutableStateOf("") }
+
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
@@ -89,9 +89,7 @@ private fun GmailContent() {
             ) {
                 TopContent(
                     focusRequester = focusRequester,
-                    searchValue = remember {
-                        mutableStateOf("")
-                    },
+                    searchValue = searchValue,
                     isEnabled = currentRoute == GmailRoutes.SearchScreen,
                     onClick = {
                         navController.navigate(route = GmailRoutes.SearchScreen) {
@@ -246,7 +244,7 @@ private fun TopContent(
 
 
 @Composable
-fun BottomNavBar(
+private fun BottomNavBar(
     navigationItems: Array<BottomNavItems>, currentRoute: String?, navController: NavHostController
 ) {
     NavigationBar {
