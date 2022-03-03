@@ -19,7 +19,10 @@ abstract class AppRoomDatabase : RoomDatabase(), AppDatabase {
     companion object {
         fun onCreate(scope: CoroutineScope, database: AppRoomDatabase?) {
             scope.launch {
-                database?.getGmailDao()?.insert(MailsData.mails)
+                val dao = database?.getGmailDao()
+                if (dao?.getAllEmails().isNullOrEmpty()) {
+                    database?.getGmailDao()?.insert(MailsData.mails)
+                }
             }
         }
     }

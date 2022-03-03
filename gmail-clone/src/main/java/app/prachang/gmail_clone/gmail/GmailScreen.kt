@@ -12,6 +12,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -26,6 +27,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import app.prachang.common_compose_ui.animations.RotateIcon
 import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.dummy_data.instagram.kotlinIcon
@@ -35,6 +37,7 @@ import app.prachang.gmail_clone.home.HomeScreen
 import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
+import kotlinx.coroutines.delay
 
 @Composable
 fun GmailScreen() {
@@ -131,6 +134,14 @@ private fun TopContent(
     onClick: () -> Unit,
     focusRequester: FocusRequester,
 ) {
+    var icon by remember {
+        mutableStateOf(Icons.Default.Menu)
+    }
+    LaunchedEffect(key1 = isEnabled, block = {
+        delay(300)
+        icon = if (isEnabled) Icons.Default.ArrowBack else Icons.Default.Menu
+    })
+
     Box(
         modifier = modifier
             .background(Material3Colors.primary)
@@ -148,10 +159,11 @@ private fun TopContent(
                 Text(text = "Search in emails")
             },
             leadingIcon = {
-                IconButton(onClick = {}) {
-                    Icon(
-                        Icons.Default.Menu,
-                        contentDescription = null,
+                IconButton(onClick = {
+
+                }) {
+                    RotateIcon(
+                        state = isEnabled, icon = icon, angle = 360F, duration = 600
                     )
                 }
             },

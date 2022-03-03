@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 
@@ -99,5 +100,28 @@ fun DoubleTapLikeAnim(
             .shadow(elevation = 40.dp)
             .size(size = size),
         tint = color,
+    )
+}
+
+
+@Composable
+fun RotateIcon(
+    state: Boolean,
+    icon: ImageVector,
+    angle: Float,
+    modifier: Modifier = Modifier,
+    contentDescription: String? = null,
+    duration: Int = 2000,
+) {
+    val animation = animateFloatAsState(
+        targetValue = if (state) 0f else angle, tween(durationMillis = duration)
+    ).value
+
+    Icon(
+        modifier = modifier.graphicsLayer {
+            rotationZ = animation
+        },
+        imageVector = icon,
+        contentDescription = contentDescription,
     )
 }
