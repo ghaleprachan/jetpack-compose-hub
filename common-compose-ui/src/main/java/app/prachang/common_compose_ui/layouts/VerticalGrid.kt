@@ -2,23 +2,13 @@ package app.prachang.common_compose_ui.layouts
 
 import android.util.Log
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.Placeable
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.Density
-import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
 
 var recentX = 0
 var recentY = 0
@@ -36,14 +26,12 @@ fun MyGrid(
             cells.count
         }
     }
-
-
 }
 
 /**
- * 1. val configuration = LocalConfiguration.current
- * 2. val screenHeight = configuration.screenHeightDp.dp
- * 3. val screenWidth = configuration.screenWidthDp.dp
+ * -  val configuration = LocalConfiguration.current
+ * -  val screenHeight = configuration.screenHeightDp.dp
+ * -  val screenWidth = configuration.screenWidthDp.dp
  */
 @Composable
 fun Grid(
@@ -88,10 +76,6 @@ fun Grid(
                     val x = rowCount % 3
                     val y = (rowCount / 3.0).toInt()
                     rowCount += 1
-                    Log.e(
-                        "PrachanGhale",
-                        "$rowCount x = $x Place= ${x * width} ${y * width}"
-                    )
                     placeable.placeRelative(x = x * (width), y = y * width)
                 }
             }
