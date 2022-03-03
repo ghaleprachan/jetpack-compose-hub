@@ -9,7 +9,7 @@ ext {
     ]
 
     materialDesign = [
-            "material3": "androidx.compose.material3:material3:1.0.0-alpha04",
+            "material3": "androidx.compose.material3:material3:1.0.0-alpha06",
             "material" : "androidx.compose.material:material:$compose_version"
     ]
 

@@ -155,7 +155,7 @@ public final class GmailDao_Impl extends GmailDao {
   }
 
   @Override
-  public Object insert(final MailsDataTable value, final Continuation<? super Unit> continuation) {
+  public Object insert(final MailsDataTable value, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
@@ -168,12 +168,12 @@ public final class GmailDao_Impl extends GmailDao {
           __db.endTransaction();
         }
       }
-    }, continuation);
+    }, arg1);
   }
 
   @Override
   public Object insert(final List<? extends MailsDataTable> values,
-      final Continuation<? super Unit> continuation) {
+      final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
@@ -186,11 +186,11 @@ public final class GmailDao_Impl extends GmailDao {
           __db.endTransaction();
         }
       }
-    }, continuation);
+    }, arg1);
   }
 
   @Override
-  public Object delete(final MailsDataTable value, final Continuation<? super Unit> continuation) {
+  public Object delete(final MailsDataTable value, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
@@ -203,11 +203,11 @@ public final class GmailDao_Impl extends GmailDao {
           __db.endTransaction();
         }
       }
-    }, continuation);
+    }, arg1);
   }
 
   @Override
-  public Object update(final MailsDataTable value, final Continuation<? super Unit> continuation) {
+  public Object update(final MailsDataTable value, final Continuation<? super Unit> arg1) {
     return CoroutinesRoom.execute(__db, true, new Callable<Unit>() {
       @Override
       public Unit call() throws Exception {
@@ -220,11 +220,11 @@ public final class GmailDao_Impl extends GmailDao {
           __db.endTransaction();
         }
       }
-    }, continuation);
+    }, arg1);
   }
 
   @Override
-  public Object getAllEmails(final Continuation<? super List<MailsDataTable>> continuation) {
+  public Object getAllEmails(final Continuation<? super List<MailsDataTable>> arg0) {
     final String _sql = "SELECT * FROM emails_table";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     final CancellationSignal _cancellationSignal = DBUtil.createCancellationSignal();
@@ -295,7 +295,7 @@ public final class GmailDao_Impl extends GmailDao {
           _statement.release();
         }
       }
-    }, continuation);
+    }, arg0);
   }
 
   public static List<Class<?>> getRequiredConverters() {

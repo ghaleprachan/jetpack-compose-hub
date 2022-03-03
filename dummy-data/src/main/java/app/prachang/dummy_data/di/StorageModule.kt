@@ -32,7 +32,6 @@ object StorageModule {
             .addCallback(object : RoomDatabase.Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    Log.e("PrachanGhale", "Db is started")
                     AppRoomDatabase.onCreate(scope = scope, database = database)
                 }
             })
