@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+
 package app.prachang.gmail_clone.home
 
 import androidx.compose.animation.AnimatedVisibility
@@ -17,10 +19,7 @@ import androidx.compose.material.icons.outlined.Beenhere
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.StarBorder
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,6 +30,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import app.prachang.android_common.apputils.Loading
+import app.prachang.android_common.apputils.UiStates
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.gmail.MailsData
 import app.prachang.dummy_data.gmail.MailsDataTable
@@ -48,9 +49,7 @@ internal fun EmailListScreen(
         homeViewModel.getGmail()
     })
     EmailListScreen(
-        scrollState = scrollState,
-        isScrollingUp = isScrollingUp,
-        gmailState = gmailState
+        scrollState = scrollState, isScrollingUp = isScrollingUp, gmailState = gmailState
     )
 }
 
@@ -63,13 +62,11 @@ internal fun EmailListScreen(
 private fun EmailListScreen(
     scrollState: LazyListState,
     isScrollingUp: Boolean,
-    gmailState: State<List<MailsDataTable>>,
+    gmailState: State<UiStates<List<MailsDataTable>>>,
 ) {
-    Scaffold(
-        floatingActionButton = {
-            ExpandableFloatingButton(isScrollingUp = isScrollingUp)
-        }
-    ) {
+    Scaffold(floatingActionButton = {
+        ExpandableFloatingButton(isScrollingUp = isScrollingUp)
+    }) {
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -78,8 +75,16 @@ private fun EmailListScreen(
                 item {
                     Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
                 }
-
-                items(gmailState.value) { mail ->
+                if (gmailState.value is Loading) {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(color = Material3Colors.surface)
+                        }
+                    }
+                }
+                items(gmailState.value.data.orEmpty()) { mail ->
                     if (mail.tags == MailsData.Tags.Email) {
                         EmailItem(mail = mail)
                     } else {
