@@ -1,7 +1,10 @@
 package app.prachang.gmail_clone.home
 
+import androidx.compose.foundation.gestures.rememberScrollableState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.compose.rememberNavController
 import app.prachang.dummy_data.data.dao.GmailDao
 import app.prachang.dummy_data.gmail.MailsDataTable
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,4 +24,5 @@ class HomeViewModel @Inject constructor(
     fun getGmail() = viewModelScope.launch {
         _gmailList.value = gmailDao.getAllEmails()
     }
+
 }

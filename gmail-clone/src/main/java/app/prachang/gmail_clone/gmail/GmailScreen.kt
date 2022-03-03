@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -47,7 +48,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-@Preview
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
 private fun GmailScreenPreview() {
     GmailScreen()
@@ -87,8 +88,10 @@ private fun GmailContent() {
 
     NavigationDrawer(
         drawerContent = {
-            Text("Here is drawer content")
+            DrawerContent()
         },
+        drawerContainerColor = Color.White,
+        drawerShape = RoundedCornerShape(0.dp),
         drawerState = drawerState,
     ) {
         Column(
@@ -175,117 +178,3 @@ private fun NavigationComponents(
     )
 }
 
-
-@Composable
-private fun TopContent(
-    modifier: Modifier = Modifier,
-    searchValue: MutableState<String>,
-    isEnabled: Boolean,
-    onClick: () -> Unit,
-    focusRequester: FocusRequester,
-    onLeadingIconClick: () -> Unit = {},
-    onProfileIconClick: () -> Unit = {},
-) {
-    val systemUiController = rememberSystemUiController()
-    var icon by remember {
-        mutableStateOf(Icons.Default.Menu)
-    }
-    LaunchedEffect(
-        key1 = isEnabled,
-        block = {
-            delay(300)
-            icon = if (isEnabled) Icons.Default.ArrowBack else Icons.Default.Menu
-        },
-    )
-    val backgroundColor = animateColorAsState(
-        targetValue = if (isEnabled) Material3Colors.surface else Material3Colors.primary
-    )
-    SideEffect {
-        systemUiController.setSystemBarsColor(backgroundColor.value)
-        systemUiController.setNavigationBarColor(CustomColors.VeryLightBlue)
-    }
-
-    Box(
-        modifier = modifier
-            .background(backgroundColor.value)
-            .padding(
-                horizontal = 16.dp, vertical = 8.dp
-            )
-    ) {
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .focusRequester(focusRequester)
-                .clip(shape = CircleShape)
-                .clickable { onClick() },
-            placeholder = {
-                Text(text = "Search in emails")
-            },
-            leadingIcon = {
-                IconButton(onClick = onLeadingIconClick) {
-                    RotateIcon(
-                        state = isEnabled,
-                        icon = icon,
-                        angle = 360F,
-                        duration = 600,
-                    )
-                }
-            },
-            trailingIcon = {
-                IconButton(onClick = onProfileIconClick) {
-                    CircleImage(
-                        url = kotlinIcon,
-                        modifier = Modifier.size(30.dp),
-                    )
-                }
-            },
-            value = searchValue.value,
-            onValueChange = { searchValue.value = it },
-            shape = CircleShape,
-            singleLine = true,
-            enabled = isEnabled,
-            colors = TextFieldDefaults.textFieldColors(
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                cursorColor = Color.DarkGray,
-                backgroundColor = Material3Colors.surface
-            ),
-        )
-    }
-}
-
-
-@Composable
-private fun BottomNavBar(
-    navigationItems: Array<BottomNavItems>, currentRoute: String?, navController: NavHostController
-) {
-    NavigationBar {
-        navigationItems.forEach { bottomNavItem ->
-            val isSelected = bottomNavItem.route == currentRoute
-            val icon = if (isSelected) bottomNavItem.selectedIcon else bottomNavItem.unselectedIcon
-
-            NavigationBarItem(
-                selected = isSelected,
-                onClick = {
-                    navController.navigate(route = bottomNavItem.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route)
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
-                },
-                label = {
-                    Text(text = bottomNavItem.label)
-                },
-                icon = {
-                    Icon(
-                        imageVector = icon,
-                        contentDescription = null,
-                    )
-                },
-            )
-        }
-    }
-}

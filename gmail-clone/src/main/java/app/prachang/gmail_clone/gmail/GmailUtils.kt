@@ -4,8 +4,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Mail
 import androidx.compose.material.icons.filled.VideoCall
-import androidx.compose.material.icons.outlined.Mail
-import androidx.compose.material.icons.outlined.VideoCall
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
@@ -32,3 +31,23 @@ val colors = listOf(
     Color(0xFFFF9800),
     Color(0xFF4CAF50),
 )
+
+enum class DrawerItems(val label: String, val icon: ImageVector) {
+    Primary("Primary", Icons.Outlined.StayPrimaryPortrait),
+    Social("Social", Icons.Outlined.PersonOutline),
+    Promotions("Promotions", Icons.Outlined.Image),
+    Starred("Starred", Icons.Outlined.StarOutline),
+    Snoozed("Snoozed", Icons.Outlined.LockClock),
+    Important("Important", Icons.Outlined.Save),
+    Send("Important", Icons.Outlined.Send),
+    Scheduled("Scheduled", Icons.Outlined.ScheduleSend),
+    Outbox("OutBox", Icons.Outlined.Outbox),
+    Drafts("Drafts", Icons.Outlined.Drafts),
+    AllMail("All Mails", Icons.Outlined.Message),
+    Span("Span", Icons.Outlined.LockClock),
+    Bin("Bin", Icons.Outlined.DeleteOutline),
+    Calendar("Calendar", Icons.Outlined.CalendarViewDay),
+    Contacts("Contacts", Icons.Outlined.Contacts),
+    Settings("Settings", Icons.Outlined.Settings),
+    Help("Help and feedback", Icons.Outlined.HelpOutline),
+}
