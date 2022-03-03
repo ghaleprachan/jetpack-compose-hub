@@ -1,19 +1,25 @@
 package app.prachang.gmail_clone.home
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Beenhere
+import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.StarBorder
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,12 +34,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.gmail.MailsData
 import app.prachang.dummy_data.gmail.MailsDataTable
+import app.prachang.gmail_clone.gmail.colors
+import app.prachang.theme.materialyoutheme.Material3Colors
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun EmailListScreen(
     scrollState: LazyListState,
     homeViewModel: HomeViewModel = hiltViewModel(),
+    isScrollingUp: Boolean,
 ) {
     val gmailState = homeViewModel.gmailList.collectAsState()
     LaunchedEffect(key1 = true, block = {
@@ -41,34 +49,46 @@ internal fun EmailListScreen(
     })
     EmailListScreen(
         scrollState = scrollState,
-        gmailState = gmailState,
+        isScrollingUp = isScrollingUp,
+        gmailState = gmailState
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
+@OptIn(
+    ExperimentalMaterialApi::class,
+    ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class
+)
 @Composable
 private fun EmailListScreen(
     scrollState: LazyListState,
+    isScrollingUp: Boolean,
     gmailState: State<List<MailsDataTable>>,
 ) {
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp),
-        state = scrollState,
-        content = {
-            item {
-                Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
-            }
-
-            items(gmailState.value) { mail ->
-                if (mail.tags == MailsData.Tags.Email) {
-                    EmailItem(mail = mail)
-                } else {
-                    OtherItem(type = mail.tags)
+    Scaffold(
+        floatingActionButton = {
+            ExpandableFloatingButton(isScrollingUp = isScrollingUp)
+        }
+    ) {
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            state = scrollState,
+            content = {
+                item {
+                    Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
                 }
-            }
-        },
-    )
+
+                items(gmailState.value) { mail ->
+                    if (mail.tags == MailsData.Tags.Email) {
+                        EmailItem(mail = mail)
+                    } else {
+                        OtherItem(type = mail.tags)
+                    }
+                }
+            },
+        )
+    }
 }
 
 @Composable
@@ -183,10 +203,31 @@ private fun OtherItem(
     }
 }
 
-val colors = listOf(
-    Color(0xFF2196F3),
-    Color(0xFFA6AEDD),
-    Color(0xFFFF9800),
-    Color(0xFF4CAF50),
-)
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ExpandableFloatingButton(isScrollingUp: Boolean) {
+    Card(
+        modifier = Modifier.height(60.dp),
+        elevation = 8.dp,
+        shape = RoundedCornerShape(16.dp),
+        onClick = {},
+        backgroundColor = Material3Colors.secondary
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxHeight()
+                .padding(horizontal = 18.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            androidx.compose.material3.Icon(Icons.Outlined.Edit, contentDescription = null)
+            AnimatedVisibility(visible = isScrollingUp) {
+                Row {
+                    Width(width = 12.dp)
+                    Text(text = "Compose", fontWeight = FontWeight.SemiBold)
+                }
+            }
+        }
+    }
+}
 

@@ -7,6 +7,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
@@ -24,6 +25,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,8 +35,8 @@ import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.gmail_clone.GmailRoutes
-import app.prachang.gmail_clone.home.BottomNavItems
-import app.prachang.gmail_clone.home.HomeScreen
+import app.prachang.gmail_clone.home.*
+import app.prachang.gmail_clone.home.EmailListScreen
 import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.CustomColors
 import app.prachang.theme.materialyoutheme.GmailTheme
@@ -58,29 +60,17 @@ private fun GmailContent() {
     val focusRequester = remember {
         FocusRequester()
     }
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
     val coroutineScope = rememberCoroutineScope()
-    val emailScrollState = rememberLazyListState()
+    val drawerState = rememberDrawerState(DrawerValue.Closed)
 
+    val emailScrollState = rememberLazyListState()
+    val isScrollingUp = emailScrollState.isScrollingUp()
+
+    val navigationItems = BottomNavItems.values()
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
 
-    val homeNavController = rememberNavController()
-    val homeNavBackStack by homeNavController.currentBackStackEntryAsState()
-    val homeCurrentRoute = homeNavBackStack?.destination?.route
-
-    val gmailUtils = GmailUtils(
-        emailScrollState = emailScrollState,
-        searchValue = remember {
-            mutableStateOf("")
-        },
-        focusRequester = FocusRequester(),
-        navController = homeNavController,
-        currentRoute = homeCurrentRoute,
-    )
-
-    val isScrollingUp = gmailUtils.emailScrollState.isScrollingUp()
 
     NavigationDrawer(
         drawerContent = {
@@ -93,16 +83,19 @@ private fun GmailContent() {
                 .fillMaxSize()
                 .background(Material3Colors.background)
         ) {
+            // Common top bar for search screen
             AnimatedVisibility(
-                visible = isScrollingUp && homeCurrentRoute != BottomNavItems.Bookings.route,
+                visible = isScrollingUp && currentRoute != BottomNavItems.Bookings.route,
             ) {
                 TopContent(
-                    focusRequester = gmailUtils.focusRequester,
-                    searchValue = gmailUtils.searchValue,
+                    focusRequester = focusRequester,
+                    searchValue = remember {
+                        mutableStateOf("")
+                    },
                     isEnabled = currentRoute == GmailRoutes.SearchScreen,
                     onClick = {
                         navController.navigate(route = GmailRoutes.SearchScreen) {
-                            gmailUtils.navController.graph.startDestinationRoute?.let { route ->
+                            navController.graph.startDestinationRoute?.let { route ->
                                 popUpTo(route = route)
                             }
                             restoreState = true
@@ -120,24 +113,55 @@ private fun GmailContent() {
                     },
                 )
             }
-            NavHost(
-                navController = navController, startDestination = GmailRoutes.HomeScreen,
-                builder = {
-                    composable(GmailRoutes.HomeScreen) {
-                        HomeScreen(
-                            gmailUtils = gmailUtils,
-                            isScrollingUp = isScrollingUp,
-                        )
-                    }
-                    composable(GmailRoutes.SearchScreen) {
-                        SearchScreen(
-                            focusRequester = focusRequester
-                        )
-                    }
-                },
+            // Navigation components for screen
+            NavigationComponents(
+                navController = navController,
+                emailScrollState = emailScrollState,
+                isScrollingUp = isScrollingUp,
+                focusRequester = focusRequester,
+                modifier = Modifier.weight(1f)
             )
+            // Bottom navigation bar
+            AnimatedVisibility(visible = currentRoute != GmailRoutes.SearchScreen) {
+                BottomNavBar(
+                    navigationItems = navigationItems,
+                    currentRoute = currentRoute,
+                    navController = navController,
+                )
+            }
         }
     }
+}
+
+@Composable
+private fun NavigationComponents(
+    navController: NavHostController,
+    emailScrollState: LazyListState,
+    isScrollingUp: Boolean,
+    focusRequester: FocusRequester,
+    modifier: Modifier = Modifier
+) {
+    NavHost(
+        modifier = modifier,
+        navController = navController,
+        startDestination = GmailRoutes.HomeScreen,
+        builder = {
+            composable(BottomNavItems.Home.route) {
+                EmailListScreen(
+                    scrollState = emailScrollState,
+                    isScrollingUp = isScrollingUp,
+                )
+            }
+            composable(BottomNavItems.Bookings.route) {
+                MeetScreen()
+            }
+            composable(GmailRoutes.SearchScreen) {
+                SearchScreen(
+                    focusRequester = focusRequester
+                )
+            }
+        },
+    )
 }
 
 
@@ -217,5 +241,40 @@ private fun TopContent(
                 backgroundColor = Material3Colors.surface
             ),
         )
+    }
+}
+
+
+@Composable
+fun BottomNavBar(
+    navigationItems: Array<BottomNavItems>, currentRoute: String?, navController: NavHostController
+) {
+    NavigationBar {
+        navigationItems.forEach { bottomNavItem ->
+            val isSelected = bottomNavItem.route == currentRoute
+            val icon = if (isSelected) bottomNavItem.selectedIcon else bottomNavItem.unselectedIcon
+
+            NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(route = bottomNavItem.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route)
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+                },
+                label = {
+                    Text(text = bottomNavItem.label)
+                },
+                icon = {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                    )
+                },
+            )
+        }
     }
 }
