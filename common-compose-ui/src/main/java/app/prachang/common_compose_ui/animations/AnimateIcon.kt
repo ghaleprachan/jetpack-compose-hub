@@ -123,5 +123,6 @@ fun RotateIcon(
         },
         imageVector = icon,
         contentDescription = contentDescription,
+        tint = Color.Black
     )
 }

@@ -3,6 +3,7 @@
 package app.prachang.gmail_clone.gmail
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -141,10 +142,13 @@ private fun TopContent(
         delay(300)
         icon = if (isEnabled) Icons.Default.ArrowBack else Icons.Default.Menu
     })
+    val backgroundColor = animateColorAsState(
+        targetValue = if (isEnabled) Material3Colors.surface else Material3Colors.primary
+    )
 
     Box(
         modifier = modifier
-            .background(Material3Colors.primary)
+            .background(backgroundColor.value)
             .padding(
                 horizontal = 16.dp, vertical = 8.dp
             )
@@ -179,7 +183,8 @@ private fun TopContent(
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                cursorColor = Color.DarkGray
+                cursorColor = Color.DarkGray,
+                backgroundColor = Material3Colors.surface
             ),
         )
     }
