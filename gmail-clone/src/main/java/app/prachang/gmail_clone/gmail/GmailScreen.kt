@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -45,6 +46,13 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+
+@Preview
+@Composable
+private fun GmailScreenPreview() {
+    GmailScreen()
+}
+
 @Composable
 fun GmailScreen() {
     GmailTheme {
@@ -53,24 +61,29 @@ fun GmailScreen() {
 }
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class,
 )
 @Composable
 private fun GmailContent() {
+    // Search field values
     val focusRequester = remember { FocusRequester() }
     val searchValue = remember { mutableStateOf("") }
 
+    // Drawer Content
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
 
+    // Scrolling state
     val emailScrollState = rememberLazyListState()
     val isScrollingUp = emailScrollState.isScrollingUp()
 
+    // Navigation Items
     val navigationItems = BottomNavItems.values()
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
-
 
     NavigationDrawer(
         drawerContent = {
