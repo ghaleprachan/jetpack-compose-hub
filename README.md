@@ -1,7 +1,7 @@
-### Compose Hub
+# Compose Hub
 ---
 
-# GIF
+### GIF
 
 <p float="left">
 <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/dashboard.gif?raw=true" width="200" height="auto">
@@ -13,6 +13,7 @@
 [//]: # (# Screenshots)
 
 [//]: # ()
+
 [//]: # (<p float="left">)
 
 [//]: # (<img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/dashboard.jpg?raw=true" width="200" height="auto">)
