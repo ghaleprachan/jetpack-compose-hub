@@ -7,12 +7,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -26,6 +29,7 @@ import app.prachang.instagram_clone.home.HomeScreen
 import app.prachang.instagram_clone.profile.ProfileScreen
 import app.prachang.instagram_clone.search.SearchScreen
 import app.prachang.instagram_clone.shop.ShopScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun InstagramScreen() {
@@ -35,7 +39,9 @@ fun InstagramScreen() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainScreenContent() {
+    val context = LocalContext.current
     val bottomNavItems = BottomNavItems.values()
+    val rememberCoroutineScope = rememberCoroutineScope()
 
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
@@ -46,14 +52,20 @@ private fun MainScreenContent() {
     )
     ModalBottomSheetLayout(
         sheetContent = {
-            Text(text = "One")
+            BottomSheetContent()
         },
+        sheetShape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
         sheetState = modalBottomSheetState,
     ) {
         Column {
             InstagramContent(
                 modifier = Modifier.weight(1f),
                 navController = navController,
+                onMoreOptions = {
+                    rememberCoroutineScope.launch {
+                        modalBottomSheetState.show()
+                    }
+                },
             )
 
             BottomNavView(
@@ -69,6 +81,7 @@ private fun MainScreenContent() {
 private fun InstagramContent(
     modifier: Modifier = Modifier,
     navController: NavHostController,
+    onMoreOptions: () -> Unit,
 ) {
     NavHost(
         modifier = modifier,
@@ -85,7 +98,7 @@ private fun InstagramContent(
                 ShopScreen()
             }
             composable(BottomNavItems.Profile.route) {
-                ProfileScreen()
+                ProfileScreen(onMoreOptions = onMoreOptions)
             }
         },
     )
@@ -154,3 +167,13 @@ private fun BottomNavView(
         }
     }
 }
+
+@Composable
+private fun BottomSheetContent() {
+    Column(modifier = Modifier) {
+        (0..12).forEach {
+            Text(text = "Content number is $it")
+        }
+    }
+}
+

@@ -25,14 +25,6 @@ internal fun TopContent() {
         Row(
             modifier = Modifier.height(IntrinsicSize.Min)
         ) {
-            /*val painter = rememberImagePainter(data = image2, builder = {
-                transformations(CircleCropTransformation())
-            })
-            Image(
-                modifier = Modifier.size(size = 85.dp),
-                painter = painter,
-                contentDescription = null,
-            )*/
             CircleImage(
                 modifier = Modifier.size(85.dp),
                 url = image2,

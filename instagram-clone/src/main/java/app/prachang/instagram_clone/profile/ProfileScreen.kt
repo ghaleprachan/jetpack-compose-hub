@@ -9,8 +9,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.PermContactCalendar
+import androidx.compose.material.icons.outlined.AddBox
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -34,15 +37,19 @@ import app.prachang.theme.materialtheme.ComposeHubTheme
 
 @Preview(showSystemUi = true)
 @Composable
-private fun ProfileScreenPreview() {
+private fun ProfileScreenPreview(
+    onMoreOptions: () -> Unit = {}
+) {
     ComposeHubTheme {
-        ProfileScreen()
+        ProfileScreen(
+            onMoreOptions = onMoreOptions
+        )
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-internal fun ProfileScreen() {
+internal fun ProfileScreen(onMoreOptions: () -> Unit) {
     val scrollState = rememberLazyListState()
     val showElevation by remember {
         derivedStateOf {
@@ -53,24 +60,7 @@ internal fun ProfileScreen() {
     Scaffold(
         topBar = {
             Column {
-                TopAppBar(
-                    elevation = 0.dp,
-                    title = {
-                        Text(
-                            text = profileData.username,
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.ExtraBold,
-                        )
-                    },
-                    actions = {
-                        IconButton(onClick = { }) {
-                            Icon(Icons.Default.MoreVert, contentDescription = null)
-                        }
-                    },
-                )
-                if (showElevation) {
-                    Divider()
-                }
+                TopAppBar(showElevation = showElevation, onMoreOptions = onMoreOptions)
             }
         },
     ) {
@@ -110,6 +100,59 @@ internal fun ProfileScreen() {
 }
 
 @Composable
+private fun TopAppBar(
+    showElevation: Boolean,
+    onMoreOptions: () -> Unit = {},
+) {
+    TopAppBar(
+        elevation = 0.dp,
+        title = {
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(2.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Lock,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+                Text(
+                    text = profileData.username,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                )
+                Icon(
+                    imageVector = Icons.Outlined.ExpandMore,
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp)
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    imageVector = Icons.Outlined.AddBox,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.Black,
+                )
+            }
+            IconButton(onClick = onMoreOptions) {
+                Icon(
+                    Icons.Default.Menu,
+                    contentDescription = null,
+                    modifier = Modifier.size(24.dp),
+                    tint = Color.Black
+                )
+            }
+        },
+    )
+    if (showElevation) {
+        Divider()
+    }
+}
+
+@Composable
 private fun ProfileTab() {
     Column(modifier = Modifier.background(Color.White)) {
         Height(height = 16.dp)
@@ -119,24 +162,19 @@ private fun ProfileTab() {
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
-                    painterResource(id = R.drawable.ic_grid),
-                    contentDescription = null
+                    painterResource(id = R.drawable.ic_grid), contentDescription = null
                 )
                 Height(height = 16.dp)
                 Divider(color = Color.Black)
             }
             Column(
-                modifier = Modifier.weight(1f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.weight(1f), horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Icon(
-                    Icons.Default.PermContactCalendar,
-                    contentDescription = null,
-                    tint = Color.Gray
+                    Icons.Default.PermContactCalendar, contentDescription = null, tint = Color.Gray
                 )
                 Height(height = 16.dp)
                 Divider(color = Color.Transparent)
