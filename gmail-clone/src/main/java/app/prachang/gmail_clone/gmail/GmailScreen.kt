@@ -86,13 +86,13 @@ private fun GmailContent() {
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
 
-    NavigationDrawer(
+    ModalNavigationDrawer(
         drawerContent = {
             DrawerContent()
         },
-        drawerContainerColor = Color.White,
-        drawerShape = RoundedCornerShape(0.dp),
         drawerState = drawerState,
+        drawerShape = RoundedCornerShape(0.dp),
+        drawerContainerColor = Color.White
     ) {
         Column(
             modifier = Modifier

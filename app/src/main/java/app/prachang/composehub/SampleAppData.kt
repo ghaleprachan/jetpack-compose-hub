@@ -52,14 +52,14 @@ object SampleAppData {
     private val materialDesign3 = listOf(
         SampleApp(
             label = "App bar",
-            route = Routes.Material.AppBar,
+            route = Routes.Material3.AppBar,
         ),
         SampleApp(
-            label = "Bottom app bar", route = "bottomappbar",
+            label = "Bottom app bar", route = Routes.Material3.BottomBar,
         ),
         SampleApp(
-            label = "Buttons",
-            route = "buttons",
+            label = "Clickable Components",
+            route = Routes.Material3.Clickable,
         ),
     )
 
@@ -71,9 +71,10 @@ object SampleAppData {
             subSamples = demoApps,
         ),
         SampleApp(
-            label = "Animations",
+            label = "Material Design 3",
             route = Routes.Animation,
-            icon = R.drawable.ic_animations,
+            icon = R.drawable.ic_material_design_you,
+            subSamples = materialDesign3
         ),
         SampleApp(
             label = "Material Design",
@@ -82,10 +83,9 @@ object SampleAppData {
             subSamples = materialDesign
         ),
         SampleApp(
-            label = "Material Design 3",
+            label = "Animations",
             route = Routes.Animation,
-            icon = R.drawable.ic_material_design_you,
-            subSamples = materialDesign3
+            icon = R.drawable.ic_animations,
         ),
     )
 

@@ -1,13 +1,12 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 apply from: "$rootDir/dependencies.gradle"
 
 android {
-    namespace 'app.prachang.gmail_clone'
+    namespace 'app.prachang.material3'
     compileSdk 32
 
     defaultConfig {
@@ -31,6 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         compose true
     }
@@ -41,18 +41,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":common-compose-ui"))
-    implementation(project(":android-common"))
     implementation(project(":theme"))
-    implementation(project(":dummy-data"))
     implementation compose
-    implementation accompaniest.flow_layout
-
-    implementation hilt.hilt
-    implementation hilt.hilt_navigation
-    kapt hilt.hilt_compiler
-
-    implementation accompaniest.ui_controller
-
     implementation materialDesign.material3
 }

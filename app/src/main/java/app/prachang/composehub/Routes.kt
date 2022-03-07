@@ -13,9 +13,12 @@ object Routes {
 
     object Material {
         const val AppBar = "material-appbar"
+        const val BottomBar = "material-bottom-bar"
     }
 
     object Material3 {
         const val AppBar = "material3-appbar"
+        const val BottomBar = "material3-bottom-bar"
+        const val Clickable = "material3-buttons"
     }
 }
