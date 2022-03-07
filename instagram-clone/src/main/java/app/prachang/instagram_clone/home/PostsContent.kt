@@ -48,14 +48,7 @@ import coil.compose.rememberImagePainter
  *  */
 @Composable
 internal fun PostItem(post: Post) {
-    val context = LocalContext.current
     val profilePainter = rememberImagePainter(data = post.userImage)
-    /*val postImage = rememberImagePainter(
-        data = post.postImage[0],
-        builder = {
-            size(OriginalSize)
-        },
-    )*/
     Column {
         // Post Content With UserProfile, Username and More-Option Icon
         // Have to add more option action todo(ghaleprachan)

@@ -1,15 +1,19 @@
 package app.prachang.common_compose_ui.components
 
+import android.provider.CalendarContract
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
@@ -31,7 +35,7 @@ private fun getImagePainter(
 ): ImagePainter {
     return rememberImagePainter(data = url) {
         size(OriginalSize)
-        placeholder(loadingResId)
+        // placeholder(loadingResId)
         error(errorResId)
         crossfade(true)
         crossfade(300)
@@ -45,7 +49,6 @@ private fun getImagePainter(
  * Jetpack compose reusable-image using coil library
  * This may change in future based on work conditions
  * */
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun ComposeImage(
     modifier: Modifier = Modifier,
@@ -68,18 +71,7 @@ fun ComposeImage(
             contentScale = contentScale,
         )
 
-        // make instagram like loading and do in following way todo(ghaleprachan)
-        /*when (painter.state) {
-            is ImagePainter.State.Loading -> {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = Color.Yellow,
-                )
-            }
-            is ImagePainter.State.Error -> {
-            }
-            else -> {}
-        }*/
+        LoadingState(painter = painter)
     }
 }
 
@@ -98,12 +90,34 @@ fun CircleImage(
         errorResId = errorResId,
         transformation = CircleCropTransformation()
     )
-    Image(
-        modifier = modifier
-            .clip(shape = CircleShape)
-            .background(Color.LightGray),
-        painter = painter,
-        contentDescription = contentDescription,
-        contentScale = contentScale,
-    )
+    Box {
+        Image(
+            modifier = modifier
+                .clip(shape = CircleShape)
+                .background(Color.LightGray),
+            painter = painter,
+            contentDescription = contentDescription,
+            contentScale = contentScale,
+        )
+
+        LoadingState(painter = painter)
+    }
+}
+
+@OptIn(ExperimentalCoilApi::class)
+@Composable
+private fun BoxScope.LoadingState(painter: ImagePainter) {
+    // make instagram like loading and do in following way todo(ghaleprachan)
+    when (painter.state) {
+        is ImagePainter.State.Loading -> {
+            CircularProgressIndicator(
+                modifier = Modifier.Companion.align(Alignment.Center),
+                color = Color(0xFF656665),
+                strokeWidth = 1.dp,
+            )
+        }
+        is ImagePainter.State.Error -> {
+        }
+        else -> {}
+    }
 }
