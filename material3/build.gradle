@@ -44,4 +44,5 @@ dependencies {
     implementation(project(":theme"))
     implementation compose
     implementation materialDesign.material3
+    implementation accompaniest.flow_layout
 }

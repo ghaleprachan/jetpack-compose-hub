@@ -17,16 +17,16 @@ import androidx.navigation.NavController
 import app.prachang.material3.Material3Screen
 
 @Composable
-fun BottomBarScreen3(
+fun TextButtonScreen3(
     navController: NavController
 ) {
     Material3Screen(title = "Bottom Bar", navController = navController) {
-        BottomBarScreen()
+        TextButtonScreen()
     }
 }
 
 @Composable
-private fun BottomBarScreen() {
+private fun TextButtonScreen() {
     val items = BottomBarItems.values()
 
     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {

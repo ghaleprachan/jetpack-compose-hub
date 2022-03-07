@@ -18,7 +18,8 @@ import app.prachang.composehub.screens.DashboardScreen
 import app.prachang.gmail_clone.gmail.GmailScreen
 import app.prachang.instagram_clone.InstagramScreen
 import app.prachang.material3.appbar.AppBarScreen3
-import app.prachang.material3.bottombar.BottomBarScreen3
+import app.prachang.material3.bottombar.TextButtonScreen3
+import app.prachang.material3.textbuttons.ClickableScreen3
 import app.prachang.theme.materialtheme.ComposeHubTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -76,7 +77,11 @@ internal fun MainScreen() {
             }
 
             composable(Routes.Material3.BottomBar) {
-                BottomBarScreen3(navController = navController)
+                TextButtonScreen3(navController = navController)
+            }
+
+            composable(Routes.Material3.TextButtons) {
+                ClickableScreen3(navController = navController)
             }
         },
     )

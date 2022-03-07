@@ -51,15 +51,15 @@ object SampleAppData {
     // Types of material design you
     private val materialDesign3 = listOf(
         SampleApp(
-            label = "App bar",
+            label = "Appbar",
             route = Routes.Material3.AppBar,
         ),
         SampleApp(
-            label = "Bottom app bar", route = Routes.Material3.BottomBar,
+            label = "Bottom Appbar", route = Routes.Material3.BottomBar,
         ),
         SampleApp(
-            label = "Clickable Components",
-            route = Routes.Material3.Clickable,
+            label = "Text & Buttons",
+            route = Routes.Material3.TextButtons,
         ),
     )
 
