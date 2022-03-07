@@ -53,7 +53,6 @@ private fun MaterialComponents() {
     FlowRow(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFFE7F0F8))
             .padding(16.dp),
         mainAxisSpacing = 24.dp,
         crossAxisSpacing = 24.dp,
