@@ -126,7 +126,7 @@ private fun ProfileTab() {
                     painterResource(id = R.drawable.ic_grid),
                     contentDescription = null
                 )
-                Height(height = 6.dp)
+                Height(height = 16.dp)
                 Divider(color = Color.Black)
             }
             Column(
@@ -138,7 +138,7 @@ private fun ProfileTab() {
                     contentDescription = null,
                     tint = Color.Gray
                 )
-                Height(height = 8.dp)
+                Height(height = 16.dp)
                 Divider(color = Color.Transparent)
             }
         }
