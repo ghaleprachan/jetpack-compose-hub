@@ -103,19 +103,23 @@ private fun SampleSubItem(
                         onItemClick.invoke(subSample)
                     }
                     .padding(start = 30.dp),
-                secondaryText = {
-                    Text(
-                        text = subSample.description.orEmpty(),
-                        style = Typography.body2,
-                    )
-                },
-                icon = {
-                    Image(
-                        modifier = Modifier.size(40.dp),
-                        painter = painterResource(id = subSample.icon),
-                        contentDescription = null
-                    )
-                },
+                secondaryText = if (!subSample.description.isNullOrEmpty()) {
+                    {
+                        Text(
+                            text = subSample.description.orEmpty(),
+                            style = Typography.body2,
+                        )
+                    }
+                } else null,
+                icon = if (subSample.icon != -1) {
+                    {
+                        Image(
+                            modifier = Modifier.size(40.dp),
+                            painter = painterResource(id = subSample.icon),
+                            contentDescription = null
+                        )
+                    }
+                } else null,
                 text = {
                     Text(
                         text = subSample.label,

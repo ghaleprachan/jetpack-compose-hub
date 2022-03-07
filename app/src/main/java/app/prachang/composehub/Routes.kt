@@ -10,4 +10,12 @@ object Routes {
     const val Tweeter = "route-tweeter"
 
     const val Dialog = "route-dialog"
+
+    object Material {
+        const val AppBar = "material-appbar"
+    }
+
+    object Material3 {
+        const val AppBar = "material3-appbar"
+    }
 }

@@ -36,16 +36,15 @@ object SampleAppData {
     private val materialDesign = listOf(
         SampleApp(
             label = "App bar",
-            route = null,
-            icon = R.drawable.ic_instagram_icon,
+            route = Routes.Material.AppBar,
         ),
         SampleApp(
-            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
+            label = "Bottom app bar",
+            route = "bottomappbar",
         ),
         SampleApp(
             label = "Buttons",
             route = "buttons",
-            icon = R.drawable.ic_tweeter,
         ),
     )
 
@@ -53,16 +52,14 @@ object SampleAppData {
     private val materialDesign3 = listOf(
         SampleApp(
             label = "App bar",
-            route = "appbar",
-            icon = R.drawable.ic_instagram_icon,
+            route = Routes.Material.AppBar,
         ),
         SampleApp(
-            label = "Bottom app bar", route = "bottomappbar", icon = R.drawable.ic_facebook
+            label = "Bottom app bar", route = "bottomappbar",
         ),
         SampleApp(
             label = "Buttons",
             route = "buttons",
-            icon = R.drawable.ic_tweeter,
         ),
     )
 
@@ -95,7 +92,7 @@ object SampleAppData {
     data class SampleApp(
         val label: String,
         val route: String? = null,
-        @DrawableRes val icon: Int,
+        @DrawableRes val icon: Int = -1,
         val description: String? = null,
         val subSamples: List<SampleApp> = emptyList()
     )
