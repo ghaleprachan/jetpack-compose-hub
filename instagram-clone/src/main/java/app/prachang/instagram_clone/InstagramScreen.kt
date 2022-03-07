@@ -1,21 +1,25 @@
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+
 package app.prachang.instagram_clone
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -24,6 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import app.prachang.common_compose_ui.components.CircleImage
+import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.instagram_clone.home.HomeScreen
 import app.prachang.instagram_clone.profile.ProfileScreen
@@ -39,7 +44,8 @@ fun InstagramScreen() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun MainScreenContent() {
-    val context = LocalContext.current
+    val bottomSheetItems = BottomSheetItem.values()
+
     val bottomNavItems = BottomNavItems.values()
     val rememberCoroutineScope = rememberCoroutineScope()
 
@@ -52,7 +58,7 @@ private fun MainScreenContent() {
     )
     ModalBottomSheetLayout(
         sheetContent = {
-            BottomSheetContent()
+            BottomSheetContent(bottomSheetItems = bottomSheetItems)
         },
         sheetShape = RoundedCornerShape(topEnd = 16.dp, topStart = 16.dp),
         sheetState = modalBottomSheetState,
@@ -168,12 +174,42 @@ private fun BottomNavView(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun BottomSheetContent() {
+private fun BottomSheetContent(bottomSheetItems: Array<BottomSheetItem>) {
     Column(modifier = Modifier) {
-        (0..12).forEach {
-            Text(text = "Content number is $it")
+        Height(height = 8.dp)
+        Divider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(align = Alignment.CenterHorizontally)
+                .width(40.dp)
+                .height(5.dp)
+                .clip(shape = CircleShape)
+                .background(Color.DarkGray)
+        )
+        Height(height = 8.dp)
+        bottomSheetItems.forEach {
+            ListItem(
+                icon = {
+                    Icon(imageVector = it.icon, contentDescription = null)
+                },
+            ) {
+                Text(text = it.label)
+            }
         }
     }
 }
 
+enum class BottomSheetItem(val label: String, val icon: ImageVector) {
+    Settings("Settings", Icons.Outlined.Settings), Archive(
+        "Archive", Icons.Outlined.Archive
+    ),
+    Activity("Your activity", Icons.Outlined.LocalActivity), QRCode(
+        "QR code", Icons.Outlined.QrCodeScanner
+    ),
+    Saved("Saved", Icons.Outlined.BookmarkBorder), Friends(
+        "Close friends", Icons.Outlined.FilterList
+    ),
+    Discover("Discover people", Icons.Outlined.PersonAdd),
+}
