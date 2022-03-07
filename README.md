@@ -3,11 +3,11 @@
 
 ### GIF
   #Title               | #Screenshot                                                        
-| --------------------------------------------------------                                     |
+ --------------------------------------------------------                                     
  Dashboard            | <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/dashboard.gif?raw=true" width="200" height="auto">
-| ---------------------------------------------------------                                    |
+ ---------------------------------------------------------                                    |
  Instagram Home       | <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/insta-home.gif?raw=true" width="200" height="auto">
-| ---------------------------------------------------------                                     |
+ ---------------------------------------------------------                                     
 
 <p float="left">
 <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/dashboard.gif?raw=true" width="200" height="auto">
