@@ -45,9 +45,6 @@ internal fun EmailListScreen(
     isScrollingUp: Boolean,
 ) {
     val gmailState = homeViewModel.gmailList.collectAsState()
-    LaunchedEffect(key1 = true, block = {
-        homeViewModel.getGmail()
-    })
     EmailListScreen(
         scrollState = scrollState, isScrollingUp = isScrollingUp, gmailState = gmailState
     )

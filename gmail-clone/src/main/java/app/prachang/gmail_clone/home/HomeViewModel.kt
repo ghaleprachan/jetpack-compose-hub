@@ -19,7 +19,12 @@ class HomeViewModel @Inject constructor(
 
     private val _gmailList = MutableStateFlow<LoadResults<List<MailsDataTable>>>(LoadingState())
     val gmailList = _gmailList.asStateFlow()
-    fun getGmail() = viewModelScope.launch {
+
+    init {
+        getGmail()
+    }
+
+    private fun getGmail() = viewModelScope.launch {
         _gmailList.value = emailRepository.getEmails()
     }
 }
