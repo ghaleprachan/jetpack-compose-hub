@@ -19,6 +19,6 @@ object Routes {
     object Material3 {
         const val AppBar = "material3-appbar"
         const val BottomBar = "material3-bottom-bar"
-        const val TextButtons = "material3-text-buttons"
+        const val Material3Components = "material3-components"
     }
 }

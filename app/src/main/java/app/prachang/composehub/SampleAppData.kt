@@ -58,8 +58,8 @@ object SampleAppData {
             label = "Bottom Appbar", route = Routes.Material3.BottomBar,
         ),
         SampleApp(
-            label = "Text & Buttons",
-            route = Routes.Material3.TextButtons,
+            label = "Material3 Components",
+            route = Routes.Material3.Material3Components,
         ),
     )
 

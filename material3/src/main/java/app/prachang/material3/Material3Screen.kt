@@ -14,27 +14,20 @@ import app.prachang.theme.materialyoutheme.GmailTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun Material3Screen(
-    title: String,
-    navController: NavController,
-    content: @Composable () -> Unit
+    title: String, navController: NavController, content: @Composable () -> Unit
 ) {
-    GmailTheme {
-        Scaffold(
-            topBar = {
-                SmallTopAppBar(
-                    title = {
-                        Text(text = title)
-                    },
-                    navigationIcon = {
-                        NavigationIcon {
-                            navController.popBackStack()
-                        }
-                    }
-                )
-            },
-            content = {
-                content()
-            }
-        )
-    }
+    Scaffold(
+        topBar = {
+            SmallTopAppBar(title = {
+                Text(text = title)
+            }, navigationIcon = {
+                NavigationIcon {
+                    navController.popBackStack()
+                }
+            })
+        },
+        content = {
+            content()
+        },
+    )
 }
