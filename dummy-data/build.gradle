@@ -45,7 +45,6 @@ android {
         kapt hilt.hilt_compiler
         api room.room_db
         implementation room.room_runtime
-        implementation room.room_coroutine
         kapt room.room_compiler
     }
 }

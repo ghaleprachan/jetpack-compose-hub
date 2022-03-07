@@ -85,7 +85,7 @@ object SampleAppData {
             subSamples = materialDesign
         ),
         SampleApp(
-            label = "Material Design",
+            label = "Material Design 3",
             route = Routes.Animation,
             icon = R.drawable.ic_material_design_you,
             subSamples = materialDesign3

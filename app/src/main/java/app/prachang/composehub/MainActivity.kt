@@ -72,6 +72,10 @@ internal fun MainScreen() {
     )
 }
 
+/**
+ * This is good practice to use routes when have to pass parameter in it.
+ * Or else you can just use enums or constants inside object
+ * */
 sealed class Route(val route: String) {
     object Dashboard : Route(route = Routes.Dashboard)
     object Instagram : Route(route = "${Routes.Instagram}/{id}") {
