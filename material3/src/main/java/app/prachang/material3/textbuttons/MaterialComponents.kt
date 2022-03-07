@@ -1,22 +1,28 @@
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+
 package app.prachang.material3.textbuttons
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import app.prachang.material3.Material3Screen
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.flowlayout.MainAxisAlignment
 import kotlinx.coroutines.delay
 
 
@@ -71,6 +77,14 @@ private fun MaterialComponents() {
             Text(text = "Button")
         }
 
+        ElevatedButton(onClick = { }) {
+            Text(text = "Elevated Button")
+        }
+
+        FilledTonalButton(onClick = { /*TODO*/ }) {
+            Text(text = "Filled Tonal Button")
+        }
+
         Text(text = "Random Normal Text")
 
         CircularProgressIndicator()
@@ -109,19 +123,66 @@ private fun MaterialComponents() {
         }
 
 
+        val interactionSource = remember {
+            MutableInteractionSource()
+        }
+        val clickable = Modifier.clickable(
+            interactionSource = interactionSource,
+            indication = LocalIndication.current,
+            onClick = {
+
+            },
+        )
+        // val isPressed by interactionSource.collectIsPressedAsState()
         Card(
             elevation = CardDefaults.cardElevation(
-                pressedElevation = 16.dp, defaultElevation = 8.dp,
-                draggedElevation = 16.dp,
+                pressedElevation = 22.dp,
+                defaultElevation = 6.dp,
+                draggedElevation = 22.dp,
             ),
-            shape = RoundedCornerShape(12.dp),
+            interactionSource = interactionSource,
         ) {
             Text(
                 text = "Content Inside Card",
                 modifier = Modifier
-                    .clickable { }
+                    .then(clickable)
                     .padding(16.dp),
             )
+        }
+        OutlinedCard {
+            Text(
+                text = "Outlined Card",
+                modifier = Modifier
+                    .then(clickable)
+                    .padding(16.dp),
+            )
+        }
+        ElevatedCard {
+            Text(
+                text = "Elevated Card",
+                modifier = Modifier
+                    .then(clickable)
+                    .padding(16.dp),
+            )
+        }
+
+        FloatingActionButton(onClick = { }) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = null)
+        }
+        ExtendedFloatingActionButton(
+            onClick = { },
+            icon = {
+                Icon(imageVector = Icons.Default.Add, contentDescription = null)
+            },
+            text = {
+                Text(text = "Compose")
+            },
+        )
+        LargeFloatingActionButton(onClick = { /*TODO*/ }) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = null)
+        }
+        SmallFloatingActionButton(onClick = { /*TODO*/ }) {
+            Icon(imageVector = Icons.Default.Add, contentDescription = null)
         }
     }
 }
