@@ -1,4 +1,4 @@
-# Compose Hub | Work in progress
+# Compose Hub (Work in progress)
 
 Compose-Hub work **is on progress**. The project contains clone app of Instagram and Gmail (**Note:
 Not the whole app but some crucial screens**). This project was mainly focused on to build UIs using
