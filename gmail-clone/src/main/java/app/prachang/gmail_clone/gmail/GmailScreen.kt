@@ -92,7 +92,7 @@ private fun GmailContent() {
         },
         drawerState = drawerState,
         drawerShape = RoundedCornerShape(0.dp),
-        drawerContainerColor = Color.White
+        drawerContainerColor = Color.White,
     ) {
         Column(
             modifier = Modifier

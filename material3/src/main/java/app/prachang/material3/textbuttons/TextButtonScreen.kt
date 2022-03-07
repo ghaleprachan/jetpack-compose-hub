@@ -16,7 +16,10 @@ import com.google.accompanist.flowlayout.FlowRow
 
 @Composable
 fun ClickableScreen3(navController: NavController) {
-    Material3Screen(title = "Text & Buttons", navController = navController) {
+    Material3Screen(
+        title = "Text & Buttons",
+        navController = navController,
+    ) {
         ClickableScreen()
     }
 }

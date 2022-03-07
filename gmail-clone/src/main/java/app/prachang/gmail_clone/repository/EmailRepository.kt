@@ -16,7 +16,6 @@ class EmailRepositoryImpl(
     private val dispatcher: CoroutineDispatcher,
 ) : EmailRepository {
     override suspend fun getEmails(): LoadResults<List<MailsDataTable>> {
-        delay(3000)
         return SuccessState(data = dao.getAllEmails())
     }
 }
