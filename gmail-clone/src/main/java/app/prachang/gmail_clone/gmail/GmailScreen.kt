@@ -5,12 +5,10 @@ package app.prachang.gmail_clone.gmail
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,15 +28,15 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.*
 import app.prachang.common_compose_ui.utils.isScrollingUp
 import app.prachang.gmail_clone.GmailRoutes
 import app.prachang.gmail_clone.home.EmailListScreen
@@ -160,6 +158,9 @@ private fun GmailContent() {
                                 }
                             }
                         },
+                        onProfileIconClick = {
+                            navController.navigateToRoute(GmailRoutes.Dialog)
+                        },
                     )
                 }
             }
@@ -203,6 +204,7 @@ private fun BoxScope.TopContentVisibility(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun NavigationComponents(
     navController: NavHostController,
@@ -232,7 +234,22 @@ private fun NavigationComponents(
                     focusRequester = focusRequester
                 )
             }
+            dialog(
+                route = GmailRoutes.Dialog,
+                dialogProperties = DialogProperties(usePlatformDefaultWidth = false)
+            ) {
+                GmailDialog(
+                    modifier = Modifier.padding(top = topContentHeight.convertToDp()),
+                    navController = navController
+                )
+            }
         },
     )
 }
 
+@Composable
+internal fun Float?.convertToDp(): Dp {
+    return with(LocalDensity.current) {
+        this@convertToDp?.toDp() ?: 0.dp
+    }
+}

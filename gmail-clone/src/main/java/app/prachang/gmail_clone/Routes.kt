@@ -1,5 +1,6 @@
 package app.prachang.gmail_clone
 
+import android.app.Dialog
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 
@@ -7,6 +8,7 @@ internal object GmailRoutes {
     const val HomeScreen = "route-home"
     const val SearchScreen = "route-search"
     const val EmailDetail = "route-email-details/{email_id}"
+    const val Dialog = "route-dialog"
 }
 
 // This is better way to use route when having
