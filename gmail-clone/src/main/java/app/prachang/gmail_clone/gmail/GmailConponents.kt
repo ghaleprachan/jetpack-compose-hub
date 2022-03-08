@@ -35,12 +35,12 @@ import app.prachang.common_compose_ui.animations.RotateIcon
 import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.dummy_data.instagram.kotlinIcon
+import app.prachang.gmail_clone.navigateToRoute
 import app.prachang.theme.CustomColors
 import app.prachang.theme.materialyoutheme.Material3Colors
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun DrawerContent(
     modifier: Modifier = Modifier
@@ -208,13 +208,7 @@ internal fun BottomNavBar(
             NavigationBarItem(
                 selected = isSelected,
                 onClick = {
-                    navController.navigate(route = bottomNavItem.route) {
-                        navController.graph.startDestinationRoute?.let { route ->
-                            popUpTo(route)
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
+                    navController.navigateToRoute(route = bottomNavItem.route)
                 },
                 label = {
                     Text(text = bottomNavItem.label)

@@ -1,5 +1,8 @@
 package app.prachang.gmail_clone
 
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+
 internal object GmailRoutes {
     const val HomeScreen = "route-home"
     const val SearchScreen = "route-search"
@@ -17,5 +20,16 @@ internal sealed class Routes(
         fun getRoute(emailId: String): String {
             return "$route/$emailId"
         }
+    }
+}
+
+
+internal fun NavHostController.navigateToRoute(route: String) {
+    this.navigate(route = route) {
+        this@navigateToRoute.graph.startDestinationRoute?.let { route ->
+            popUpTo(route = route)
+        }
+        restoreState = true
+        launchSingleTop = true
     }
 }

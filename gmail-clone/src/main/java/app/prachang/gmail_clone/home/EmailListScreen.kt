@@ -1,4 +1,4 @@
-@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED", "OPT_IN_IS_NOT_ENABLED")
 
 package app.prachang.gmail_clone.home
 
@@ -24,6 +24,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.prachang.android_common.apputils.LoadingState
 import app.prachang.android_common.apputils.LoadResults
+import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
 import app.prachang.dummy_data.gmail.MailsData
 import app.prachang.dummy_data.gmail.MailsDataTable
@@ -43,23 +45,24 @@ internal fun EmailListScreen(
     scrollState: LazyListState,
     homeViewModel: HomeViewModel = hiltViewModel(),
     isScrollingUp: Boolean,
+    topContentHeight: Float,
 ) {
     val gmailState = homeViewModel.gmailList.collectAsState()
     EmailListScreen(
-        scrollState = scrollState, isScrollingUp = isScrollingUp, gmailState = gmailState
+        topContentHeight = topContentHeight,
+        scrollState = scrollState,
+        isScrollingUp = isScrollingUp,
+        gmailState = gmailState,
     )
 }
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalFoundationApi::class,
-    ExperimentalMaterial3Api::class
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun EmailListScreen(
     scrollState: LazyListState,
     isScrollingUp: Boolean,
     gmailState: State<LoadResults<List<MailsDataTable>>>,
+    topContentHeight: Float,
 ) {
     Scaffold(floatingActionButton = {
         ExpandableFloatingButton(isScrollingUp = isScrollingUp)
@@ -70,6 +73,10 @@ private fun EmailListScreen(
             state = scrollState,
             content = {
                 item {
+                    // This is height is same as top search bar on home screen
+                    Height(height = with(LocalDensity.current) {
+                        topContentHeight.toDp()
+                    })
                     Text(text = "Primary", color = Color.Gray, fontSize = 14.sp)
                 }
                 if (gmailState.value is LoadingState) {

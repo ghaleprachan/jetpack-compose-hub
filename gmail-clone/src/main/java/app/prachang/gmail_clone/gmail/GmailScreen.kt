@@ -1,51 +1,54 @@
-@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED")
+@file:Suppress("EXPERIMENTAL_IS_NOT_ENABLED", "OPT_IN_IS_NOT_ENABLED")
 
 package app.prachang.gmail_clone.gmail
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.*
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import app.prachang.common_compose_ui.animations.RotateIcon
-import app.prachang.common_compose_ui.components.CircleImage
 import app.prachang.common_compose_ui.utils.isScrollingUp
-import app.prachang.dummy_data.instagram.kotlinIcon
 import app.prachang.gmail_clone.GmailRoutes
-import app.prachang.gmail_clone.home.*
 import app.prachang.gmail_clone.home.EmailListScreen
+import app.prachang.gmail_clone.home.MeetScreen
+import app.prachang.gmail_clone.navigateToRoute
 import app.prachang.gmail_clone.search.SearchScreen
-import app.prachang.theme.CustomColors
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.android.awaitFrame
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 
 @Preview(showSystemUi = true, showBackground = true)
@@ -61,13 +64,12 @@ fun GmailScreen() {
     }
 }
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class,
-)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 private fun GmailContent() {
+    // Keyboard
+    val configuration = LocalSoftwareKeyboardController.current
+
     // Search field values
     val focusRequester = remember { FocusRequester() }
     val searchValue = remember { mutableStateOf("") }
@@ -86,7 +88,24 @@ private fun GmailContent() {
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
 
+    // Top Content Offset
+    var topContentHeight by remember { mutableStateOf(0f) }
+    var offset by remember {
+        mutableStateOf(0f)
+    }
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val delta = available.y
+                val newOffset = offset + delta
+                offset = newOffset.coerceIn(-topContentHeight, 0f)
+                return Offset.Zero
+            }
+        }
+    }
+
     ModalNavigationDrawer(
+        modifier = Modifier.nestedScroll(nestedScrollConnection),
         drawerContent = {
             DrawerContent()
         },
@@ -99,44 +118,56 @@ private fun GmailContent() {
                 .fillMaxSize()
                 .background(Material3Colors.background)
         ) {
-            // Common top bar for search screen
-            AnimatedVisibility(
-                visible = isScrollingUp && currentRoute != BottomNavItems.Bookings.route,
-            ) {
-                TopContent(
+            Box(modifier = Modifier.weight(1f)) {
+                // Navigation components for screen
+                NavigationComponents(
+                    modifier = Modifier.fillMaxSize(1f),
+                    topContentHeight = topContentHeight,
+                    navController = navController,
+                    emailScrollState = emailScrollState,
+                    isScrollingUp = isScrollingUp,
                     focusRequester = focusRequester,
-                    searchValue = searchValue,
-                    isEnabled = currentRoute == GmailRoutes.SearchScreen,
-                    onClick = {
-                        navController.navigate(route = GmailRoutes.SearchScreen) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route = route)
-                            }
-                            restoreState = true
-                            launchSingleTop = true
-                        }
-                    },
-                    onLeadingIconClick = {
-                        if (currentRoute == GmailRoutes.SearchScreen) {
-                            navController.popBackStack()
-                        } else {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
-                        }
-                    },
                 )
+
+                // Common top bar for search screen
+                TopContentVisibility(
+                    isVisible = currentRoute != BottomNavItems.Bookings.route,
+                    modifier = Modifier.onGloballyPositioned {
+                        topContentHeight = it.size.height.toFloat()
+                    },
+                    translationY = offset,
+                    topContentHeight = topContentHeight
+                ) {
+                    TopContent(
+                        focusRequester = focusRequester,
+                        searchValue = searchValue,
+                        isEnabled = currentRoute == GmailRoutes.SearchScreen,
+                        onClick = {
+                            navController.navigateToRoute(route = GmailRoutes.SearchScreen)
+                            coroutineScope.launch {
+                                awaitFrame()
+                                focusRequester.requestFocus()
+                            }
+                        },
+                        onLeadingIconClick = {
+                            if (currentRoute == GmailRoutes.SearchScreen) {
+                                configuration?.hide()
+                                navController.popBackStack()
+                            } else {
+                                coroutineScope.launch {
+                                    drawerState.open()
+                                }
+                            }
+                        },
+                    )
+                }
             }
-            // Navigation components for screen
-            NavigationComponents(
-                navController = navController,
-                emailScrollState = emailScrollState,
-                isScrollingUp = isScrollingUp,
-                focusRequester = focusRequester,
-                modifier = Modifier.weight(1f)
-            )
+
             // Bottom navigation bar
-            AnimatedVisibility(visible = currentRoute != GmailRoutes.SearchScreen) {
+            AnimatedVisibility(
+                modifier = Modifier,
+                visible = currentRoute != GmailRoutes.SearchScreen,
+            ) {
                 BottomNavBar(
                     navigationItems = navigationItems,
                     currentRoute = currentRoute,
@@ -148,12 +179,37 @@ private fun GmailContent() {
 }
 
 @Composable
+private fun BoxScope.TopContentVisibility(
+    modifier: Modifier = Modifier,
+    isVisible: Boolean,
+    topContentHeight: Float,
+    translationY: Float,
+    content: @Composable () -> Unit,
+) {
+    AnimatedVisibility(visible = isVisible,
+        modifier = modifier
+            .align(alignment = Alignment.TopCenter)
+            .graphicsLayer {
+                this.translationY = translationY
+            },
+        exit = slideOut(tween(100)) {
+            IntOffset(0, -topContentHeight.roundToInt())
+        },
+        enter = slideIn(tween(100)) {
+            IntOffset(0, 0)
+        }) {
+        content()
+    }
+}
+
+@Composable
 private fun NavigationComponents(
     navController: NavHostController,
     emailScrollState: LazyListState,
     isScrollingUp: Boolean,
     focusRequester: FocusRequester,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    topContentHeight: Float
 ) {
     NavHost(
         modifier = modifier,
@@ -164,6 +220,7 @@ private fun NavigationComponents(
                 EmailListScreen(
                     scrollState = emailScrollState,
                     isScrollingUp = isScrollingUp,
+                    topContentHeight = topContentHeight
                 )
             }
             composable(BottomNavItems.Bookings.route) {
