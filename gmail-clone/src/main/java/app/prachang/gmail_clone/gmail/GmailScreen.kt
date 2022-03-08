@@ -2,8 +2,10 @@
 
 package app.prachang.gmail_clone.gmail
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -46,7 +48,6 @@ import app.prachang.gmail_clone.search.SearchScreen
 import app.prachang.theme.materialyoutheme.GmailTheme
 import app.prachang.theme.materialyoutheme.Material3Colors
 import kotlinx.coroutines.android.awaitFrame
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -70,10 +71,6 @@ private fun GmailContent() {
     // Keyboard
     val configuration = LocalSoftwareKeyboardController.current
 
-    // Search field values
-    val focusRequester = remember { FocusRequester() }
-    val searchValue = remember { mutableStateOf("") }
-
     // Drawer Content
     val coroutineScope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(DrawerValue.Closed)
@@ -87,6 +84,10 @@ private fun GmailContent() {
     val navController = rememberNavController()
     val navBackStack by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStack?.destination?.route
+
+    // Search field values
+    val focusRequester = remember { FocusRequester() }
+    val searchValue = remember { mutableStateOf("") }
 
     // Top Content Offset
     var topContentHeight by remember { mutableStateOf(0f) }

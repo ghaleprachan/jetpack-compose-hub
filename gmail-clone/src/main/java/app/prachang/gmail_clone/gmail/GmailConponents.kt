@@ -15,7 +15,6 @@ import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.Image
 import androidx.compose.material3.*
@@ -155,9 +154,9 @@ internal fun TopContent(
         TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRequester(focusRequester)
                 .clip(shape = CircleShape)
-                .clickable { onClick() },
+                .clickable { onClick() }
+                .focusRequester(focusRequester),
             placeholder = {
                 Text(text = "Search in emails")
             },
