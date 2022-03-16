@@ -29,3 +29,4 @@ fun Activity.hideKeyboard() {
 }
 
 fun Fragment.hideKeyboard() = requireActivity().hideKeyboard()
+

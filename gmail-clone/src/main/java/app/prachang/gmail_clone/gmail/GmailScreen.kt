@@ -5,7 +5,6 @@ package app.prachang.gmail_clone.gmail
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -67,7 +66,7 @@ fun GmailScreen() {
 @Composable
 private fun GmailContent() {
     // Keyboard
-    val configuration = LocalSoftwareKeyboardController.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     // Drawer Content
     val coroutineScope = rememberCoroutineScope()
@@ -150,7 +149,7 @@ private fun GmailContent() {
                         },
                         onLeadingIconClick = {
                             if (currentRoute == GmailRoutes.SearchScreen) {
-                                configuration?.hide()
+                                keyboardController?.hide()
                                 navController.popBackStack()
                             } else {
                                 coroutineScope.launch {
@@ -188,7 +187,8 @@ private fun BoxScope.TopContentVisibility(
     translationY: Float,
     content: @Composable () -> Unit,
 ) {
-    AnimatedVisibility(visible = isVisible,
+    AnimatedVisibility(
+        visible = isVisible,
         modifier = modifier
             .align(alignment = Alignment.TopCenter)
             .graphicsLayer {
@@ -199,9 +199,11 @@ private fun BoxScope.TopContentVisibility(
         },
         enter = slideIn(tween(100)) {
             IntOffset(0, 0)
-        }) {
-        content()
-    }
+        },
+        content = {
+            content()
+        },
+    )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
