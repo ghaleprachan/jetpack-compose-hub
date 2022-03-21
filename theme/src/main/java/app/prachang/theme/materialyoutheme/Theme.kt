@@ -13,7 +13,24 @@ import app.prachang.theme.CustomColors
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 // Add dark theme support for email todo(ghaleprachan)
-private val DarkColorScheme = darkColorScheme()
+private val DarkColorScheme = darkColorScheme(
+    primary = Color.Black,
+    onPrimary = Color.White,
+    primaryContainer = Color.Black,
+    onPrimaryContainer = Color.White,
+    secondary = CustomColors.LightBlack,
+    onSecondary = Color.White,
+    secondaryContainer = CustomColors.LightBlack,
+    onSecondaryContainer = Color.White,
+    background = Color.Black,
+    onBackground = Color.White,
+    surface = CustomColors.VeryLightBlack,
+    onSurface = Color.White,
+    inverseSurface = CustomColors.LightBlack,
+    inverseOnSurface = Color.White,
+    tertiary = CustomColors.LightBlack,
+    onTertiary = Color.Black,
+)
 
 private val LightColorScheme = lightColorScheme(
     primary = Color.White,
@@ -39,9 +56,9 @@ fun GmailTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val context = LocalContext.current
+    // val context = LocalContext.current
     val colors = if (darkTheme) {
-        dynamicDarkColorScheme(context)
+        DarkColorScheme
     } else {
         LightColorScheme
     }

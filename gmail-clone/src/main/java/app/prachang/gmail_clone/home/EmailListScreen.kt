@@ -118,7 +118,7 @@ private fun EmailItem(mail: MailsDataTable) {
                     .wrapContentSize(align = Alignment.Center),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = Material3Colors.onBackground
             )
         }
 
@@ -198,11 +198,14 @@ private fun OtherItem(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Column {
-                    Text(text = title, style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        text = title,
+                        style = MaterialTheme.typography.headlineMedium.copy(color = Material3Colors.onBackground)
+                    )
 
                     Text(
                         text = message,
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.headlineSmall.copy(color = Material3Colors.onBackground),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
