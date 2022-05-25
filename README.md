@@ -24,3 +24,8 @@ Summary of tools and technologies used:
 | Dashboard Screens           | <p float="left"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/dashboard.gif?raw=true" width="200" height="auto"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/dashboard-expanded.jpg?raw=true" width="200" height="auto"></p> |
 | Instagram Clone App Samples |  <p float="left"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/insta-home.gif?raw=true" width="200" height="auto"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/insta-profile.gif?raw=true" width="200" height="auto"></p>  |
 | Gmail Clone App Samples     |   <p float="left"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/mail-home.gif?raw=true" width="200" height="auto"> <img src="https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/gifs/mail-dialog.gif?raw=true" width="200" height="auto"></p>    |
+
+## MAD Scorecard
+
+![alt text](https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/summary.png?raw=true)
+
