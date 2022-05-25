@@ -27,5 +27,5 @@ Summary of tools and technologies used:
 
 ## MAD Scorecard
 
-![alt text](https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/summary.png?raw=true](https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/summary.png?raw=true)
+![alt text](https://github.com/ghaleprachan/jetpack-compose-hub/blob/develop/arts/ss/summary.png?raw=true)
 
