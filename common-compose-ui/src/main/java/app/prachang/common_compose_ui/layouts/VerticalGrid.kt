@@ -1,14 +1,10 @@
 package app.prachang.common_compose_ui.layouts
 
 import android.util.Log
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.unit.Constraints
-import androidx.compose.ui.unit.Density
 
 var recentX = 0
 var recentY = 0
@@ -16,16 +12,15 @@ var rowCount = 0
 val uni: () -> Unit = {}
 private lateinit var composable: @Composable () -> Unit
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MyGrid(
     cells: GridCells.Fixed
 ) {
-    val slotsPerLine = remember<Density.(Constraints) -> Int>(cells) {
+    /*val slotsPerLine = remember<Density.(Constraints) -> Int>(cells) {
         {
             cells.count
         }
-    }
+    }*/
 }
 
 /**
