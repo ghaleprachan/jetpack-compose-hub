@@ -1,9 +1,15 @@
 package com.example.facebook_clone
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 
 @Composable
-fun FacebookHomeScree() {
-    Text(text = "Facebook work on progress")
+fun FacebookHomeScreen() {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text = "Facebook work on progress")
+    }
 }
