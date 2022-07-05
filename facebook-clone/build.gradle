@@ -43,6 +43,8 @@ dependencies {
     implementation(project(":dummy-data"))
     implementation compose
     implementation accompaniest.flow_layout
+    implementation accompaniest.pager
+    implementation accompaniest.pager_indicator
 
     implementation materialDesign.material3
     implementation coil
