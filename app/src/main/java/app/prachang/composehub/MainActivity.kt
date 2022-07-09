@@ -21,6 +21,7 @@ import app.prachang.material3.appbar.AppBarScreen3
 import app.prachang.material3.bottombar.TextButtonScreen3
 import app.prachang.material3.textbuttons.MaterialComponents3
 import app.prachang.theme.materialtheme.ComposeHubTheme
+import com.example.facebook_clone.screens.FacebookHomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,6 +71,10 @@ internal fun MainScreen() {
 
             composable(Routes.Gmail) {
                 GmailScreen()
+            }
+
+            composable(Routes.Facebook) {
+                FacebookHomeScreen()
             }
 
             composable(Routes.Material3.AppBar) {
