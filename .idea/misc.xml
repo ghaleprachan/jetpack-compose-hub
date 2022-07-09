@@ -15,6 +15,9 @@
         <entry key="..\:/prg/ComposeHub/instagram-clone/src/main/res/drawable/ic_instagram.xml" value="0.1" />
         <entry key="..\:/prg/ComposeHub/instagram-clone/src/main/res/drawable/ic_loading_icon.xml" value="0.1105" />
         <entry key="facebook-clone/src/main/res/drawable/ic_home.xml" value="0.2045" />
+        <entry key="facebook-clone/src/main/res/drawable/ic_home_selected.xml" value="0.1765" />
+        <entry key="facebook-clone/src/main/res/drawable/ic_messanger.xml" value="0.1765" />
+        <entry key="facebook-clone/src/main/res/drawable/ic_search_outlined.xml" value="0.1765" />
       </map>
     </option>
   </component>
