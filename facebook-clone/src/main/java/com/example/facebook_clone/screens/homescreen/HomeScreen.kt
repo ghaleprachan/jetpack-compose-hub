@@ -1,6 +1,5 @@
-package com.example.facebook_clone.screens.tabscreens
+package com.example.facebook_clone.screens.homescreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -18,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.components.CircleImage
-import coil.compose.rememberImagePainter
 import com.example.facebook_clone.FacebookConstants
 import com.example.facebook_clone.facebookthemes.FacebookColors
 
@@ -39,10 +37,17 @@ private fun HomeScreenContent() {
                 item {
                     AddPostItem()
                 }
+                item {
+                    StoryContent()
+                }
+                items(14) {
+                    PostItem()
+                }
             },
         )
     }
 }
+
 
 @Composable
 private fun AddPostItem() {

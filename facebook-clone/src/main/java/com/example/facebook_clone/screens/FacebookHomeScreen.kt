@@ -1,6 +1,5 @@
 package com.example.facebook_clone.screens
 
-import android.graphics.Paint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
@@ -12,13 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.example.facebook_clone.BottomNavItems
 import com.example.facebook_clone.R
-import com.example.facebook_clone.screens.tabscreens.HomeScreen
+import com.example.facebook_clone.screens.homescreen.HomeScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
