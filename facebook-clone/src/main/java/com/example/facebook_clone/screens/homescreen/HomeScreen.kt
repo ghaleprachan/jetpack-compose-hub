@@ -56,7 +56,8 @@ private fun AddPostItem() {
             .fillMaxWidth()
             .background(MaterialTheme.colors.background)
             .padding(horizontal = 12.dp, vertical = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         CircleImage(
             modifier = Modifier.size(40.dp),
