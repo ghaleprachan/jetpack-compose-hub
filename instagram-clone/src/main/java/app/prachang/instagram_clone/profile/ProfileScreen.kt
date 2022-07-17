@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Height
-import app.prachang.common_compose_ui.layouts.items
+import app.prachang.common_compose_ui.layouts.customItems
 import app.prachang.dummy_data.R
 import app.prachang.dummy_data.instagram.myPosts
 import app.prachang.dummy_data.instagram.profileData
@@ -82,7 +82,7 @@ internal fun ProfileScreen(onMoreOptions: () -> Unit) {
                     ProfileTab()
                 }
 
-                items(
+                customItems(
                     items = myPosts,
                     columns = 3,
                     horizontalItemPadding = 2.dp,
