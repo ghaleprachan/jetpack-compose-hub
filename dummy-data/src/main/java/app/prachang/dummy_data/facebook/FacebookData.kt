@@ -7,4 +7,6 @@ data class FacebookDataModel(
     val likes: String,
     val comments: String,
     val shares: String,
+    val postImage: String,
+    val postDescription: String,
 )
