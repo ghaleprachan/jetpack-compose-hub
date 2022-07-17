@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Surface
@@ -17,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.components.CircleImage
+import app.prachang.common_compose_ui.layouts.customItems
+import app.prachang.dummy_data.facebook.FacebookData
 import com.example.facebook_clone.FacebookConstants
 import com.example.facebook_clone.facebookthemes.FacebookColors
 
@@ -40,8 +43,8 @@ private fun HomeScreenContent() {
                 item {
                     StoryContent()
                 }
-                items(14) {
-                    PostItem()
+                items(FacebookData.dashboardPosts) { post ->
+                    PostItem(post = post)
                 }
             },
         )

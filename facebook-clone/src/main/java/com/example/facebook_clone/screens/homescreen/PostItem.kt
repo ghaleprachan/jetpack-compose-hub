@@ -27,10 +27,11 @@ import androidx.compose.ui.unit.sp
 import app.prachang.common_compose_ui.components.ComposeImage
 import app.prachang.common_compose_ui.extensions.Height
 import app.prachang.common_compose_ui.extensions.Width
+import app.prachang.dummy_data.facebook.FacebookDataModel
 import com.example.facebook_clone.FacebookConstants
 
 @Composable
-internal fun PostItem() {
+internal fun PostItem(post: FacebookDataModel) {
     val horizontalPadding = 8.dp
     Column(
         modifier = Modifier
@@ -42,7 +43,7 @@ internal fun PostItem() {
             modifier = Modifier.padding(horizontal = horizontalPadding)
         ) {
             ComposeImage(
-                url = FacebookConstants.ProfileImage,
+                url = post.profile,
                 modifier = Modifier
                     .size(35.dp)
                     .clip(shape = CircleShape)
@@ -50,10 +51,10 @@ internal fun PostItem() {
             Width(width = 16.dp)
             Column {
                 Text(
-                    text = "Prachan Ghale",
+                    text = post.name,
                     style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
                 )
-                Text(text = "Just now", fontSize = 12.sp, fontWeight = FontWeight.Light)
+                Text(text = post.time, fontSize = 12.sp, fontWeight = FontWeight.Light)
             }
             Row(
                 modifier = Modifier
@@ -82,13 +83,13 @@ internal fun PostItem() {
         }
         Height(height = 12.dp)
         Text(
-            text = "Jetpack Compose is Android’s modern toolkit for building native UI. It simplifies and accelerates UI development on Android. Quickly bring your app to life with less code, powerful tools, and intuitive Kotlin APIs.",
+            text = post.postDescription,
             modifier = Modifier.padding(horizontal = horizontalPadding),
             style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Light),
         )
         Height(height = 8.dp)
         ComposeImage(
-            url = "https://wallpapershome.com/images/pages/pic_h/23277.jpg",
+            url = post.postImage,
             modifier = Modifier
                 .fillMaxWidth()
                 .defaultMinSize(minHeight = 200.dp),
@@ -101,9 +102,9 @@ internal fun PostItem() {
                 .padding(horizontal = 12.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "400K", color = Color.Gray)
-            Text(text = "235 Comments", color = Color.Gray)
-            Text(text = "12 Shares", color = Color.Gray)
+            Text(text = post.likes, color = Color.Gray)
+            Text(text = post.comments, color = Color.Gray)
+            Text(text = post.shares, color = Color.Gray)
         }
         // Text(text = "Like numbers")
         Height(height = 12.dp)

@@ -25,7 +25,7 @@ fun LazyListScope.itemSpacing(space: Dp) {
     }
 }
 
-fun <T : Any> LazyListScope.items(
+fun <T : Any> LazyListScope.customItems(
     items: List<T>,
     columns: Int = 2,
     contentPadding: PaddingValues = PaddingValues(),
