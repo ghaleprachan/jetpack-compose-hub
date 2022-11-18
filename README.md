@@ -16,6 +16,8 @@ Summary of tools and technologies used:
   locally.
 - Uses [Kotlin Coroutines](https://developer.android.com/kotlin/coroutines/coroutines-best-practices).
 - Uses [Material Design 3](https://m3.material.io/) and [Material Design 2](https://material.io/).
+- Uses [Chips](mychips0://hello) and [Material Design 2](https://material.io/).
+
 
 ## UIs
 
